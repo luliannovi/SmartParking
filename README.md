@@ -4,3 +4,4 @@ An idea of a smart parking automated system with the use of IoT standards and pr
       - MQTT
       - CoAP
       - Serverless functionalities
+
