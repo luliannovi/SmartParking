@@ -1,0 +1,4 @@
+All'interno della cartella saranno gestiti tutti gli script (si veda poi la suddivisione in directory) che si occupano di data
+management & data collection. Anche qua sarebbe comodo inserire un thread che esegua le funzionalità in parallelo scrivendo i dati
+in logger dedicati per non dover eseguire troppi script.
+

@@ -1,0 +1,2 @@
+Per ogni protocollo usato lato edge si specifichino le risorse e come
+si intende gestire la loro esposizione alle richieste / pubblicazione stato
