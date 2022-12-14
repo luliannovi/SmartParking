@@ -1,0 +1,1 @@
+Definire le classi utili alla modellazione delle risorse di nostro interesse

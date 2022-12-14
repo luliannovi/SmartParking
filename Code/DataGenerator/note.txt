@@ -1,0 +1,4 @@
+All'interno della cartella inserire tutti i simulatori che possono andare a generare dei dati.
+Per eseguire un buon codice è necessario ridurre le print e scrivere in un file di log dedicato ogni print.
+Si potrebbe, per comodità in fase di esame, generare un file terzo che esegue i simulatori all'interno di task indipendenti
+in modo da non dover eseguire 200 script.
