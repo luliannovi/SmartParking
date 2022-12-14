@@ -18,9 +18,8 @@ class ParkingSensorDescriptor:
         if isinstance(car, CarDescriptor):
             self.car = car
             self.readingTime = datetime.now()
-            return True
         else:
-            return False
+            raise ValueError("Data passed as paramether must be a CarDescriptor class data")
 
     def setErrorTrue(self):
         self.error = True

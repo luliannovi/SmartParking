@@ -23,9 +23,8 @@ class CarDescriptor:
         """
         if isinstance(self.exitTime, datetime):
             self.deltaTime = (self.exitTime - self.entryTime).min
-            return True
         else:
-            return False
+            raise ValueError("The car has not an exit time yet")
 
     def to_json(self):
         json.dumps(self, default=lambda o: o.__dict__())
@@ -43,13 +42,11 @@ class CarDescriptor:
     def setLicensePlate(self, licensePlate):
         if isinstance(licensePlate, string_types):
             self.licensePlate = licensePlate
-            return True
         else:
-            return False
+            raise ValueError("Data passed as paramether must be a String")
 
     def setParkingPlace(self, parkingPlace):
         if isinstance(parkingPlace, string_types):
             self.parkingPlace = parkingPlace
-            return True
         else:
-            return False
+            raise ValueError("Data passed as paramether must be a String")
