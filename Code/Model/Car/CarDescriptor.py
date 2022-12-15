@@ -2,7 +2,6 @@ import random
 import json
 import time
 from datetime import datetime
-from six import string_types
 
 
 class CarDescriptor:
@@ -26,8 +25,8 @@ class CarDescriptor:
         else:
             raise ValueError("The car has not an exit time yet")
 
-    def to_json(self):
-        json.dumps(self, default=lambda o: o.__dict__())
+    def toJson(self):
+        return json.dumps(self, default=lambda o: o.__dict__())
 
     def exitNow(self):
         """
@@ -40,13 +39,13 @@ class CarDescriptor:
         self.paid = True
 
     def setLicensePlate(self, licensePlate):
-        if isinstance(licensePlate, string_types):
+        if isinstance(licensePlate, str):
             self.licensePlate = licensePlate
         else:
             raise ValueError("Data passed as paramether must be a String")
 
     def setParkingPlace(self, parkingPlace):
-        if isinstance(parkingPlace, string_types):
+        if isinstance(parkingPlace, str):
             self.parkingPlace = parkingPlace
         else:
             raise ValueError("Data passed as paramether must be a String")

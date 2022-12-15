@@ -1,7 +1,7 @@
 import json
 from datetime import datetime
-from six import string_types
-from car import CarDescriptor
+from Code.Model.Car.CarDescriptor import CarDescriptor
+
 
 class ParkingSensorDescriptor:
     """
@@ -27,5 +27,5 @@ class ParkingSensorDescriptor:
     def setErrorFalse(self):
         self.error = False
 
-    def to_json(self):
-        json.dumps(self, default=lambda o: o.__dict__())
+    def toJson(self):
+        return json.dumps(self, default=lambda o: o.__dict__())
