@@ -10,13 +10,13 @@ class ParkingSensorDescriptor:
 
     def __init__(self, parkingPlace):
         self.parkingPlace = parkingPlace
-        self.car = CarDescriptor()
+        self.carPlate = ""
         self.readingTime = 0
         self.error = False
 
-    def readThePlate(self, car):
-        if isinstance(car, CarDescriptor):
-            self.car = car
+    def readThePlate(self, carPlate):
+        if isinstance(carPlate, str):
+            self.carPlate = carPlate
             self.readingTime = datetime.now()
         else:
             raise ValueError("Data passed as paramether must be a CarDescriptor class data")
