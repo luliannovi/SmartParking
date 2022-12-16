@@ -2,5 +2,7 @@
   "PRIMAERY_KEY": "Lk0m4517tecdyVdeu2cFMVgrKClNaentgttsUMpS9io=",
   "SECONDARY_KEY": "xbvAmStfJOt/PVfbWHRF820Lia1evO03XgH5wXDgy8A=",
   "FIRST_CONNECTION_STRING": "HostName=SmartParking.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=Lk0m4517tecdyVdeu2cFMVgrKClNaentgttsUMpS9io=",
-  "SECOND_CONNECTION_STRING": "HostName=SmartParking.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=xbvAmStfJOt/PVfbWHRF820Lia1evO03XgH5wXDgy8A="
+  "SECOND_CONNECTION_STRING": "HostName=SmartParking.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=xbvAmStfJOt/PVfbWHRF820Lia1evO03XgH5wXDgy8A=",
+  "HOST": "SmartParking.azure-devices.net",
+
 }
