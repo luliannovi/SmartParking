@@ -13,7 +13,7 @@ class AzureManager:
         """type is the media that we want to handle calling the class.
         Calling the constructor i check if the media type is supported.
         """
-        if type not in LocalDB.SUPPORTED_MEDIA:
+        if type not in AzureManager.SUPPORTED_MEDIA:
             raise Exception("Requested media type is not supported")
         else:
             self.type = type
@@ -24,7 +24,7 @@ class AzureManager:
         True,jsonData is returned if everything is ok otherwise False,STR is returned.
         """
         try:
-            with open(LocalDB.SUPPORTED_MEDIA[type], "r") as jsonStream:
+            with open(AzureManager.SUPPORTED_MEDIA[self.type], "r") as jsonStream:
                 dataJson = json.load(jsonStream)
             return True, dataJson
         except Exception as e:

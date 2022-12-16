@@ -23,7 +23,7 @@ class LocalDB:
         True,'' is returned if everything is ok otherwise False,STR is returned
         """
         try:
-            with open(LocalDB.SUPPORTED_MEDIA[type],"r") as jsonStream:
+            with open(LocalDB.SUPPORTED_MEDIA[self.type],"r") as jsonStream:
                 dataJson = json.load(jsonStream)
                 dataJson.append(paymentObject.toJson())
                 json.dump(dataJson, jsonStream)
@@ -37,7 +37,7 @@ class LocalDB:
         If no payments if found True, None is returned.
         """
         try:
-            with open(LocalDB.SUPPORTED_MEDIA[type], "r") as jsonStream:
+            with open(LocalDB.SUPPORTED_MEDIA[self.type], "r") as jsonStream:
                 dataJson = json.load(jsonStream)
                 for payment in dataJson:
                     if payment.get("licensePlate","")==licensePlate:
@@ -52,7 +52,7 @@ class LocalDB:
         If no payments if found True, None is returned.
         """
         try:
-            with open(LocalDB.SUPPORTED_MEDIA[type], "r") as jsonStream:
+            with open(LocalDB.SUPPORTED_MEDIA[self.type], "r") as jsonStream:
                 dataJson = json.load(jsonStream)
                 for payment in dataJson:
                     if payment.get("transactionID","")==transactionID:
@@ -66,7 +66,7 @@ class LocalDB:
         True,'' is returned if everything is ok otherwise False,STR is returned
         """
         try:
-            with open(LocalDB.SUPPORTED_MEDIA[type],"r") as jsonStream:
+            with open(LocalDB.SUPPORTED_MEDIA[self.type],"r") as jsonStream:
                 dataJson = json.load(jsonStream)
                 newDataJson = []
                 for payment in dataJson:
