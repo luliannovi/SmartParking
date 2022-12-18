@@ -1,1 +1,19 @@
-[]
+[
+    {
+        "transactionID": "TEST_PAYMENTS_ID",
+        "licensePlate": "TEST_LICENSE_PLATE",
+        "amount": "TEST_AMOUNT",
+        "timeIn": null,
+        "paymentTime": 1671387033.090802
+    }
+][
+    "{\"transactionID\": \"TEST_PAYMENTS_ID\", \"licensePlate\": \"TEST_LICENSE_PLATE\", \"amount\": \"TEST_AMOUNT\", \"timeIn\": null, \"paymentTime\": 1671387813.153819}"
+][
+    {
+        "transactionID": "TEST_PAYMENTS_ID",
+        "licensePlate": "TEST_LICENSE_PLATE",
+        "amount": "TEST_AMOUNT",
+        "timeIn": null,
+        "paymentTime": 1671387820.768735
+    }
+]

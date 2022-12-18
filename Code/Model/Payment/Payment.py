@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 
 
-class Payament:
+class Payment:
     """Payment model a received payment from CLOUD service
     """
 
@@ -36,4 +36,4 @@ class Payament:
             raise Exception(f"{timeOut} is not a valid DateTime object")
 
     def toJson(self):
-        return json.dumps(self, default=lambda o: o.__dict__())
+        return json.dumps(self.__dict__)
