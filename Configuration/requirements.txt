@@ -1,0 +1,5 @@
+aiocoap
+kpn_senml
+azure-iot-device
+azure-iot-hub
+paho-mqtt
