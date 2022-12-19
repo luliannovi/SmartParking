@@ -68,8 +68,9 @@ class ReadPayments:
         while True:
             time.sleep(1000)
 
-rp = ReadPayments()
-asyncio.run(rp.execute())
+# FOR TEST ONLY
+# rp = ReadPayments()
+# READ STATUS ONLY asyncio.run(rp.execute())
 
 
 
