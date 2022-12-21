@@ -7,7 +7,10 @@ class LocalDB:
     """This class defines methods required to store/read/update data inside configuration file.
     We should reset each night payament.json, anyway..."""
 
-    SUPPORTED_MEDIA = {"PAYMENTS":"Configuration/LocalDB/payments.json"}
+    SUPPORTED_MEDIA = {
+        "PAYMENTS":"Configuration/LocalDB/payments.json",
+        "PARKING_SLOT":"Configuration/LocalDB/parkingSlot.json"
+   }
 
     def __init__(self,type):
         """type is the media that we want to handle calling the class.
@@ -95,3 +98,21 @@ class LocalDB:
         except Exception as e:
             traceback.print_exc()
             return False, f'Error with "updatePayment": {e}'
+
+    """Methods that read each position"""
+    def getParkingSlot(self):
+        """This method return all the json object stored inside.
+        If there is no item an empty list will be returned.
+        For a list of parking slot -> True, [parkingslotObject].
+        For an error -> False, stringError.
+        For a empty parking slot file -> True, []"""
+        try:
+            with open(LocalDB.SUPPORTED_MEDIA[self.type], "r") as jsonStream:
+                try:
+                    jsonData = json.load(jsonStream)
+                    #TODO -> REPLACE WITH THE OBJECT INSTANCE
+                    return True, [jsonData[key] for key in jsonData]
+                except JSONDecodeError:
+                    return True, []
+        except Exception as e:
+            return False, f'Error with "getParkingSlot": {e}'
