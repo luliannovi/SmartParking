@@ -1,11 +1,10 @@
 import json
 from datetime import datetime
-from Code.Model.Car.CarDescriptor import CarDescriptor
 
 
-class ParkingSensorDescriptor:
+class ParkingSensor:
     """
-    ParkingSensorDescriptor is a model of a license plate sensor for the Smart Parking
+    ParkingSensor is a model of a license plate sensor for the Smart Parking
     """
 
     def __init__(self, parkingPlace):

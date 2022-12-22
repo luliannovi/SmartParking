@@ -1,6 +1,7 @@
 import json, traceback
 from json import JSONDecodeError
 from Code.Model.Payment.Payment import Payment
+from Code.Model.Car.ParkingSlot import ParkingSlot
 
 
 class LocalDB:
@@ -48,9 +49,11 @@ class LocalDB:
             with open(LocalDB.SUPPORTED_MEDIA[self.type], "r") as jsonStream:
                 try:
                     dataJson = json.load(jsonStream)
+                    output = []
                     for payment in dataJson:
                         if payment.get("licensePlate","")==licensePlate:
-                            return True, Payment(paymentSerialized=payment)
+                            output.append(Payment(paymentSerialized=payment))
+                    return True, output
                 except JSONDecodeError:
                     return True, None
             return True, None
@@ -81,18 +84,19 @@ class LocalDB:
         True,'' is returned if everything is ok otherwise False,STR is returned
         """
         try:
-            with open(LocalDB.SUPPORTED_MEDIA[self.type],"r+") as jsonStream:
+            with open(LocalDB.SUPPORTED_MEDIA[self.type],"r") as jsonStream:
                 try:
                     dataJson = json.load(jsonStream)
                 except JSONDecodeError:
                     dataJson = []
+
+            with open(LocalDB.SUPPORTED_MEDIA[self.type], "w") as jsonStream:
                 newDataJson = []
                 for payment in dataJson:
                     if payment.get("transactionID","")==paymentObject.transactionID:
-                        newDataJson.append(paymentObject.toJson())
+                        newDataJson.append(paymentObject.__dict__)
                     else:
                         newDataJson.append(payment)
-
                 json.dump(newDataJson, jsonStream, indent=4)
             return True, ''
         except Exception as e:
@@ -110,8 +114,8 @@ class LocalDB:
             with open(LocalDB.SUPPORTED_MEDIA[self.type], "r") as jsonStream:
                 try:
                     jsonData = json.load(jsonStream)
-                    #TODO -> REPLACE WITH THE OBJECT INSTANCE
-                    return True, [jsonData[key] for key in jsonData]
+                    return True, [ParkingSlot(parkingslotSerialized=data)
+                                  for data in jsonData]
                 except JSONDecodeError:
                     return True, []
         except Exception as e:
