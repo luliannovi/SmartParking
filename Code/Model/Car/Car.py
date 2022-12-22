@@ -4,16 +4,19 @@ import time
 from datetime import datetime
 
 
-class CarDescriptor:
-    """CarDescriptor is a model for cars inside the SmartParking"""
 
-    def __init__(self):
+class Car:
+    """Car is a model for cars inside the SmartParking"""
+
+    def __init__(self, carSerialized=None):
         self.licensePlate = ""
-        self.parkingPlace = ""
+        self.parkingSlot = None
         self.paid = False
         self.entryTime = datetime.now()
         self.exitTime = 0
         self.deltaTime = 0
+        if carSerialized is not None:
+            self.__dict__ = dict(carSerialized)
 
     def calculateDeltaTime(self):
         """
@@ -38,14 +41,22 @@ class CarDescriptor:
     def setPaid(self):
         self.paid = True
 
+    def setEntryTime(self,datetimeObject):
+        """If entryTime is datetime I set it, otherwise i convert it from timestamp"""
+        if isinstance(datetimeObject, datetime.__class__):
+            self.entryTime = datetimeObject
+        else:
+            self.entryTime = datetime.fromtimestamp(datetimeObject)
+
     def setLicensePlate(self, licensePlate):
         if isinstance(licensePlate, str):
             self.licensePlate = licensePlate
         else:
-            raise ValueError("Data passed as paramether must be a String")
+            raise ValueError("Data passed as parameter must be a String")
 
-    def setParkingPlace(self, parkingPlace):
-        if isinstance(parkingPlace, str):
-            self.parkingPlace = parkingPlace
+    def setParkingSlot(self, parkingSlot):
+        from Code.Model.Car.ParkingSlot import ParkingSlot
+        if isinstance(parkingSlot, ParkingSlot):
+            self.parkingSlot = parkingSlot
         else:
-            raise ValueError("Data passed as paramether must be a String")
+            raise ValueError("Data passed as parameter must be an instance of parkingSlot")
