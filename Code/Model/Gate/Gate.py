@@ -4,10 +4,11 @@ import json
 class Gate:
     """The class models gates used in the SmartParking"""
 
-    def __init__(self):
-        """Class only have 1 attribute: state (boolean).
+    def __init__(self, gateID):
+        """Class only have 2 attribute: state (boolean) gateID (str).
         If it's set to True """
         self.state = False
+        self.gateID = gateID
 
     def openGate(self):
         """The method opens the gate: sets self.state to True"""
