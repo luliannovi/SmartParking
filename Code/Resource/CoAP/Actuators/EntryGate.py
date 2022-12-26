@@ -15,10 +15,15 @@ class EntryGate(resource.Resource):
     The class represents the resource Gate for park's entrance
     """
 
-    def __init__(self, gateID):
+    def __init__(self, gateID, timesleep):
+        """
+        @param timesleep: indicates second to wait in order to close the gate after it was opened
+        """
         super().__init__()
         self.gateID = gateID
-        self.entryGate = Gate(self.gateID)
+        self.timesleep = timesleep
+
+        self.entryGate = Gate(self.gateID, timesleep)
         # interface actuator
         self.if_ = "core.a"
         # resource type
@@ -31,9 +36,9 @@ class EntryGate(resource.Resource):
         state = self.entryGate.state
         pack = SenmlPack(self.gateID)
         gate = SenmlRecord("EntryGate",
-                             unit="bool",  # no standard unit exists
-                             value=state,
-                             time=int(time.time()))
+                           unit="bool",  # no standard unit exists
+                           value=state,
+                           time=int(time.time()))
         pack.add(gate)
         return pack.to_json()
 
@@ -45,4 +50,5 @@ class EntryGate(resource.Resource):
     async def render_post(self, request):
         """Method handles POST requests. Changes Gate state"""
         self.entryGate.switchState()
-        return aiocoap.Message(code=Code.CHANGED, paylaod=f'{str(self.entryGate.state)}'.encode('utf-8'))
+        return aiocoap.Message(code=Code.CHANGED,
+                               paylaod=f'{str(self.entryGate.state)};timesleep={self.timesleep}'.encode('utf-8'))
