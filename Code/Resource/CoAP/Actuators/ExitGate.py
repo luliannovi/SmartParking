@@ -1,55 +1,59 @@
 import time
 
-import aiocoap
+from aiocoap import Code
 import aiocoap.resource as resource
 import aiocoap.numbers as numbers
-from aiocoap import Code
+import aiocoap
 
 from kpn_senml import *
 
 from Code.Model.Gate.Gate import Gate
 
 
-class EntryGate(resource.Resource):
+class ExitGate(resource.Resource):
     """
-    The class represents the resource Gate for park's entrance
+    The class represents the resource Gate for park's exit
     """
 
     def __init__(self, gateID, descrizione, timesleep):
         """
-        @param timesleep: indicates second to wait in order to close the gate after it was opened
+        @param gateID: ID of the exit gate (str)
+        @param descrizione: gate description (str)
+        @param timesleep: seconds the gate has to wait before
+        automatically closing after it was opened (int indicating seconds)
         """
         super().__init__()
         self.gateID = gateID
-        self.timesleep = timesleep
         self.descrizione = descrizione
+        self.timesleep = timesleep
 
-        self.entryGate = Gate(self.gateID, descrizione, timesleep)
+        self.exitGate = Gate(gateID, descrizione, timesleep)
         # interface actuator
-        self.if_ = "core.a"
+        self.if_ = 'core.a'
         # resource type
-        self.rt = "it.resource.actuator.gate"
+        self.rt = 'it.resource.actuator.gate'
         # content type
         self.ct = numbers.media_types_rev['application/senml+json']
 
     def buildSenMLJson(self):
-        """The method created a SenML+Json representation of the gate resource."""
-        state = self.entryGate.state
+        """The method creates a senml+json representation of the resource exit gate"""
+        state = self.exitGate.state
         pack = SenmlPack(self.gateID)
-        gate = SenmlRecord("EntryGate",
+        gate = SenmlRecord("ExitGate",
                            unit="bool",  # no standard unit exists
                            value=state,
                            time=int(time.time()))
+
         pack.add(gate)
         return pack.to_json()
 
-    async def render_get(self, request):
+    def render_get(self):
         """Method handles GET requests"""
         payload = self.buildSenMLJson()
         return aiocoap.Message(content_format=self.ct, payload=payload.encode('utf-8'))
 
-    async def render_post(self, request):
+    def render_post(self):
         """Method handles POST requests. Changes Gate state"""
-        self.entryGate.switchState()
+        self.exitGate.switchState()
         return aiocoap.Message(code=Code.CHANGED,
-                               paylaod=f'{str(self.entryGate.state)};timesleep={str(self.timesleep)}'.encode('utf-8'))
+                               payload=f'{str(self.exitGate.state)};timesleep={str(self.timesleep)}'.encode('utf-8'))
