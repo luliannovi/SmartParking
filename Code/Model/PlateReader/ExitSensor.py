@@ -1,14 +1,13 @@
-import json
 from datetime import datetime
+import json
 
 
-class ParkingSensor:
+class ExitSensor:
     """
-    ParkingSensor is a model of a license plate sensor for the Smart Parking
+    ExitSensor is a model of a license plate sensor for the Smart Parking
     """
 
-    def __init__(self, parkingPlace):
-        self.parkingPlace = parkingPlace
+    def __init__(self):
         self.carPlate = ""
         self.readingTime = 0
         self.error = False
@@ -23,8 +22,6 @@ class ParkingSensor:
     def setErrorTrue(self):
         self.error = True
 
-    def getParkingPlace(self):
-        return self.parkingPlace
     def setErrorFalse(self):
         self.error = False
 
