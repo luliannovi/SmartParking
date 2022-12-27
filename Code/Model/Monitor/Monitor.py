@@ -17,6 +17,7 @@ class Monitor:
 
     def turnOff(self):
         """The method turns off the monitor: changes self.state to off."""
+        self.display = ""
         self.state = False
 
     def updateDisplay(self, string):
