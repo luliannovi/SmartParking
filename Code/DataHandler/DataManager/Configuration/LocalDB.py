@@ -13,7 +13,7 @@ class LocalDB:
         "PARKING_SLOT":"Configuration/LocalDB/parkingSlot.json"
    }
 
-    def __init__(self,type):
+    def __init__(self, type):
         """type is the media that we want to handle calling the class.
         Calling the constructor i check if the media type is supported.
         """
@@ -38,7 +38,7 @@ class LocalDB:
             return True, ''
         except Exception as e:
             traceback.print_exc()
-            return False, f'Error with "addPayamemt": {e}'
+            return False, f'Error with "addPaymemt": {e}'
 
     def getPaymentByLicense(self, licensePlate):
         """This method return a payment instance
@@ -120,3 +120,23 @@ class LocalDB:
                     return True, []
         except Exception as e:
             return False, f'Error with "getParkingSlot": {e}'
+
+    def addParkingSlot(self, parkingSlot):
+        try:
+            with open(LocalDB.SUPPORTED_MEDIA[self.type],'r+') as jsonStream:
+                try:
+                    dataJson = json.load(jsonStream)
+                except JSONDecodeError:
+                    dataJson = []
+                presence = False
+                for i in dataJson:
+                    if i['id'] == parkingSlot.id:
+                        dataJson.remove(i)
+                        break
+                dataJson.append(parkingSlot.toJson())
+                json.dump(dataJson, jsonStream, indent=4)
+            return True, ''
+        except Exception as e:
+            traceback.print_exc()
+            return False, f'Error with "addParkingSlot": {e}'
+

@@ -2,6 +2,9 @@ import json
 import time
 import paho.mqtt.client as mqtt
 from MQTTBrokerParameters import MQTTBrokerParameters
+from Code.DataHandler.DataManager.Configuration.LocalDB import LocalDB
+from Code.Model.Car.ParkingSlot import ParkingSlot
+from Code.Model.Car.Car import Car
 
 
 class PlateManager:
@@ -25,7 +28,7 @@ class PlateManager:
 
     @staticmethod
     def on_connect(self, client, userdata, flags, rc):
-        devices_topic = "{0}/{1}/{2}/{3}/#".format( #topic generico per ora
+        devices_topic = "{0}/{1}/{2}/{3}/#".format(  # topic generico per ora
             self.mqttBrokerParameters.BASIC_TOPIC,
             self.mqttBrokerParameters.USERNAME,
             self.mqttBrokerParameters.DEVICE_TOPIC,
@@ -39,6 +42,7 @@ class PlateManager:
     def on_message(client, userdata, message):
         message_payload = str(message.payload.decode("utf-8"))
         print(f"Received IoT Message at {time.time().__str__()}:\nTopic: {message.topic}\nPayload: {message_payload}")
+        localDBManager = LocalDB("PARKING_SLOT")
         if str(message.topic).endswith("parking/in"):
             """
             send data to the manager that manage entry plates
@@ -48,9 +52,18 @@ class PlateManager:
             send data to the manager that manage exit plates
             """
         else:
-            """
-            send data to the manager that manage parking plates
-            """
+            jsonData = json.loads(message_payload)
+            if isinstance(jsonData, list):
+                parkingSlot = ParkingSlot(jsonData.pop(0),
+                                          False,
+                                          [])
+                localDBManager.addParkingSlot(parkingSlot)
+            else:
+                car = jsonData['car']
+                parkingSlot = ParkingSlot(jsonData['parkingPlace'],
+                                          True,
+                                          [{"licensePlate": car.licensePlate, "entryTime": car.entryTime}])
+                localDBManager.addParkingSlot(parkingSlot)
 
     def loop(self):
         self.configurations()

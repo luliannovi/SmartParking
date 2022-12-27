@@ -7,8 +7,8 @@ from datetime import datetime
 class Car:
     """Car is a model for cars inside the SmartParking"""
 
-    def __init__(self, carSerialized=None):
-        self.licensePlate = ""
+    def __init__(self, carSerialized=None, licensePlate=""):
+        self.licensePlate = licensePlate
         self.parkingSlot = None
         self.paid = False
         self.entryTime = datetime.now()

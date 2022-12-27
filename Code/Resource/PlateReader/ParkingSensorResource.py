@@ -27,8 +27,8 @@ class ParkingSensorResource:
         self.mqttClient.connect(self.mqttParameters.BROKER_ADDRESS,
                                 self.mqttParameters.BROKER_PORT)
 
-    def plateUpdate(self, carPlate):
-        self.parkingSensor.carPlate = carPlate
+    def plateUpdate(self, car):
+        self.parkingSensor.car = car
         self.publish_telemetry()
 
     @staticmethod
@@ -43,6 +43,9 @@ class ParkingSensorResource:
             self.mqttParameters.LOCATION,
             self.mqttParameters.idClient
         )
-        device_payload_string = self.parkingSensor.toJson()
+        if self.parkingSensor.car is None:
+            device_payload_string = ["empty",self.mqttParameters.idClient]
+        else:
+            device_payload_string = self.parkingSensor.toJson()
         self.mqttClient.publish(target_topic, device_payload_string, 0, True)
         print(f"Telemetry data Published at {time.time()}: \nTopic: {target_topic}\nPayload: {device_payload_string}")

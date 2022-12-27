@@ -1,5 +1,6 @@
 import json
 from datetime import datetime
+from Car.Car import Car
 
 
 class ParkingSensor:
@@ -9,13 +10,13 @@ class ParkingSensor:
 
     def __init__(self, parkingPlace):
         self.parkingPlace = parkingPlace
-        self.carPlate = ""
+        self.car = None
         self.readingTime = 0
         self.error = False
 
     def readThePlate(self, carPlate):
         if isinstance(carPlate, str):
-            self.carPlate = carPlate
+            self.car = Car(None,carPlate)
             self.readingTime = datetime.now()
         else:
             raise ValueError("Data passed as paramether must be a CarDescriptor class data")
@@ -23,8 +24,12 @@ class ParkingSensor:
     def setErrorTrue(self):
         self.error = True
 
+    def setCar(self, car):
+        self.car = car
+
     def getParkingPlace(self):
         return self.parkingPlace
+
     def setErrorFalse(self):
         self.error = False
 
