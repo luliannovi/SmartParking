@@ -22,14 +22,14 @@ class EntryMonitor(resource.Resource):
             raise Exception(str(num))
         return num, firstID
 
-    def render_get(self, request):
+    async def render_get(self, request):
         """
         TODO: return '<state>;<display>'
         Ovvero deve ritornare lo stato (on off) e poi quello che sta mostrando (numero posti/ niente/ primo libero)
         """
         pass
 
-    def render_put(self, request):
+    async def render_put(self, request):
         """
         TODO: paylaod_body='<state>;<display>' OPPURE (meglio) gestione da DataManager
         1) La richiesta deve contenere lo stato nel quale lo si vuole settare e anche cosa deve mostrare.
@@ -37,7 +37,7 @@ class EntryMonitor(resource.Resource):
         """
         pass
 
-    def render_post(self, request):
+    async def render_post(self, request):
         """
         TODO: switch dello stato
         """
