@@ -132,7 +132,32 @@ class LocalDB:
                     return True, []
         except Exception as e:
             return False, f'Error with "getParkingSlot": {e}'
+            
+    def checkParkingSlots(self):
+        """
+        The method cheks whether or not there are any parking slost available.
 
+        (True, int, int) is returned if no error is found, (True, number of slots available, first id available)
+
+        (False, str, '') is returned if an error is found: the string contains the error
+
+        @return: (True, int, int) or (False, str, str)
+        """
+        check, slots = self.getParkingSlot()
+        if not check:
+            return False, str(slots), ''
+        if check is True and slots == []:
+            return False, "Error with loading parking: no parking slots exist", ''
+
+        available = 0
+        id = 0
+        for parkingSlot in slots:
+            if parkingSlot.state is True:
+                available += 1
+                if available == 1:
+                    id = parkingSlot.id
+        return True, available, id
+        
     def addParkingSlot(self, parkingSlot):
         """
         riceve aggiornamento su un singolo parkingSlot, libero o occupato

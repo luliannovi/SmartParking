@@ -5,16 +5,16 @@ import time
 class Gate:
     """The class models gates used in the SmartParking"""
 
-    def __init__(self, gateID, descrizione, timesleep):
+    def __init__(self, gateID, description, timesleep):
         """Class have attributes:
         - state (boolean)
         - gateID (str)
-        - descrizione (str)
+        - description (str)
         - timesleep (int indicating seconds) indicates second to wait in order to close the gate after it was opened"""
         self.state = False
         self.gateID = gateID
         self.timesleep = timesleep
-        self.descrizione = descrizione
+        self.description = description
 
     def openGate(self):
         """The method opens the gate: sets self.state to True"""
