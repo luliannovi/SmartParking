@@ -29,13 +29,23 @@ class LocalDB:
         True,'' is returned if everything is ok otherwise False,STR is returned
         """
         try:
-            with open(LocalDB.SUPPORTED_MEDIA[self.type], "r+") as jsonStream:
+            try:
+                jsonStreamRead = open(LocalDB.SUPPORTED_MEDIA[self.type], "r")
                 try:
-                    dataJson = json.load(jsonStream)
+                    dataJson = json.load(jsonStreamRead)
                 except JSONDecodeError:
                     dataJson = []
+                jsonStreamRead.close()
+
+                jsonStreamWrite = open(LocalDB.SUPPORTED_MEDIA[self.type], "w")
                 dataJson.append(paymentObject.__dict__)
-                json.dump(dataJson, jsonStream, indent=4)
+                jsonStreamWrite.truncate(0)
+                jsonStreamWrite.write(json.dumps(dataJson, indent=4))
+                jsonStreamWrite.close()
+                return True, ''
+            except Exception as e:
+                traceback.print_exc()
+                return False, f'Error with "updatePayment": {e}'
             return True, ''
         except Exception as e:
             traceback.print_exc()
@@ -85,20 +95,20 @@ class LocalDB:
         True,'' is returned if everything is ok otherwise False,STR is returned
         """
         try:
-            with open(LocalDB.SUPPORTED_MEDIA[self.type], "r") as jsonStream:
-                try:
-                    dataJson = json.load(jsonStream)
-                except JSONDecodeError:
-                    dataJson = []
+            jsonStreamRead = open(LocalDB.SUPPORTED_MEDIA[self.type], "r")
+            try:
+                dataJson = json.load(jsonStreamRead)
+            except JSONDecodeError:
+                dataJson = []
+            jsonStreamRead.close()
 
-            with open(LocalDB.SUPPORTED_MEDIA[self.type], "w") as jsonStream:
-                newDataJson = []
-                for payment in dataJson:
-                    if payment.get("transactionID", "") == paymentObject.transactionID:
-                        newDataJson.append(paymentObject.__dict__)
-                    else:
-                        newDataJson.append(payment)
-                json.dump(newDataJson, jsonStream, indent=4)
+            jsonStreamWrite = open(LocalDB.SUPPORTED_MEDIA[self.type], "w")
+            for index in range(len(dataJson)):
+                if dataJson[index].get("transactionID","")==paymentObject.transactionID:
+                    dataJson[index] = paymentObject.__dict__
+            jsonStreamWrite.truncate(0)
+            jsonStreamWrite.write(json.dumps(dataJson, indent=4))
+            jsonStreamWrite.close()
             return True, ''
         except Exception as e:
             traceback.print_exc()
