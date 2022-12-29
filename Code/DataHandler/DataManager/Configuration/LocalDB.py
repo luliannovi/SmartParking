@@ -9,11 +9,11 @@ class LocalDB:
     We should reset each night payament.json, anyway..."""
 
     SUPPORTED_MEDIA = {
-        "PAYMENTS":"Configuration/LocalDB/payments.json",
-        "PARKING_SLOT":"Configuration/LocalDB/parkingSlot.json"
-   }
+        "PAYMENTS": "Configuration/LocalDB/payments.json",
+        "PARKING_SLOT": "Configuration/LocalDB/parkingSlot.json"
+    }
 
-    def __init__(self,type):
+    def __init__(self, type):
         """type is the media that we want to handle calling the class.
         Calling the constructor i check if the media type is supported.
         """
@@ -23,6 +23,7 @@ class LocalDB:
             self.type = type
 
     """Methods to handle payments"""
+
     def addPayment(self, paymentObject):
         """This add a payment to payaments.json file with given payment instance
         True,'' is returned if everything is ok otherwise False,STR is returned
@@ -48,7 +49,7 @@ class LocalDB:
             return True, ''
         except Exception as e:
             traceback.print_exc()
-            return False, f'Error with "addPayamemt": {e}'
+            return False, f'Error with "addPaymemt": {e}'
 
     def getPaymentByLicense(self, licensePlate):
         """This method return a payment instance
@@ -61,7 +62,7 @@ class LocalDB:
                     dataJson = json.load(jsonStream)
                     output = []
                     for payment in dataJson:
-                        if payment.get("licensePlate","")==licensePlate:
+                        if payment.get("licensePlate", "") == licensePlate:
                             output.append(Payment(paymentSerialized=payment))
                     return True, output
                 except JSONDecodeError:
@@ -80,7 +81,7 @@ class LocalDB:
                 try:
                     dataJson = json.load(jsonStream)
                     for payment in dataJson:
-                        if payment.get("transactionID","")==transactionID:
+                        if payment.get("transactionID", "") == transactionID:
                             return True, Payment(paymentSerialized=payment)
                 except JSONDecodeError:
                     return True, None
@@ -114,6 +115,7 @@ class LocalDB:
             return False, f'Error with "updatePayment": {e}'
 
     """Methods that read each position"""
+
     def getParkingSlot(self):
         """This method return all the json object stored inside.
         If there is no item an empty list will be returned.
@@ -130,7 +132,7 @@ class LocalDB:
                     return True, []
         except Exception as e:
             return False, f'Error with "getParkingSlot": {e}'
-
+            
     def checkParkingSlots(self):
         """
         The method cheks whether or not there are any parking slost available.
@@ -155,3 +157,24 @@ class LocalDB:
                 if available == 1:
                     id = parkingSlot.id
         return True, available, id
+        
+    def addParkingSlot(self, parkingSlot):
+        """
+        riceve aggiornamento su un singolo parkingSlot, libero o occupato
+        """
+        try:
+            with open(LocalDB.SUPPORTED_MEDIA[self.type], 'r+') as jsonStream:
+                try:
+                    dataJson = json.load(jsonStream)
+                except JSONDecodeError:
+                    dataJson = []
+                for i in dataJson:
+                    if i['id'] == parkingSlot.id:
+                        dataJson.remove(i)
+                        break
+                dataJson.append(parkingSlot.toJson())
+                json.dump(dataJson, jsonStream, indent=4)
+            return True, ''
+        except Exception as e:
+            traceback.print_exc()
+            return False, f'Error with "addParkingSlot": {e}'

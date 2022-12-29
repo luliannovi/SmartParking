@@ -4,12 +4,11 @@ import time
 from datetime import datetime
 
 
-
 class Car:
     """Car is a model for cars inside the SmartParking"""
 
-    def __init__(self, carSerialized=None):
-        self.licensePlate = ""
+    def __init__(self, carSerialized=None, licensePlate=""):
+        self.licensePlate = licensePlate
         self.parkingSlot = None
         self.paid = False
         self.entryTime = datetime.now()
@@ -41,7 +40,7 @@ class Car:
     def setPaid(self):
         self.paid = True
 
-    def setEntryTime(self,datetimeObject):
+    def setEntryTime(self, datetimeObject):
         """If entryTime is datetime I set it, otherwise i convert it from timestamp"""
         if isinstance(datetimeObject, datetime.__class__):
             self.entryTime = datetimeObject
