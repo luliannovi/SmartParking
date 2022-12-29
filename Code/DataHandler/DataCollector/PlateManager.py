@@ -45,13 +45,22 @@ class PlateManager:
         localDBManager = LocalDB("PARKING_SLOT")
         if str(message.topic).endswith("parking/in"):
             """
-            send data to the manager that manage entry plates
+            no update to json files, if a car does not park it does not pay
+            put/post to the gate to open CoAP
+            se sono presenti errori in lettura targa invio al monitor messaggio d'errore
             """
         elif str(message.topic).endswith("parking/out"):
             """
-            send data to the manager that manage exit plates
+            control the payment
+            put/post to the gate to open CoAP
+            se non ha pagato invio al monitor messaggio d'errore 
+            se sono presenti errori in lettura targa invio al monitor messaggio d'errore
             """
         else:
+            """
+            TODO: put/post to the monitor parking slots free and the nearest place
+                    reading from the json
+            """
             jsonData = json.loads(message_payload)
             if isinstance(jsonData, list):
                 parkingSlot = ParkingSlot(jsonData.pop(0),

@@ -44,7 +44,7 @@ class ParkingSensorResource:
             self.mqttParameters.idClient
         )
         if self.parkingSensor.car is None:
-            device_payload_string = ["empty",self.mqttParameters.idClient]
+            device_payload_string = ["empty", self.mqttParameters.idClient]
         else:
             device_payload_string = self.parkingSensor.toJson()
         self.mqttClient.publish(target_topic, device_payload_string, 0, True)
