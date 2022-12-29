@@ -37,12 +37,16 @@ class ParkingSlot:
         self.id =  int(parkingslotSerialized.get("id", "")) if parkingslotSerialized.get("id", "") != "" else 999
         self.state = eval(parkingslotSerialized.get("state", "False"))
         if self.state is True:
-            carDictionary = parkingslotSerialized.get("car",[None])[0]
-            if carDictionary is not None:
-                self.car = Car(carSerialized=carDictionary)
-                self.car.setEntryTime(carDictionary["entryTime"])
-                self.car.setParkingSlot(self)
+            self.car = Car(licensePlate=parkingslotSerialized.get("car", ""))
+        else:
+            self.car = None
 
     def toJson(self):
         return json.dumps(self, default=lambda o: o.__dict__())
+
+    def __repr__(self):
+        return json.dumps({"parkingId" : self.id,
+                "state" : str(self.state),
+                "car" : self.car.licensePlate if self.car is not None else ""
+                })
 
