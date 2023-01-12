@@ -1,11 +1,15 @@
 import json
 import time
+
+import aiocoap
 import paho.mqtt.client as mqtt
 from MQTTBrokerParameters import MQTTBrokerParameters
 from Code.DataHandler.DataManager.Configuration.LocalDB import LocalDB
 from Code.Model.Car.ParkingSlot import ParkingSlot
 from Code.Model.Car.Car import Car
-
+import logging
+import asyncio
+from aiocoap import *
 
 class PlateManager:
     def __init__(self):
@@ -46,13 +50,13 @@ class PlateManager:
         if str(message.topic).endswith("parking/in"):
             """
             no update to json files, if a car does not park it does not pay
-            put/post to the gate to open CoAP
+            put/post to the gate (risorsa monitor in entrata e sbarra entrata) to open CoAP
             se sono presenti errori in lettura targa invio al monitor messaggio d'errore
             """
         elif str(message.topic).endswith("parking/out"):
             """
             control the payment
-            put/post to the gate to open CoAP
+            put/post to the gate (monitor in uscita e sbarra) to open CoAP
             se non ha pagato invio al monitor messaggio d'errore 
             se sono presenti errori in lettura targa invio al monitor messaggio d'errore
             """
@@ -67,15 +71,48 @@ class PlateManager:
                                           False,
                                           [])
                 localDBManager.addParkingSlot(parkingSlot)
+                """
+                invio messaggio tramite CoAP a monitor
+                
+                """
+                self.put_message()
             else:
                 car = jsonData['car']
                 parkingSlot = ParkingSlot(jsonData['parkingPlace'],
                                           True,
-                                          [{"licensePlate": car.licensePlate, "entryTime": car.entryTime}])
+                                          car.licensePlate)
                 localDBManager.addParkingSlot(parkingSlot)
-
+                """
+                Invio tramite CoAP messaggio al monitor
+                """
     def loop(self):
         self.configurations()
 
     def stop(self):
         self.stop()
+
+    async def put_message(self, URI, message):
+        logging.basicConfig(level=logging.INFO)
+        protocol = await Context.create_client_context()
+        request = Message(code=aiocoap.Code.PUT, payload=message, uri=URI)
+
+        try:
+            response = await protocol.request(request).response
+        except Exception as e:
+            print(print('Failed to fetch resource: '))
+            print(e)
+        else:
+            print('Result: %s\n%r'%(response.code, response.payload))
+
+     async def post_message(self, URI, message):
+        logging.basicConfig(level=logging.INFO)
+        protocol = await Context.create_client_context()
+        request = Message(code=aiocoap.Code.POST, payload=message, uri=URI)
+
+        try:
+            response = await protocol.request(request).response
+        except Exception as e:
+            print(print('Failed to fetch resource: '))
+            print(e)
+        else:
+            print('Result: %s\n%r'%(response.code, response.payload))

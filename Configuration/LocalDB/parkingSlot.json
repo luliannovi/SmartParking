@@ -2,15 +2,11 @@
   {
     "id": 1,
     "state": "True",
-    "car":
-      {
-        "licensePlate":"FM056GT",
-        "entryTime": 1671745894.1992028
-      }
+    "car":"FM056GT"
   },
   {
     "id": 2,
     "state": "False",
-    "car": []
+    "car": ""
   }
 ]
