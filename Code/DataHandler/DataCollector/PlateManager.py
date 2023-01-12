@@ -11,6 +11,7 @@ import logging
 import asyncio
 from aiocoap import *
 
+
 class PlateManager:
     def __init__(self):
         self.mqttClient = None
@@ -59,12 +60,13 @@ class PlateManager:
             jsonData = json.loads(message_payload)
 
             if jsonData['error'] is False and ret[0] is True:
-                put_message("uri_for_entryMonitor", "Total parking slots available: " + ret[1] +"\nThe nearest parking slot in: " + ret[2]
-                            + "\nReaded plate: "+ jsonData['carPlate'])
+                put_message("uri_for_entryMonitor",
+                            "Total parking slots available: " + ret[1] + "\nThe nearest parking slot in: " + ret[2]
+                            + "\nReaded plate: " + jsonData['carPlate'])
                 post_message("uri_for_gate")
             elif jsonData['error'] is True:
                 put_message("uri_for_entryMonitor", "Error in reading the plate.."
-                                   "\nPlease press the HELP button.")
+                                                    "\nPlease press the HELP button.")
             elif ret[0] is False:
                 put_message("uri_for_entryMonitor", "No parking slots available.")
                 print(ret[1])
@@ -80,13 +82,15 @@ class PlateManager:
             jsonData = json.loads(message_payload)
             if jsonData['error'] is True:
                 put_message("uri_for_exitMonitor", "Error in reading the plate.."
-                            "\nPlease press the HELP button.")
+                                                   "\nPlease press the HELP button.")
             else:
                 ret = localPaymentsDBManager.getPaymentByLicense(jsonData['carPlate'])
                 if ret[0] is True and ret[1] is None:
-                    put_message("uri_for _exitMonitor", "No payments founded for your car (" + jsonData['carPlate'] + "). Please pay and comeback.")
+                    put_message("uri_for _exitMonitor", "No payments founded for your car (" + jsonData[
+                        'carPlate'] + "). Please pay and comeback.")
                 elif ret[0] is True and ret[1] is not None:
-                    put_message("uri_for _exitMonitor", "Payments founded for your car (" + jsonData['carPlate'] + "). Goodbye." + ret[1])
+                    put_message("uri_for _exitMonitor",
+                                "Payments founded for your car (" + jsonData['carPlate'] + "). Goodbye." + ret[1])
                     post_message("uri_for_exitGate")
                 else:
                     put_message("uri_for _exitMonitor", "Error checking the payment. Please press HELP button.")
@@ -97,19 +101,20 @@ class PlateManager:
                     reading from the json
             """
             jsonData = json.loads(message_payload)
-            if isinstance(jsonData, list):
-                parkingSlot = ParkingSlot(jsonData.pop(0),
+            if jsonData['car'] is None:
+                parkingSlot = ParkingSlot(jsonData['parkingPlace'],
                                           False,
-                                          [])
+                                          "")
                 localParkingDBManager.addParkingSlot(parkingSlot)
                 """
                 checking parking slots available and the nearest
                 """
                 ret = localParkingDBManager.checkParkingSlots()
                 if ret[0] is True:
-                    put_message("...", "Total parking slots available: " + ret[1] +"\nThe nearest parking slot in: " + ret[2])
+                    put_message("uri_entryMonitor",
+                                "Total parking slots available: " + ret[1] + "\nThe nearest parking slot in: " + ret[2])
                 else:
-                    put_message("...", ret[1])
+                    put_message("uri_entryMonitor", ret[1])
                     print(ret[1])
 
             else:
@@ -123,15 +128,18 @@ class PlateManager:
                 """
                 ret = localParkingDBManager.checkParkingSlots()
                 if ret[0] is True:
-                    put_message("...", "Total parking slots available: " + ret[1] +"\nThe nearest parking slot in: " + ret[2])
+                    put_message("uri_entryMonitor",
+                                "Total parking slots available: " + ret[1] + "\nThe nearest parking slot in: " + ret[2])
                 else:
-                    put_message("...", ret[1])
+                    put_message("uri_entryMonitor", ret[1])
                     print(ret[1])
+
     def loop(self):
         self.configurations()
 
     def stop(self):
         self.stop()
+
 
 async def put_message(URI, message):
     logging.basicConfig(level=logging.INFO)
@@ -143,9 +151,10 @@ async def put_message(URI, message):
         print(print('Failed to fetch resource: '))
         print(e)
     else:
-        print('Result: %s\n%r'%(response.code, response.payload))
+        print('Result: %s\n%r' % (response.code, response.payload))
 
- async def post_message(URI):
+
+async def post_message(URI):
     logging.basicConfig(level=logging.INFO)
     protocol = await Context.create_client_context()
     request = Message(code=aiocoap.Code.POST, uri=URI)
@@ -156,4 +165,4 @@ async def put_message(URI, message):
         print(print('Failed to fetch resource: '))
         print(e)
     else:
-        print('Result: %s\n%r'%(response.code, response.payload))
+        print('Result: %s\n%r' % (response.code, response.payload))
