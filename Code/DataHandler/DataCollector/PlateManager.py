@@ -46,13 +46,30 @@ class PlateManager:
     def on_message(client, userdata, message):
         message_payload = str(message.payload.decode("utf-8"))
         print(f"Received IoT Message at {time.time().__str__()}:\nTopic: {message.topic}\nPayload: {message_payload}")
-        localDBManager = LocalDB("PARKING_SLOT")
+        localParkingDBManager = LocalDB("PARKING_SLOT")
+        localPaymentsDBManager = LocalDB("PAYMENTS")
         if str(message.topic).endswith("parking/in"):
             """
             no update to json files, if a car does not park it does not pay
             put/post to the gate (risorsa monitor in entrata e sbarra entrata) to open CoAP
             se sono presenti errori in lettura targa invio al monitor messaggio d'errore
             """
+            ret = localParkingDBManager.checkParkingSlots()
+
+            jsonData = json.loads(message_payload)
+
+            if jsonData['error'] is False and ret[0] is True:
+                put_message("uri_for_entryMonitor", "Total parking slots available: " + ret[1] +"\nThe nearest parking slot in: " + ret[2]
+                            + "\nReaded plate: "+ jsonData['carPlate'])
+                post_message("uri_for_gate")
+            elif jsonData['error'] is True:
+                put_message("uri_for_entryMonitor", "Error in reading the plate.."
+                                   "\nPlease press the HELP button.")
+            elif ret[0] is False:
+                put_message("uri_for_entryMonitor", "No parking slots available.")
+                print(ret[1])
+                post_message("uri_for_gate")
+
         elif str(message.topic).endswith("parking/out"):
             """
             control the payment
@@ -60,6 +77,20 @@ class PlateManager:
             se non ha pagato invio al monitor messaggio d'errore 
             se sono presenti errori in lettura targa invio al monitor messaggio d'errore
             """
+            jsonData = json.loads(message_payload)
+            if jsonData['error'] is True:
+                put_message("uri_for_exitMonitor", "Error in reading the plate.."
+                            "\nPlease press the HELP button.")
+            else:
+                ret = localPaymentsDBManager.getPaymentByLicense(jsonData['carPlate'])
+                if ret[0] is True and ret[1] is None:
+                    put_message("uri_for _exitMonitor", "No payments founded for your car (" + jsonData['carPlate'] + "). Please pay and comeback.")
+                elif ret[0] is True and ret[1] is not None:
+                    put_message("uri_for _exitMonitor", "Payments founded for your car (" + jsonData['carPlate'] + "). Goodbye." + ret[1])
+                    post_message("uri_for_exitGate")
+                else:
+                    put_message("uri_for _exitMonitor", "Error checking the payment. Please press HELP button.")
+                    print(ret[1])
         else:
             """
             TODO: put/post to the monitor parking slots free and the nearest place
@@ -70,49 +101,59 @@ class PlateManager:
                 parkingSlot = ParkingSlot(jsonData.pop(0),
                                           False,
                                           [])
-                localDBManager.addParkingSlot(parkingSlot)
+                localParkingDBManager.addParkingSlot(parkingSlot)
                 """
-                invio messaggio tramite CoAP a monitor
-                
+                checking parking slots available and the nearest
                 """
-                self.put_message()
+                ret = localParkingDBManager.checkParkingSlots()
+                if ret[0] is True:
+                    put_message("...", "Total parking slots available: " + ret[1] +"\nThe nearest parking slot in: " + ret[2])
+                else:
+                    put_message("...", ret[1])
+                    print(ret[1])
+
             else:
                 car = jsonData['car']
                 parkingSlot = ParkingSlot(jsonData['parkingPlace'],
                                           True,
                                           car.licensePlate)
-                localDBManager.addParkingSlot(parkingSlot)
+                localParkingDBManager.addParkingSlot(parkingSlot)
                 """
-                Invio tramite CoAP messaggio al monitor
+                checking parking slots available and the nearest
                 """
+                ret = localParkingDBManager.checkParkingSlots()
+                if ret[0] is True:
+                    put_message("...", "Total parking slots available: " + ret[1] +"\nThe nearest parking slot in: " + ret[2])
+                else:
+                    put_message("...", ret[1])
+                    print(ret[1])
     def loop(self):
         self.configurations()
 
     def stop(self):
         self.stop()
 
-    async def put_message(self, URI, message):
-        logging.basicConfig(level=logging.INFO)
-        protocol = await Context.create_client_context()
-        request = Message(code=aiocoap.Code.PUT, payload=message, uri=URI)
+async def put_message(URI, message):
+    logging.basicConfig(level=logging.INFO)
+    protocol = await Context.create_client_context()
+    request = Message(code=aiocoap.Code.PUT, payload=message, uri=URI)
+    try:
+        response = await protocol.request(request).response
+    except Exception as e:
+        print(print('Failed to fetch resource: '))
+        print(e)
+    else:
+        print('Result: %s\n%r'%(response.code, response.payload))
 
-        try:
-            response = await protocol.request(request).response
-        except Exception as e:
-            print(print('Failed to fetch resource: '))
-            print(e)
-        else:
-            print('Result: %s\n%r'%(response.code, response.payload))
+ async def post_message(URI):
+    logging.basicConfig(level=logging.INFO)
+    protocol = await Context.create_client_context()
+    request = Message(code=aiocoap.Code.POST, uri=URI)
 
-     async def post_message(self, URI, message):
-        logging.basicConfig(level=logging.INFO)
-        protocol = await Context.create_client_context()
-        request = Message(code=aiocoap.Code.POST, payload=message, uri=URI)
-
-        try:
-            response = await protocol.request(request).response
-        except Exception as e:
-            print(print('Failed to fetch resource: '))
-            print(e)
-        else:
-            print('Result: %s\n%r'%(response.code, response.payload))
+    try:
+        response = await protocol.request(request).response
+    except Exception as e:
+        print(print('Failed to fetch resource: '))
+        print(e)
+    else:
+        print('Result: %s\n%r'%(response.code, response.payload))

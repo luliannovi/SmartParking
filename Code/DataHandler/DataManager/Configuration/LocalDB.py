@@ -69,7 +69,7 @@ class LocalDB:
                     return True, None
             return True, None
         except Exception as e:
-            return False, f'Error with "getPayamemtByLicense": {e}'
+            return False, f'Error with "getPaymentByLicense": {e}'
 
     def getPaymentByTransactionID(self, transactionID):
         """This method return a payment instance
