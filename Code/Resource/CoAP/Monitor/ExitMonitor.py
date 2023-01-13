@@ -11,8 +11,8 @@ from kpn_senml import *
 from Code.Model.Monitor.Monitor import Monitor
 
 
-class EntryMonitor(resource.Resource):
-    """The class represents the resource monitor for parking entrance"""
+class ExitMonitor(resource.Resource):
+    """The class represents the resource monitor for parking exit"""
 
     def __init__(self, monitorID, description):
         super().__init__()
@@ -29,16 +29,16 @@ class EntryMonitor(resource.Resource):
 
     def buildSenMLJson(self):
         """
-        The method creates a senml+json representation of the resource entry monitor.
+        The method creates a senml+json representation of the resource exit monitor.
         The response contains 2 records in a single pack. The first one is "State" and contains the state of the monitor
         (on/off), the second one is "Display" and contains the string displayed in the monitor. There's a base name
-        which is "EntryMonitor".
+        which is "ExitMonitor".
         """
         state = self.monitor.state
         display = self.monitor.display
         pack = SenmlPack(self.monitor.monitorID)
         state_record = SenmlRecord("State",
-                                   bn="EntryMonitor",
+                                   bn="ExitMonitor",
                                    unit="bool",
                                    value=state,
                                    time=int(time.time()))
@@ -55,7 +55,7 @@ class EntryMonitor(resource.Resource):
         Methods handles GET request.
         See method self.buildSenMLJson() in interested in payload content.
         """
-        print("EntryMonitor with ID: " + self.monitorID + " --> GET Request Received...")
+        print("ExitMonitor with ID: " + self.monitorID + " --> GET Request Received...")
         payload = self.buildSenMLJson()
         return aiocoap.Message(content_format=self.ct, payload=payload.encode('utf-8'))
 
@@ -66,13 +66,13 @@ class EntryMonitor(resource.Resource):
 
         See DataHandler > DataCollector > PlateManager.py if looking for message sender.
         """
-        print("EntryMonitor with ID: " + self.monitorID + " --> PUT Request Received...")
+        print("ExitMonitor with ID: " + self.monitorID + " --> PUT Request Received...")
         json_paylaod_string = request.payload.decode('utf-8')
-        print("EntryMonitor with ID: " + self.monitorID + " --> PUT String Payload : " + json_paylaod_string)
+        print("ExitMonitor with ID: " + self.monitorID + " --> PUT String Payload : " + json_paylaod_string)
         self.monitor.updateDisplay(json_paylaod_string)
 
     async def render_post(self, request):
-        print("EntryMonitor with ID: " + self.monitorID + " --> POST Request Received...")
+        print("ExitMonitor with ID: " + self.monitorID + " --> POST Request Received...")
         self.monitor.switchState()
         return aiocoap.Message(code=Code.CHANGED,
                                payload=f'{str(self.monitor.state)};display={str(self.monitor.display)}'.encode('utf-8'))

@@ -49,11 +49,13 @@ class ExitGate(resource.Resource):
 
     def render_get(self):
         """Method handles GET requests"""
+        print("ExitGate with ID: " + self.gateID + " --> GET Request Received...")
         payload = self.buildSenMLJson()
         return aiocoap.Message(content_format=self.ct, payload=payload.encode('utf-8'))
 
     def render_post(self):
         """Method handles POST requests. Changes Gate state"""
+        print("ExitGate with ID: " + self.gateID + " --> POST Request Received...")
         self.exitGate.switchState()
         return aiocoap.Message(code=Code.CHANGED,
                                payload=f'{str(self.exitGate.state)};timesleep={str(self.timesleep)}'.encode('utf-8'))
