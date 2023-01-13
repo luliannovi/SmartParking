@@ -22,6 +22,13 @@ class Monitor:
         self.display = ""
         self.state = False
 
+    def switchState(self):
+        """The method switches the state of the monitor: on -> off and viceversa"""
+        if self.state is True:
+            self.turnOn()
+        else:
+            self.turnOff()
+
     def updateDisplay(self, string):
         """The method sets what the monitor displays"""
         if self.state is True:

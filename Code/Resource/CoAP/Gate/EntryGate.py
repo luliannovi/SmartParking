@@ -45,6 +45,7 @@ class EntryGate(resource.Resource):
 
     async def render_get(self, request):
         """Method handles GET requests"""
+        print("EntryGate with ID: " + self.gateID + " --> GET Request Received...")
         payload = self.buildSenMLJson()
         return aiocoap.Message(content_format=self.ct, payload=payload.encode('utf-8'))
 

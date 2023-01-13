@@ -49,6 +49,7 @@ class ExitGate(resource.Resource):
 
     def render_get(self):
         """Method handles GET requests"""
+        print("ExitGate with ID: " + self.gateID + " --> GET Request Received...")
         payload = self.buildSenMLJson()
         return aiocoap.Message(content_format=self.ct, payload=payload.encode('utf-8'))
 

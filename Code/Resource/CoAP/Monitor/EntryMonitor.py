@@ -1,6 +1,9 @@
+import time
+
 import aiocoap
 import aiocoap.resource as resource
 import aiocoap.numbers as numbers
+from aiocoap import Code
 
 from kpn_senml import *
 
@@ -20,9 +23,9 @@ class EntryMonitor(resource.Resource):
         self.monitor = Monitor(monitorID, description)
         self.localDB = localDB
         # interface actuator
-        self.if_ = 'monitor'
+        self.if_ = 'core.a'
         # resource type
-        self.rt = 'it.resource.monitor'
+        self.rt = 'it.resource.actuator.monitor'
         # content type
         self.ct = numbers.media_types_rev['application/senml+json']
 
@@ -35,21 +38,39 @@ class EntryMonitor(resource.Resource):
     #     if not check:
     #         raise Exception(str(num))
     #     return num, firstID
-    # ---------------------------------------------------------------------------‚
+    # ---------------------------------------------------------------------------
 
     def buildSenMLJson(self):
+        """
+        The method creates a senml+json representation of the resource entry monitor.
+        The response contains 2 records in a single pack. The first one is "State" and contains the state of the monitor
+        (on/off), the second one is "Display" and contains the string displayed in the monitor. There's a base name
+        which is "EntryMonitor".
+        """
         state = self.monitor.state
         display = self.monitor.display
         pack = SenmlPack(self.monitor.monitorID)
-
+        state_record = SenmlRecord("State",
+                                   bn="EntryMonitor",
+                                   unit="bool",
+                                   value=state,
+                                   time=int(time.time()))
+        display_record = SenmlRecord("Display",
+                                     unit="str",
+                                     value=display,
+                                     time=int(time.time()))
+        pack.add(state_record)
+        pack.add(display_record)
+        return pack.to_json()
 
     async def render_get(self, request):
         """
-        TODO: return '<state>;<display>'
-        Ovvero deve ritornare lo stato (on off) e poi quello che sta mostrando (numero posti/ niente/ primo libero)
+        Methods handles GET request.
+        See method self.buildSenMLJson() in interested in payload content.
         """
-        payload_string = self.monitor.toJson()
-        return aiocoap.Message(content_format=self.ct, payload=f'{str(self.monitor.state)};display={str(self.monitor.display)}'.encode('utf-8'))
+        print("EntryMonitor with ID: " + self.monitorID + " --> GET Request Received...")
+        payload = self.buildSenMLJson()
+        return aiocoap.Message(content_format=self.ct, payload=payload.encode('utf-8'))
 
     async def render_put(self, request):
         """
@@ -60,7 +81,9 @@ class EntryMonitor(resource.Resource):
         pass
 
     async def render_post(self, request):
-        """
-        TODO: switch dello stato
-        """
-        pass
+        print("EntryMonitor with ID: " + self.monitorID + " --> POST Request Received...")
+        prev_state = self.monitor.state
+        self.monitor.switchState()
+        print("EntryMonitor with ID: " + self.monitorID + "switched state from " + prev_state + " to " + self.monitor.state)
+        return aiocoap.Message(code=Code.CHANGED,
+                               payload=f'{str(self.monitor.state)};display={str(self.monitor.display)}'.encode('utf-8'))
