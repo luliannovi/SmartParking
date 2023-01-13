@@ -72,6 +72,9 @@ class ReadPayments:
 # rp = ReadPayments()
 # READ STATUS ONLY asyncio.run(rp.execute())
 
+rp = ReadPayments()
+asyncio.run(rp.execute())
+
 
 
 

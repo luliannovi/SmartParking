@@ -1,38 +1,34 @@
-from Code.DataHandler.DataManager.Configuration.AzureManager import AzureManager
 from Code.DataHandler.DataManager.Configuration.LocalDB import LocalDB
-from azure.iot.device.aio import IoTHubDeviceClient
-
-
+from Code.Model.DB.DataBase import DataBase
+import json
 
 
 class SendParkingStatus:
     """This class allows to read incoming payments coming from cloud services
     """
 
-    def __init__(self, type="PARKING_SLOT"):
+    def __init__(self):
         """Constructor build the object that send data to Azure IoT
         """
         self.type = type
-        self.buildConnection(self.type)
+        self.reference = "/parkingStatus"
+        self.url = "https://smartparking-47679-default-rtdb.europe-west1.firebasedatabase.app/parkingStatus"
+        self.db = DataBase(self.reference, self.url)
 
-    def buildConnection(self, type):
-        """buildConnection use to create an instance of IoTHubDeviceClient from json file values
-        """
-        azureManager = AzureManager(type)
-        check, jsonPayload = azureManager.getJsonData()
-        if not check:
-            raise Exception(jsonPayload)
+    def sendStatus(self, dictParkingStatus):
+        """This method detect if position is already stored or if it's new.
+        Data expected in the same format of parkingSlot.json"""
+        id = dictParkingStatus["parkingId"]
+        self.db.update(id, dictParkingStatus) if self.db.check(id) else self.db.add(id, dictParkingStatus)
 
-        firstConnectionString = jsonPayload.get('FIRST_CONNECTION_STRING', '')
-        if firstConnectionString == "":
-            raise Exception(
-                "error building IoTHubDeviceClient: No connection string has been defined inside JSON config")
+"""#TEST
+lDb = LocalDB("PARKING_SLOT")
+check, output = lDb.getParkingSlot()
+if check:
+    sps = SendParkingStatus()
+    for parkingSlot in output:
+        sps.sendStatus(eval(str(parkingSlot)))"""
 
-        self.deviceClient = IoTHubDeviceClient.create_from_connection_string(firstConnectionString, websockets=True)
 
-    def send(self, payload):
-        """Payload is expected to be a serialized json"""
-        self.deviceClient.send_message(payload)
-        # TODO -> end implementation with specific headers
 
 
