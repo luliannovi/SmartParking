@@ -1,3 +1,4 @@
+import json
 import time
 
 import aiocoap
@@ -74,16 +75,18 @@ class EntryMonitor(resource.Resource):
 
     async def render_put(self, request):
         """
-        TODO: paylaod_body='<state>;<display>' OPPURE (meglio) gestione da DataManager
-        1) La richiesta deve contenere lo stato nel quale lo si vuole settare e anche cosa deve mostrare.
-        2) DataManager, nel momento in cui leggo una modifica da plate reader invio al monitor cosa mostrare
+        Method handles a put request.
+        It receives a payload containing a string that is required to be displayed on the monitor.
+
+        See DataHandler > DataCollector > PlateManager.py if looking for message sender.
         """
-        pass
+        print("EntryMonitor with ID: " + self.monitorID + " --> PUT Request Received...")
+        json_paylaod_string = request.payload.decode('utf-8')
+        print("EntryMonitor with ID: " + self.monitorID + " --> PUT String Payload : " + json_paylaod_string)
+        self.monitor.updateDisplay(json_paylaod_string)
 
     async def render_post(self, request):
         print("EntryMonitor with ID: " + self.monitorID + " --> POST Request Received...")
-        prev_state = self.monitor.state
         self.monitor.switchState()
-        print("EntryMonitor with ID: " + self.monitorID + "switched state from " + prev_state + " to " + self.monitor.state)
         return aiocoap.Message(code=Code.CHANGED,
                                payload=f'{str(self.monitor.state)};display={str(self.monitor.display)}'.encode('utf-8'))

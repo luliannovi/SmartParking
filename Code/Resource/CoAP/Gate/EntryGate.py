@@ -51,6 +51,7 @@ class EntryGate(resource.Resource):
 
     async def render_post(self, request):
         """Method handles POST requests. Changes Gate state"""
+        print("EntryGate with ID: " + self.gateID + " --> POST Request Received...")
         self.entryGate.switchState()
         return aiocoap.Message(code=Code.CHANGED,
                                paylaod=f'{str(self.entryGate.state)};timesleep={str(self.timesleep)}'.encode('utf-8'))
