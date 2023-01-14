@@ -26,4 +26,4 @@ class EntrySensor:
         self.error = False
 
     def toJson(self):
-        return json.dumps(self, default=lambda o: o.__dict__())
+        return json.dumps(self, default=lambda o: o.__dict__)

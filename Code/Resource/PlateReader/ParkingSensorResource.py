@@ -43,9 +43,6 @@ class ParkingSensorResource:
             self.mqttParameters.LOCATION,
             self.mqttParameters.idClient
         )
-        if self.parkingSensor.car is None:
-            device_payload_string = ["empty", self.mqttParameters.idClient]
-        else:
-            device_payload_string = self.parkingSensor.toJson()
+        device_payload_string = self.parkingSensor.toJson()
         self.mqttClient.publish(target_topic, device_payload_string, 0, True)
         print(f"Telemetry data Published at {time.time()}: \nTopic: {target_topic}\nPayload: {device_payload_string}")

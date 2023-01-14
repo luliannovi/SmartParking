@@ -7,15 +7,11 @@ class ParkingSlot:
 
     Parking Slot structure:
     {
-        "id":1,
-        "state": "True", -> as a string, check for eval(...)
-        "car":[
-            {
-                "licensePlate":"...",
-                "entryTime":timestamp
-            }
-        ]
-    }"""
+        "id": 1,
+        "state": "True",
+        "car":"FM056GT" --> licensePlate
+    }
+    """
 
     def __init__(self, id = 0, state = False, car = None, parkingslotSerialized=None):
         """Constructor method, by default, set id as 0 and empty parking slot.
@@ -42,7 +38,7 @@ class ParkingSlot:
             self.car = None
 
     def toJson(self):
-        return json.dumps(self, default=lambda o: o.__dict__())
+        return json.dumps(self, default=lambda o: o.__dict__)
 
     def __repr__(self):
         return json.dumps({"parkingId" : self.id,

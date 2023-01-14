@@ -45,11 +45,13 @@ class EntryGate(resource.Resource):
 
     async def render_get(self, request):
         """Method handles GET requests"""
+        print("EntryGate with ID: " + self.gateID + " --> GET Request Received...")
         payload = self.buildSenMLJson()
         return aiocoap.Message(content_format=self.ct, payload=payload.encode('utf-8'))
 
     async def render_post(self, request):
         """Method handles POST requests. Changes Gate state"""
+        print("EntryGate with ID: " + self.gateID + " --> POST Request Received...")
         self.entryGate.switchState()
         return aiocoap.Message(code=Code.CHANGED,
                                paylaod=f'{str(self.entryGate.state)};timesleep={str(self.timesleep)}'.encode('utf-8'))

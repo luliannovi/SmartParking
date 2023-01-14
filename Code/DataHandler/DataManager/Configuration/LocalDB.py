@@ -69,7 +69,7 @@ class LocalDB:
                     return True, None
             return True, None
         except Exception as e:
-            return False, f'Error with "getPayamemtByLicense": {e}'
+            return False, f'Error with "getPaymentByLicense": {e}'
 
     def getPaymentByTransactionID(self, transactionID):
         """This method return a payment instance
@@ -161,6 +161,7 @@ class LocalDB:
     def addParkingSlot(self, parkingSlot):
         """
         riceve aggiornamento su un singolo parkingSlot, libero o occupato
+        con stringa riguardo alla targa
         """
         try:
             with open(LocalDB.SUPPORTED_MEDIA[self.type], 'r+') as jsonStream:
