@@ -61,7 +61,7 @@ class EntryMonitor(resource.Resource):
 
     async def render_put(self, request):
         """
-        Method handles a put request.
+        Method handles a PUT request.
         It receives a payload containing a string that is required to be displayed on the monitor.
 
         See DataHandler > DataCollector > PlateManager.py if looking for message sender.
@@ -72,6 +72,8 @@ class EntryMonitor(resource.Resource):
         self.monitor.updateDisplay(json_paylaod_string)
 
     async def render_post(self, request):
+        """Method handles a POST request.
+        It switches monitor state (on/off)."""
         print("EntryMonitor with ID: " + self.monitorID + " --> POST Request Received...")
         self.monitor.switchState()
         return aiocoap.Message(code=Code.CHANGED,
