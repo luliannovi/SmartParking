@@ -122,6 +122,7 @@ class LocalDB:
         For a list of parking slot -> True, [parkingslotObject].
         For an error -> False, stringError.
         For a empty parking slot file -> True, []"""
+
         try:
             with open(LocalDB.SUPPORTED_MEDIA[self.type], "r") as jsonStream:
                 try:
