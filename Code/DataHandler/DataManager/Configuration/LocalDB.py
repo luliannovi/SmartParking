@@ -53,7 +53,7 @@ class LocalDB:
 
     def getPaymentByLicense(self, licensePlate):
         """This method return a payment instance
-        True,istance is returned if everything is ok otherwise False,STR is returned.
+        True,instance is returned if everything is ok otherwise False,STR is returned.
         If no payments if found True, None is returned.
         """
         try:
