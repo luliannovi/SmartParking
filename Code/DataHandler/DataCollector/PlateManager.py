@@ -8,6 +8,7 @@ from Code.DataHandler.DataManager.Configuration.LocalDB import LocalDB
 from Code.Model.Car.ParkingSlot import ParkingSlot
 from aiocoap import *
 from Code.Logging.Logger import loggerSetup
+import asyncio
 
 import asyncio
 
@@ -47,8 +48,7 @@ class PlateManager:
         )
         self.mqttClient.subscribe(devices_topic)
 
-        #print(self.mqttBrokerParameters.idClient + " subscribed to: " + devices_topic)
-        logger.info(self.mqttBrokerParameters.idClient + " subscribed to: " + devices_topic)
+        print(self.mqttBrokerParameters.idClient + " subscribed to: " + devices_topic)
 
     @staticmethod
     def on_message(self, client, userdata, msg):
