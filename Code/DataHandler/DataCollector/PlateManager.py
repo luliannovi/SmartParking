@@ -1,18 +1,22 @@
 import json
 import time
-
 import aiocoap
 import paho.mqtt.client as mqtt
 from MQTTBrokerParameters import MQTTBrokerParameters
 from Code.DataHandler.DataManager.Configuration.LocalDB import LocalDB
 from Code.Model.Car.ParkingSlot import ParkingSlot
-from Code.Model.Car.Car import Car
-import logging
-import asyncio
 from aiocoap import *
+from Code.Logging.Logger import loggerSetup
+
+
 
 
 class PlateManager:
+    """This class allows to manage the incoming messages from parking considering entry/exit/parking status update.
+    Incoming messages allow the following features:
+        - communicate with Firebase to store online parking availabilities
+        - send free slot to the entry monitor"""
+
     def __init__(self):
         self.mqttClient = None
         self.mqttBrokerParameters = None
