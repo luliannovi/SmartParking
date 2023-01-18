@@ -2,7 +2,9 @@ import json, traceback
 from json import JSONDecodeError
 from Code.Model.Payment.Payment import Payment
 from Code.Model.Car.ParkingSlot import ParkingSlot
+from Code.Logging.Logger import loggerSetup
 
+logger = loggerSetup("db", "Code/Logging/DB/db.log")
 
 class LocalDB:
     """This class defines methods required to store/read/update data inside configuration file.
@@ -44,11 +46,11 @@ class LocalDB:
                 jsonStreamWrite.close()
                 return True, ''
             except Exception as e:
-                traceback.print_exc()
+                logger.error(e)
                 return False, f'Error with "updatePayment": {e}'
             return True, ''
         except Exception as e:
-            traceback.print_exc()
+            logger.error(e)
             return False, f'Error with "addPaymemt": {e}'
 
     def getPaymentByLicense(self, licensePlate):
@@ -69,6 +71,7 @@ class LocalDB:
                     return True, None
             return True, None
         except Exception as e:
+            logger.error(e)
             return False, f'Error with "getPaymentByLicense": {e}'
 
     def getPaymentByTransactionID(self, transactionID):
@@ -87,7 +90,7 @@ class LocalDB:
                     return True, None
             return True, None
         except Exception as e:
-            traceback.print_exc()
+            logger.error(e)
             return False, f'Error with "getPayamemtByTransactionID": {e}'
 
     def updatePayment(self, paymentObject):
@@ -111,7 +114,7 @@ class LocalDB:
             jsonStreamWrite.close()
             return True, ''
         except Exception as e:
-            traceback.print_exc()
+            logger.error(e)
             return False, f'Error with "updatePayment": {e}'
 
     """Methods that read each position"""
@@ -132,6 +135,7 @@ class LocalDB:
                 except JSONDecodeError:
                     return True, []
         except Exception as e:
+            logger.error(e)
             return False, f'Error with "getParkingSlot": {e}'
             
     def checkParkingSlots(self):
@@ -177,5 +181,5 @@ class LocalDB:
                 json.dump(dataJson, jsonStream, indent=4)
             return True, ''
         except Exception as e:
-            traceback.print_exc()
+            logger.error(e)
             return False, f'Error with "addParkingSlot": {e}'
