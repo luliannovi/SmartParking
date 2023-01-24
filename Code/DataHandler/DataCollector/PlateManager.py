@@ -22,6 +22,7 @@ class PlateManager:
     def __init__(self):
         self.mqttClient = None
         self.mqttBrokerParameters = None
+        self.configurations()
 
     def configurations(self):
         self.mqttBrokerParameters = MQTTBrokerParameters()
@@ -144,9 +145,6 @@ class PlateManager:
                     error_string = availables
                     self.put_message("uri_entryMonitor", error_string)
                     print(error_string)
-
-    def loop(self):
-        self.configurations()
 
     def stop(self):
         self.stop()
