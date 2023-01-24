@@ -49,7 +49,7 @@ class PlateManager:
             mqttBrokerParameters.DEVICE_TOPIC,
             mqttBrokerParameters.LOCATION
         )
-        mqttClient.subscribe(devices_topic)
+        client.subscribe(devices_topic)
 
         #print(self.mqttBrokerParameters.idClient + " subscribed to: " + devices_topic)
         plateLogger.info(mqttBrokerParameters.idClient + " subscribed to: " + devices_topic)
