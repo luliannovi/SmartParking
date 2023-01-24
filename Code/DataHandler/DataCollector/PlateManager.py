@@ -12,6 +12,7 @@ from Code.Logging.Logger import loggerSetup
 import asyncio
 
 plateLogger = loggerSetup("plateLogger","Code/Logging/Plate/plate.log")
+BASE_URI = 'coap://127.0.0.1:5683/'
 
 class PlateManager:
     """This class allows to manage the incoming messages from parking considering entry/exit/parking status update.
@@ -30,8 +31,8 @@ class PlateManager:
         self.mqttBrokerParameters.fromJson(configparser)
         self.mqttBrokerParameters.idClient = "PlateManager"
         self.mqttClient = mqtt.Client(self.mqttBrokerParameters.idClient)
-        self.mqttClient.on_connect = lambda client, userdata, flags, rc: self.on_connect(client, userdata, flags, rc)
-        self.mqttClient.on_message = lambda client, userdata, msg: self.on_message(client, userdata, msg)
+        self.mqttClient.on_connect = PlateManager.on_connect
+        self.mqttClient.on_message = PlateManager.on_message
         self.mqttClient.username_pw_set(self.mqttBrokerParameters.USERNAME,
                                         self.mqttBrokerParameters.PASSWORD)
         self.mqttClient.connect(self.mqttBrokerParameters.BROKER_ADDRESS,
@@ -43,11 +44,10 @@ class PlateManager:
         mqttBrokerParameters = MQTTBrokerParameters()
         configparser = open('Configuration/PlateReaderMQTTParameters/config.json')
         mqttBrokerParameters.fromJson(configparser)
-        devices_topic = "{0}/{1}/{2}/{3}/#".format(  # topic generico per ora
+        devices_topic = "{0}/{1}/{2}/#".format(  # topic generico per ora
             mqttBrokerParameters.BASIC_TOPIC,
             mqttBrokerParameters.USERNAME,
-            mqttBrokerParameters.DEVICE_TOPIC,
-            mqttBrokerParameters.LOCATION
+            mqttBrokerParameters.DEVICE_TOPIC
         )
         client.subscribe(devices_topic)
 
@@ -57,7 +57,7 @@ class PlateManager:
     @staticmethod
     def on_message(client, userdata, msg):
         message_payload = str(msg.payload.decode("utf-8"))
-        print(f"Received IoT Message at {time.time().__str__()}:\nTopic: {msg.topic}\nPayload: {message_payload}")
+        plateLogger.info(f"Received: Topic: {msg.topic} Payload: {message_payload}")
         localParkingDBManager = LocalDB("PARKING_SLOT")
         localPaymentsDBManager = LocalDB("PAYMENTS")
         if str(msg.topic).endswith("parking/in"):
@@ -69,20 +69,27 @@ class PlateManager:
             valid, availables, firstId = localParkingDBManager.checkParkingSlots()
 
             jsonData = json.loads(message_payload)
+            print(jsonData, type(jsonData))
 
             if jsonData['error'] is False and valid is True:
-                put_message("uri_for_entryMonitor",
-                            "Total parking slots available: " + availables + "\nThe nearest parking slot in: " + firstId
-                            + "\nReaded plate: " + jsonData['carPlate'])
-                post_message("uri_for_gate")
+                loop = asyncio.get_event_loop()
+                loop.run_until_complete(put_message(BASE_URI + 'IoT/device/monitor/in',
+                            "Total parking slots available: " + str(availables) + "\nThe nearest parking slot in: " + str(firstId)
+                            + "\nReaded plate: " + jsonData['carPlate']))
+                #loop.close()
+
+                #loop = asyncio.get_event_loop()
+                loop.run_until_complete(post_message(BASE_URI + 'IoT/actuator/gate/in'))
+                loop.close()
+
             elif jsonData['error'] is True:
-                put_message("uri_for_entryMonitor", "Error in reading the plate.."
+                put_message(BASE_URI + 'IoT/device/monitor/in', "Error in reading the plate.."
                                                     "\nPlease press the HELP button.")
             elif valid is False:
                 errorString = availables
-                put_message("uri_for_entryMonitor", "No parking slots available.")
-                print(errorString)
-                post_message("uri_for_gate")
+                put_message(BASE_URI + 'IoT/device/monitor/in', "No parking slots available.")
+                plateLogger.error(errorString)
+                post_message(BASE_URI + 'IoT/actuator/gate/in')
 
         elif str(msg.topic).endswith("parking/out"):
             """
@@ -162,7 +169,7 @@ async def put_message(URI, text):
         print(print('Failed to fetch resource: '))
         print(e)
     else:
-        print('Result: %s\n%r' % (response.code, response.payload))
+        print('Result: %s\n%r' % (response.code, response.payload.decode("utf-8")))
 
 async def post_message(URI):
     logging.basicConfig(level=logging.INFO)
@@ -174,6 +181,6 @@ async def post_message(URI):
         print(print('Failed to fetch resource: '))
         print(e)
     else:
-        print('Result: %s\n%r' % (response.code, response.payload))
+        print('Result: %s\n%r' % (response.code, response.payload.decode("utf-8")))
 
 

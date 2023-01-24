@@ -2,7 +2,7 @@ from Code.Model.PlateReader.EntrySensor import EntrySensor
 import time
 import paho.mqtt.client as mqtt
 
-from MQTTClientParameters import MQTTClientParameters
+from Code.Resource.PlateReader.MQTTClientParameters import MQTTClientParameters
 import json
 
 
