@@ -17,7 +17,6 @@ plateManager = PlateManager()
 
 car = Car(licensePlate='FM056GT')
 entrySensor = EntrySensor()
-monitorResource = EntryMonitor(monitorID='id1', description='monitor per ingresso')
 
 # istanza risorsa lettore targa ingresso
 entrySensorResource = EntrySensorResource()
