@@ -39,20 +39,23 @@ class PlateManager:
         self.mqttClient.loop_forever()
 
     @staticmethod
-    def on_connect(self, client, userdata, flags, rc):
+    def on_connect(client, userdata, flags, rc):
+        mqttBrokerParameters = MQTTBrokerParameters()
+        configparser = open('Configuration/PlateReaderMQTTParameters/config.json')
+        mqttBrokerParameters.fromJson(configparser)
         devices_topic = "{0}/{1}/{2}/{3}/#".format(  # topic generico per ora
-            self.mqttBrokerParameters.BASIC_TOPIC,
-            self.mqttBrokerParameters.USERNAME,
-            self.mqttBrokerParameters.DEVICE_TOPIC,
-            self.mqttBrokerParameters.LOCATION
+            mqttBrokerParameters.BASIC_TOPIC,
+            mqttBrokerParameters.USERNAME,
+            mqttBrokerParameters.DEVICE_TOPIC,
+            mqttBrokerParameters.LOCATION
         )
-        self.mqttClient.subscribe(devices_topic)
+        mqttClient.subscribe(devices_topic)
 
         #print(self.mqttBrokerParameters.idClient + " subscribed to: " + devices_topic)
-        plateLogger.info(self.mqttBrokerParameters.idClient + " subscribed to: " + devices_topic)
+        plateLogger.info(mqttBrokerParameters.idClient + " subscribed to: " + devices_topic)
 
     @staticmethod
-    def on_message(self, client, userdata, msg):
+    def on_message(client, userdata, msg):
         message_payload = str(msg.payload.decode("utf-8"))
         print(f"Received IoT Message at {time.time().__str__()}:\nTopic: {msg.topic}\nPayload: {message_payload}")
         localParkingDBManager = LocalDB("PARKING_SLOT")
@@ -68,18 +71,18 @@ class PlateManager:
             jsonData = json.loads(message_payload)
 
             if jsonData['error'] is False and valid is True:
-                self.put_message("uri_for_entryMonitor",
+                put_message("uri_for_entryMonitor",
                             "Total parking slots available: " + availables + "\nThe nearest parking slot in: " + firstId
                             + "\nReaded plate: " + jsonData['carPlate'])
-                self.post_message("uri_for_gate")
+                post_message("uri_for_gate")
             elif jsonData['error'] is True:
-                self.put_message("uri_for_entryMonitor", "Error in reading the plate.."
+                put_message("uri_for_entryMonitor", "Error in reading the plate.."
                                                     "\nPlease press the HELP button.")
             elif valid is False:
                 errorString = availables
-                self.put_message("uri_for_entryMonitor", "No parking slots available.")
+                put_message("uri_for_entryMonitor", "No parking slots available.")
                 print(errorString)
-                self.post_message("uri_for_gate")
+                post_message("uri_for_gate")
 
         elif str(msg.topic).endswith("parking/out"):
             """
@@ -90,20 +93,20 @@ class PlateManager:
             """
             jsonData = json.loads(message_payload)
             if jsonData['error'] is True:
-                self.put_message("uri_for_exitMonitor", "Error in reading the plate.."
+                put_message("uri_for_exitMonitor", "Error in reading the plate.."
                                                    "\nPlease press the HELP button.")
             else:
                 valid, instance = localPaymentsDBManager.getPaymentByLicense(jsonData['carPlate'])
                 if valid is True and instance is None:
-                    self.put_message("uri_for _exitMonitor", "No payments founded for your car (" + jsonData[
+                    put_message("uri_for _exitMonitor", "No payments founded for your car (" + jsonData[
                         'carPlate'] + "). Please pay and comeback.")
                 elif valid is True and instance is not None:
-                    self.put_message("uri_for _exitMonitor",
+                    put_message("uri_for _exitMonitor",
                                 "Payments founded for your car (" + jsonData['carPlate'] + "). Goodbye." + instance)
-                    self.post_message("uri_for_exitGate")
+                    post_message("uri_for_exitGate")
                 else:
                     error_string = instance
-                    self.put_message("uri_for _exitMonitor", "Error checking the payment. Please press HELP button.")
+                    put_message("uri_for _exitMonitor", "Error checking the payment. Please press HELP button.")
                     print(error_string)
         else:
             """
@@ -121,11 +124,11 @@ class PlateManager:
                 """
                 valid, availables, firstId = localParkingDBManager.checkParkingSlots()
                 if valid is True:
-                    self.put_message("uri_entryMonitor",
+                    put_message("uri_entryMonitor",
                                 "Total parking slots available: " + availables + "\nThe nearest parking slot in: " + firstId)
                 else:
                     error_string = availables
-                    self.put_message("uri_entryMonitor", error_string)
+                    put_message("uri_entryMonitor", error_string)
                     print(error_string)
 
             else:
@@ -139,40 +142,38 @@ class PlateManager:
                 """
                 valid, availables, firstId = localParkingDBManager.checkParkingSlots()
                 if valid is True:
-                    self.put_message("uri_entryMonitor",
+                    put_message("uri_entryMonitor",
                                 "Total parking slots available: " + availables + "\nThe nearest parking slot in: " + firstId)
                 else:
                     error_string = availables
-                    self.put_message("uri_entryMonitor", error_string)
+                    put_message("uri_entryMonitor", error_string)
                     print(error_string)
 
     def stop(self):
         self.stop()
 
-    @staticmethod
-    async def put_message(self, URI, text):
-        logging.basicConfig(level=logging.INFO)
-        protocol = await Context.create_client_context()
-        request = Message(code=aiocoap.Code.PUT, payload=text, uri=URI)
-        try:
-            response = await protocol.request(request).response
-        except Exception as e:
-            print(print('Failed to fetch resource: '))
-            print(e)
-        else:
-            print('Result: %s\n%r' % (response.code, response.payload))
+async def put_message(URI, text):
+    logging.basicConfig(level=logging.INFO)
+    protocol = await Context.create_client_context()
+    request = Message(code=aiocoap.Code.PUT, payload=text, uri=URI)
+    try:
+        response = await protocol.request(request).response
+    except Exception as e:
+        print(print('Failed to fetch resource: '))
+        print(e)
+    else:
+        print('Result: %s\n%r' % (response.code, response.payload))
 
-    @staticmethod
-    async def post_message(URI):
-        logging.basicConfig(level=logging.INFO)
-        protocol = await Context.create_client_context()
-        request = Message(code=aiocoap.Code.POST, uri=URI)
-        try:
-            response = await protocol.request(request).response
-        except Exception as e:
-            print(print('Failed to fetch resource: '))
-            print(e)
-        else:
-            print('Result: %s\n%r' % (response.code, response.payload))
+async def post_message(URI):
+    logging.basicConfig(level=logging.INFO)
+    protocol = await Context.create_client_context()
+    request = Message(code=aiocoap.Code.POST, uri=URI)
+    try:
+        response = await protocol.request(request).response
+    except Exception as e:
+        print(print('Failed to fetch resource: '))
+        print(e)
+    else:
+        print('Result: %s\n%r' % (response.code, response.payload))
 
 
