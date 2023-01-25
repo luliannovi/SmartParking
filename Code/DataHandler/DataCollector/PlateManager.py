@@ -167,7 +167,7 @@ class PlateManager:
                     if valid is True:
                         loop = asyncio.get_event_loop()
                         loop.run_until_complete(put_message("uri_entryMonitor",
-                                                            "Total parking slots available: " + availables + "\nThe nearest parking slot in: " + firstId))
+                                                            "Total parking slots available: " + str(availables) + "\nThe nearest parking slot in: " + str(firstId)))
                         loop.close()
                     else:
                         error_string = availables
