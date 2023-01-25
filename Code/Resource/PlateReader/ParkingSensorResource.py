@@ -8,10 +8,10 @@ import json
 
 class ParkingSensorResource:
 
-    def __init__(self, parkingPlace):
+    def __init__(self, parkingPlaceId):
         self.mqttParameters = None
         self.mqttClient = None
-        self.parkingSensor = ParkingSensor(parkingPlace)
+        self.parkingSensor = ParkingSensor(parkingPlaceId)
         self.configurations()
 
     def configurations(self):
