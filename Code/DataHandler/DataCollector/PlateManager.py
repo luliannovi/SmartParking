@@ -3,14 +3,20 @@ import logging
 import time
 import aiocoap
 import paho.mqtt.client as mqtt
-from MQTTBrokerParameters import MQTTBrokerParameters
+
+from Code.DataHandler.DataCollector.MQTTBrokerParameters import MQTTBrokerParameters
+from Code.DataHandler.DataManager.CloudDialog.SendParkingStatus import SendParkingStatus
+
 from Code.DataHandler.DataManager.Configuration.LocalDB import LocalDB
 from Code.Model.Car.ParkingSlot import ParkingSlot
 from aiocoap import *
 from Code.Logging.Logger import loggerSetup
 import asyncio
 
-import asyncio
+plateLogger = loggerSetup("plateLogger_PlateManager", "Code/Logging/Plate/plate.log")
+sps = SendParkingStatus()
+
+BASE_URI = 'coap://127.0.0.1:5683/'
 
 logger = loggerSetup("plateLogger","Code/Logging/Plate/plate.log")
 
@@ -23,6 +29,7 @@ class PlateManager:
     def __init__(self):
         self.mqttClient = None
         self.mqttBrokerParameters = None
+
 
     def configurations(self):
         self.mqttBrokerParameters = MQTTBrokerParameters()
@@ -51,105 +58,120 @@ class PlateManager:
         print(self.mqttBrokerParameters.idClient + " subscribed to: " + devices_topic)
 
     @staticmethod
-    def on_message(self, client, userdata, msg):
-        message_payload = str(msg.payload.decode("utf-8"))
-        print(f"Received IoT Message at {time.time().__str__()}:\nTopic: {msg.topic}\nPayload: {message_payload}")
-        localParkingDBManager = LocalDB("PARKING_SLOT")
-        localPaymentsDBManager = LocalDB("PAYMENTS")
-        if str(msg.topic).endswith("parking/in"):
-            """
-            no update to json files, if a car does not park it does not pay
-            put/post to the gate (risorsa monitor in entrata e sbarra entrata) to open CoAP
-            se sono presenti errori in lettura targa invio al monitor messaggio d'errore
-            """
-            valid, availables, firstId = localParkingDBManager.checkParkingSlots()
-
-            jsonData = json.loads(message_payload)
-
-            if jsonData['error'] is False and valid is True:
+    def on_message(client, userdata, msg):
+        try:
+            message_payload = str(msg.payload.decode("utf-8"))
+            plateLogger.info(f"Received: Topic: {msg.topic} Payload: {message_payload} Retain: {msg.retain}")
+            localParkingDBManager = LocalDB("PARKING_SLOT")
+            localPaymentsDBManager = LocalDB("PAYMENTS")
+            if str(msg.topic).endswith("parking/in"):
                 """
-                controlla -> se firstID=0 o availables = 0, ritorna stringa per cui si indica posti non disponibili 
-                """
-                self.put_message("uri_for_entryMonitor",
-                            "Total parking slots available: " + availables + "\nThe nearest parking slot in: " + firstId
-                            + "\nReaded plate: " + jsonData['carPlate'])
-                self.post_message("uri_for_gate")
-            elif jsonData['error'] is True:
-                self.put_message("uri_for_entryMonitor", "Error in reading the plate.."
-                                                    "\nPlease press the HELP button.")
-            elif valid is False:
-                errorString = availables
-                self.put_message("uri_for_entryMonitor", "No parking slots available.")
-                print(errorString)
-                self.post_message("uri_for_gate")
-
-        elif str(msg.topic).endswith("parking/out"):
-            """
-            control the payment
-            put/post to the gate (monitor in uscita e sbarra) to open CoAP
-            se non ha pagato invio al monitor messaggio d'errore 
-            se sono presenti errori in lettura targa invio al monitor messaggio d'errore
-            """
-            jsonData = json.loads(message_payload)
-            if jsonData['error'] is True:
-                self.put_message("uri_for_exitMonitor", "Error in reading the plate.."
-                                                   "\nPlease press the HELP button.")
-            else:
-                valid, instance = localPaymentsDBManager.getPaymentByLicense(jsonData['carPlate'])
-                if valid is True and instance is None:
-                    self.put_message("uri_for _exitMonitor", "No payments founded for your car (" + jsonData[
-                        'carPlate'] + "). Please pay and comeback.")
-                elif valid is True and instance is not None:
-                    self.put_message("uri_for _exitMonitor",
-                                "Payments founded for your car (" + jsonData['carPlate'] + "). Goodbye." + instance)
-                    self.post_message("uri_for_exitGate")
-                else:
-                    error_string = instance
-                    self.put_message("uri_for _exitMonitor", "Error checking the payment. Please press HELP button.")
-                    print(error_string)
-        else:
-            """
-            TODO: put/post to the monitor parking slots free and the nearest place
-                    reading from the json
-            """
-            jsonData = json.loads(message_payload)
-            if jsonData['car'] is None:
-                parkingSlot = ParkingSlot(jsonData['parkingPlace'],
-                                          False,
-                                          "")
-                localParkingDBManager.addParkingSlot(parkingSlot)
-                """
-                checking parking slots available and the nearest
+                no update to json files, if a car does not park it does not pay
+                put/post to the gate (risorsa monitor in entrata e sbarra entrata) to open CoAP
+                se sono presenti errori in lettura targa invio al monitor messaggio d'errore
                 """
                 valid, availables, firstId = localParkingDBManager.checkParkingSlots()
-                if valid is True:
-                    self.put_message("uri_entryMonitor",
-                                "Total parking slots available: " + availables + "\nThe nearest parking slot in: " + firstId)
-                else:
-                    error_string = availables
-                    self.put_message("uri_entryMonitor", error_string)
-                    print(error_string)
 
-            else:
-                car = jsonData['car']
-                parkingSlot = ParkingSlot(jsonData['parkingPlace'],
-                                          True,
-                                          car.licensePlate)
-                localParkingDBManager.addParkingSlot(parkingSlot)
+                jsonData = json.loads(message_payload)
+
+                if jsonData['error'] is False and valid is True:
+                    asyncio.get_event_loop().run_until_complete(put_message(BASE_URI + 'monitor_in',
+                                                                            "Total parking slots available: " + str(
+                                                                                availables) + "\nThe nearest parking slot in: " + str(
+                                                                                firstId)
+                                                                            + "\nReaded plate: " + jsonData['carPlate']))
+                    asyncio.get_event_loop().run_until_complete(post_message(BASE_URI + 'gate_in'))
+
+                elif jsonData['error'] is True:
+                    loop = asyncio.get_event_loop()
+                    loop.run_until_complete(put_message(BASE_URI + 'monitor_in', "Error in reading the plate.."
+                                                                                            "\nPlease press the HELP button."))
+                    loop.close()
+                elif valid is False:
+                    errorString = availables
+                    asyncio.get_event_loop().run_until_complete(put_message(BASE_URI + 'monitor_in', "No parking slots available."))
+                    asyncio.get_event_loop().run_until_complete(post_message(BASE_URI + 'gate_in'))
+
+
+            elif str(msg.topic).endswith("parking/out"):
                 """
-                checking parking slots available and the nearest
+                control the payment
+                put/post to the gate (monitor in uscita e sbarra) to open CoAP
+                se non ha pagato invio al monitor messaggio d'errore 
+                se sono presenti errori in lettura targa invio al monitor messaggio d'errore
+                """
+                jsonData = json.loads(message_payload)
+                if jsonData['error'] is True:
+                    asyncio.get_event_loop().run_until_complete(put_message(BASE_URI + 'monitor_out', "Error in reading the plate.."
+                                                                               "\nPlease press the HELP button."))
+
+                else:
+                    valid, instance = localPaymentsDBManager.getPaymentByLicense(jsonData['carPlate'])
+                    if valid is True and instance is None:
+                        asyncio.get_event_loop().run_until_complete(put_message(BASE_URI + 'monitor_in', "No payments founded for your car (" + jsonData[
+                                'carPlate'] + "). Please pay and comeback."))
+                    elif valid is True and instance is not None:
+                        asyncio.get_event_loop().run_until_complete(put_message(BASE_URI + 'monitor_out',
+                                                            "Payments founded for your car (" + jsonData[
+                                                                'carPlate'] + "). Goodbye." + instance))
+                        asyncio.get_event_loop().run_until_complete(post_message(BASE_URI + 'gate_out'))
+                    else:
+                        error_string = instance
+                        asyncio.get_event_loop().run_until_complete(
+                            put_message(BASE_URI + 'monitor_out', "Error checking the payment. Please press HELP button."))
+                        print(error_string)
+            else:
+                """
+                TODO: put/post to the monitor parking slots free and the nearest place
+                        reading from the json
                 """
                 valid, availables, firstId = localParkingDBManager.checkParkingSlots()
-                if valid is True:
-                    self.put_message("uri_entryMonitor",
-                                "Total parking slots available: " + availables + "\nThe nearest parking slot in: " + firstId)
-                else:
-                    error_string = availables
-                    self.put_message("uri_entryMonitor", error_string)
-                    print(error_string)
+                
+                jsonData = json.loads(message_payload)
+                if jsonData["car"]["licensePlate"] == "":
+                    parkingSlot = ParkingSlot(jsonData['parkingPlace'],
+                                              False,
+                                              "")
+                    localParkingDBManager.updateParkingSlot(parkingSlot)
+                    """
+                    checking parking slots available and the nearest
+                    """
+                    valid, availables, firstId = localParkingDBManager.checkParkingSlots()
+                    if valid is True:
+                        asyncio.get_event_loop().run_until_complete(put_message(BASE_URI + 'monitor_in',
+                                                            "Total parking slots available: " + str(availables) + "\nThe nearest parking slot in: " + str(firstId)))
+                    else:
+                        error_string = availables
+                        asyncio.get_event_loop().run_until_complete(put_message(BASE_URI + 'monitor_in', error_string))
+                        print(error_string)
 
-    def loop(self):
-        self.configurations()
+                else:
+                    car = jsonData['car']
+                    parkingSlot = ParkingSlot(jsonData['parkingPlace'],
+                                              True,
+                                              car["licensePlate"])
+                    localParkingDBManager.updateParkingSlot(parkingSlot)
+                    """
+                    checking parking slots available and the nearest
+                    """
+                    valid, availables, firstId = localParkingDBManager.checkParkingSlots()
+                    if valid is True:
+                        asyncio.get_event_loop().run_until_complete(put_message(BASE_URI + 'monitor_in',
+                                                            "Total parking slots available: " + str(availables) + "\nThe nearest parking slot in: " + str(firstId)))
+                    else:
+                        error_string = availables
+                        asyncio.get_event_loop().run_until_complete(put_message(BASE_URI + 'monitor_in', error_string))
+                        print(error_string)
+
+                """Updating FireBase real-time DB"""
+                check, output = localParkingDBManager.getParkingSlot()
+                if check:
+                    for parkingSlot in output:
+                        sps.sendStatus(eval(str(parkingSlot)))
+
+
+        except Exception as e:
+            plateLogger.error(e)
 
     def stop(self):
         self.stop()

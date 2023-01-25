@@ -14,6 +14,7 @@ class EntrySensorResource:
         self.entrySensor = EntrySensor()
         self.configurations()
 
+
     def configurations(self):
         configFile = open("Configuration/PlateReaderMQTTParameters/config.json")
         self.mqttParameters = MQTTClientParameters()

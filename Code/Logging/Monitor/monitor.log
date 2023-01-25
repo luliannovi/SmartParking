@@ -1,0 +1,236 @@
+2023-01-25 15:31:48,241 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 15:31:48,241 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 15:31:48,242 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 0
+The nearest parking slot in: 0
+Readed plate: FM056GT
+2023-01-25 15:31:48,242 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 0
+The nearest parking slot in: 0
+Readed plate: FM056GT
+2023-01-25 15:35:00,440 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 15:35:00,440 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 15:35:00,440 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 0
+The nearest parking slot in: 0
+Readed plate: FM056GT
+2023-01-25 15:35:00,440 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 0
+The nearest parking slot in: 0
+Readed plate: FM056GT
+2023-01-25 15:36:02,053 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 15:36:02,053 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 15:36:02,053 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 0
+The nearest parking slot in: 0
+Readed plate: FM056GT
+2023-01-25 15:36:02,053 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 0
+The nearest parking slot in: 0
+Readed plate: FM056GT
+2023-01-25 15:46:10,250 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 15:46:10,250 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 15:46:10,250 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 15:46:10,250 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 15:46:33,301 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 15:46:33,301 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 15:46:33,301 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 15:46:33,301 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 15:51:44,093 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 15:51:44,093 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 15:51:44,093 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 15:51:44,093 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 15:52:00,472 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 15:52:00,472 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 15:52:00,472 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 15:52:00,472 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 15:53:46,498 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 15:53:46,498 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 15:53:46,498 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 15:53:46,498 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 15:59:39,628 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 15:59:39,628 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 15:59:39,628 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 15:59:39,628 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 16:01:53,164 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 16:01:53,164 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 16:01:53,164 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 16:01:53,164 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 16:02:29,769 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 16:02:29,769 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 16:02:29,770 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 16:02:29,770 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 16:03:19,438 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 16:03:19,438 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 16:03:19,438 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 16:03:19,438 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 16:06:34,692 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 16:06:34,692 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 16:06:34,693 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 16:06:34,693 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 16:10:20,463 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 16:10:20,463 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 16:10:20,464 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 16:10:20,464 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 16:11:27,494 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 16:11:27,494 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 16:11:27,494 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 16:11:27,494 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 16:12:02,469 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 16:12:02,469 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 16:12:02,470 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 16:12:02,470 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 16:13:12,913 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 16:13:12,913 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 16:13:12,913 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 16:13:12,913 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 16:19:58,453 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 16:19:58,453 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 16:19:58,454 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 16:19:58,454 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 16:21:18,311 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 16:21:18,311 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 16:21:18,312 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 16:21:18,312 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+Readed plate: FM056GT
+2023-01-25 17:21:48,328 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:21:48,328 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:21:48,329 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 7
+The nearest parking slot in: 4
+2023-01-25 17:21:48,329 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 7
+The nearest parking slot in: 4
+2023-01-25 17:24:03,947 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:24:03,948 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 6
+The nearest parking slot in: 5
+2023-01-25 17:27:57,333 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:27:57,334 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 8
+The nearest parking slot in: 3
+2023-01-25 17:34:15,223 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:34:15,223 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 8
+The nearest parking slot in: 3
+2023-01-25 17:39:57,136 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:39:57,136 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 9
+The nearest parking slot in: 2
+2023-01-25 17:39:57,145 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:39:57,145 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+2023-01-25 17:41:58,514 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:41:58,515 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 9
+The nearest parking slot in: 2
+2023-01-25 17:41:58,524 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:41:58,524 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+2023-01-25 17:41:58,541 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:41:58,541 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 9
+The nearest parking slot in: 1
+2023-01-25 17:49:01,852 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:49:01,853 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 8
+The nearest parking slot in: 2
+2023-01-25 17:49:03,505 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:49:03,505 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 9
+The nearest parking slot in: 1
+2023-01-25 17:49:03,581 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:49:03,581 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 9
+The nearest parking slot in: 1
+2023-01-25 17:50:21,782 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:50:21,782 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 8
+The nearest parking slot in: 2
+2023-01-25 17:50:23,470 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:50:23,470 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 9
+The nearest parking slot in: 1
+2023-01-25 17:50:23,541 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:50:23,542 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 8
+The nearest parking slot in: 1
+2023-01-25 17:51:56,100 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:51:56,101 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 7
+The nearest parking slot in: 2
+2023-01-25 17:51:56,160 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:51:56,160 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 8
+The nearest parking slot in: 1
+2023-01-25 17:51:56,170 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:51:56,170 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 8
+The nearest parking slot in: 1
+2023-01-25 17:53:03,009 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:53:03,009 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 7
+The nearest parking slot in: 2
+2023-01-25 17:53:03,092 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:53:03,092 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 8
+The nearest parking slot in: 1
+2023-01-25 17:53:03,101 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:53:03,102 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 8
+The nearest parking slot in: 1
+2023-01-25 17:54:14,455 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:54:14,455 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 7
+The nearest parking slot in: 2
+2023-01-25 17:54:16,104 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:54:16,105 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 8
+The nearest parking slot in: 1
+2023-01-25 17:54:17,385 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:54:17,385 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 8
+The nearest parking slot in: 1
+2023-01-25 17:55:22,248 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:55:22,248 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 9
+The nearest parking slot in: 2
+2023-01-25 17:55:23,638 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:55:23,639 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 10
+The nearest parking slot in: 1
+2023-01-25 17:55:24,784 INFO EntryMonitor with ID: id1 --> PUT Request Received...
+2023-01-25 17:55:24,784 INFO EntryMonitor with ID: id1 --> PUT String Payload : Total parking slots available: 9
+The nearest parking slot in: 1

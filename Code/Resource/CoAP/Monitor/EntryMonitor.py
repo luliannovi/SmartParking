@@ -11,7 +11,7 @@ from kpn_senml import *
 from Code.Logging.Logger import loggerSetup
 from Code.Model.Monitor.Monitor import Monitor
 
-monitorLogger = loggerSetup('monitorLogger', 'Code/Logging/Monitor/monitor.log')
+monitorLogger = loggerSetup('monitorLogger_EntryMonitor', 'Code/Logging/Monitor/monitor.log')
 
 
 class EntryMonitor(resource.Resource):
@@ -70,9 +70,9 @@ class EntryMonitor(resource.Resource):
         See DataHandler > DataCollector > PlateManager.py if looking for message sender.
         """
         monitorLogger.info("EntryMonitor with ID: " + self.monitorID + " --> PUT Request Received...")
-        json_paylaod_string = request.payload.decode('utf-8')
-        monitorLogger.info("EntryMonitor with ID: " + self.monitorID + " --> PUT String Payload : " + json_paylaod_string)
-        self.monitor.updateDisplay(json_paylaod_string)
+        json_payload_string = request.payload.decode('utf-8')
+        monitorLogger.info("EntryMonitor with ID: " + self.monitorID + " --> PUT String Payload : " + json_payload_string)
+        self.monitor.updateDisplay(json_payload_string)
         return aiocoap.Message(code=Code.CHANGED,
                                payload=f'{str(self.monitor.state)};display={str(self.monitor.display)}'.encode('utf-8'))
 

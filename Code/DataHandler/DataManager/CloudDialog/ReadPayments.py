@@ -18,6 +18,7 @@ def readMessage(message):
     try:
         data = json.loads(message.data.decode())
         messageID = message.message_id
+        paymentsLogger.info(f'message ID: {messageID}; Data: {data}')
         payment = Payment(paymentSerialized=data)
         lDB = LocalDB("PAYMENTS")
         check, flag = lDB.getPaymentByTransactionID(payment.transactionID)
@@ -34,7 +35,7 @@ def readMessage(message):
         else:
             #there is an error to report
             raise Exception(flag)
-        paymentsLogger.info(f'message ID: {messageID}; Data: {data}')
+
     except Exception as e:
         paymentsLogger.error(f'Error reading payments from cloud (Azure): {e}')
 
