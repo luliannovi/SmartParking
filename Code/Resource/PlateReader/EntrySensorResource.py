@@ -37,10 +37,6 @@ class EntrySensorResource:
         print("Connected with result code: " + str(rc))
 
     def publish_telemetry(self):
-        """
-        Method used to send data by MQTT to a broker specified by MQTTParameters.
-        Quality of service = 0, Retained messages = off.
-        """
         target_topic = "{0}/{1}/{2}/{3}/{4}".format(
             self.mqttParameters.BASIC_TOPIC,
             self.mqttParameters.USERNAME,
