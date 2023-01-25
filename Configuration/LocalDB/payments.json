@@ -1,4 +1,9 @@
 [
-
+    {
+        "transactionID": "6",
+        "licensePlate": "EP726GG",
+        "amount": 15.0,
+        "timeIn": 1668246600.0,
+        "paymentTime": 1668246930.0
+    }
 ]
-

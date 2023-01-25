@@ -1,8 +1,11 @@
 import requests
 from datetime import datetime
+from Code.Logging.Logger import loggerSetup
 
-URL = """https://sendpaymentscode.azurewebsites.net/api/PaymentsReceiverHTTP?code={}"""
-FUNCTION_KEY = """qutLVUJeqUP1Fiomlo2irHjq6D1BO2fI0FN_c9gh2uUNAzFu_GJDXg=="""
+paymentsLogger = loggerSetup('paymentsLogger', 'Code/Logging/Payments/payments.log')
+
+URL = """https://paymentslambda.azurewebsites.net/api/HttpPaymentsHandler?code={}"""
+FUNCTION_KEY = """lE1Qt9uJnAM9X2scZGBHBKZV_PPaSTrgaatxFQ-8Y2ecAzFuQn8U8w=="""
 
 
 transactionID = 6
@@ -23,9 +26,9 @@ paramaters = {
     "paymentTime":paymentTime
 }
 
-print("Sending payments....")
+paymentsLogger.info("TEST: Sending payments....")
 try:
     r = requests.post(URL.format(FUNCTION_KEY), data=paramaters)
-    print(f"Payment transferred with status code: {r.status_code}\n{r.text}")
+    paymentsLogger.info(f"TEST: Payment transferred with status code: {r.status_code} - {r.text}")
 except Exception as e:
-    print(f"Errore sending payment:\n{e}")
+    paymentsLogger.error(f"TEST: Error sending payment:{e}")
