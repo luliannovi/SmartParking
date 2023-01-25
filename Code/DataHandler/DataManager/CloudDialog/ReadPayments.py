@@ -3,7 +3,11 @@ from datetime import datetime
 from Code.DataHandler.DataManager.Configuration.AzureManager import AzureManager
 from Code.DataHandler.DataManager.Configuration.LocalDB import LocalDB
 from Code.Model.Payment.Payment import Payment
+from Code.Logging.Logger import loggerSetup
 from azure.iot.device.aio import IoTHubDeviceClient
+
+
+paymentsLogger = loggerSetup('paymentsLogger', 'Code/Logging/Payments/payments.log')
 
 def readMessage(message):
     """This method is used as a callback when a message from the cloud is received.
@@ -21,18 +25,18 @@ def readMessage(message):
             # add the payment
             check, flag = lDB.addPayment(payment)
             if not check:
-                raise Exception(f'\terror saving data inside local DB: \n\t{flag}')
+                paymentsLogger.error(f'Error saving payments data inside local DB: {flag}')
         elif check:
             # update the payment
             check, flag = lDB.updatePayment(payment)
             if not check:
-                raise Exception(f'\terror saving data inside local DB: \n\t{flag}')
+                paymentsLogger.error(f'Error updating payments data inside local DB: {flag}')
         else:
             #there is an error to report
             raise Exception(flag)
-        print(f'message ID: {messageID}\nData: {data}\n')
+        paymentsLogger.info(f'message ID: {messageID}; Data: {data}')
     except Exception as e:
-        print(f"Error reading payments from the cloud: \n{e}")
+        paymentsLogger.error(f'Error reading payments from cloud (Azure): {e}')
 
 class ReadPayments:
     """This class allows to read incoming payments coming from cloud services
@@ -63,7 +67,7 @@ class ReadPayments:
         """This method read all payments coming from Azure.
         receive_message() is blocking"""
         await self.deviceClient.connect()
-        print(f"Waiting for incoming messages: {datetime.now().strftime('%d/%m/%Y %H:%M')}")
+        paymentsLogger.info(f"Waiting for incoming messages...")
         self.deviceClient.on_message_received = readMessage
         while True:
             time.sleep(1000)
