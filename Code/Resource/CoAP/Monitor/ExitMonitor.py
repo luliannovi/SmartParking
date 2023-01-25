@@ -8,8 +8,11 @@ from aiocoap import Code
 
 from kpn_senml import *
 
+from Code.Logging.Logger import loggerSetup
 from Code.Model.Monitor.Monitor import Monitor
 
+
+monitorLogger = loggerSetup('monitorLogger', 'Code/Logging/Monitor/monitor.log')
 
 class ExitMonitor(resource.Resource):
     """The class represents the resource monitor for parking exit"""
@@ -55,7 +58,7 @@ class ExitMonitor(resource.Resource):
         Methods handles GET request.
         See method self.buildSenMLJson() in interested in payload content.
         """
-        print("ExitMonitor with ID: " + self.monitorID + " --> GET Request Received...")
+        monitorLogger.info("ExitMonitor with ID: " + self.monitorID + " --> GET Request Received...")
         payload = self.buildSenMLJson()
         return aiocoap.Message(content_format=self.ct, payload=payload.encode('utf-8'))
 
@@ -66,9 +69,9 @@ class ExitMonitor(resource.Resource):
 
         See DataHandler > DataCollector > PlateManager.py if looking for message sender.
         """
-        print("ExitMonitor with ID: " + self.monitorID + " --> PUT Request Received...")
+        monitorLogger.info("ExitMonitor with ID: " + self.monitorID + " --> PUT Request Received...")
         json_paylaod_string = request.payload.decode('utf-8')
-        print("ExitMonitor with ID: " + self.monitorID + " --> PUT String Payload : " + json_paylaod_string)
+        monitorLogger.info("ExitMonitor with ID: " + self.monitorID + " --> PUT String Payload : " + json_paylaod_string)
         self.monitor.updateDisplay(json_paylaod_string)
 
     async def render_post(self, request):
@@ -76,7 +79,7 @@ class ExitMonitor(resource.Resource):
         Method handles a POST request.
         It switches monitor state (on/off).
         """
-        print("ExitMonitor with ID: " + self.monitorID + " --> POST Request Received...")
+        monitorLogger.info("ExitMonitor with ID: " + self.monitorID + " --> POST Request Received...")
         self.monitor.switchState()
         return aiocoap.Message(code=Code.CHANGED,
                                payload=f'{str(self.monitor.state)};display={str(self.monitor.display)}'.encode('utf-8'))
