@@ -36,6 +36,10 @@ class EntrySensorResource:
         print("Connected with result code: " + str(rc))
 
     def publish_telemetry(self):
+        """
+        Method used to send data by MQTT to a broker specified by MQTTParameters.
+        Quality of service = 0, Retained messages = off.
+        """
         target_topic = "{0}/{1}/{2}/{3}/{4}".format(
             self.mqttParameters.BASIC_TOPIC,
             self.mqttParameters.USERNAME,
@@ -44,5 +48,5 @@ class EntrySensorResource:
             self.mqttParameters.idClient
         )
         device_payload_string = self.entrySensor.toJson()
-        self.mqttClient.publish(target_topic, device_payload_string, 0, True)
+        self.mqttClient.publish(target_topic, device_payload_string, 0, False)
         print(f"Telemetry data Published at {time.time()}: \nTopic: {target_topic}\nPayload: {device_payload_string}")

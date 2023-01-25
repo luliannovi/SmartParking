@@ -67,6 +67,9 @@ class PlateManager:
             jsonData = json.loads(message_payload)
 
             if jsonData['error'] is False and valid is True:
+                """
+                controlla -> se firstID=0 o availables = 0, ritorna stringa per cui si indica posti non disponibili 
+                """
                 self.put_message("uri_for_entryMonitor",
                             "Total parking slots available: " + availables + "\nThe nearest parking slot in: " + firstId
                             + "\nReaded plate: " + jsonData['carPlate'])
