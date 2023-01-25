@@ -6,7 +6,7 @@ from MQTTClientParameters import MQTTClientParameters
 import json
 
 
-class ParkingSensorResource:
+class ExitSensorResource:
 
     def __init__(self):
         self.mqttParameters = None

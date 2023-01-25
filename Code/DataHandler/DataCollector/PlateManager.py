@@ -1,14 +1,18 @@
 import json
+import logging
 import time
 import aiocoap
 import paho.mqtt.client as mqtt
-from MQTTBrokerParameters import MQTTBrokerParameters
+from Code.DataHandler.DataCollector.MQTTBrokerParameters import MQTTBrokerParameters
 from Code.DataHandler.DataManager.Configuration.LocalDB import LocalDB
 from Code.Model.Car.ParkingSlot import ParkingSlot
 from aiocoap import *
 from Code.Logging.Logger import loggerSetup
 
-logger = loggerSetup("plateLogger","Code/Logging/Plate/plate.log")
+import asyncio
+
+plateLogger = loggerSetup("plateLogger", "Code/Logging/Plate/plate.log")
+BASE_URI = 'coap://127.0.0.1:5683/'
 
 
 class PlateManager:
@@ -20,6 +24,7 @@ class PlateManager:
     def __init__(self):
         self.mqttClient = None
         self.mqttBrokerParameters = None
+        self.configurations()
 
     def configurations(self):
         self.mqttBrokerParameters = MQTTBrokerParameters()
@@ -27,8 +32,8 @@ class PlateManager:
         self.mqttBrokerParameters.fromJson(configparser)
         self.mqttBrokerParameters.idClient = "PlateManager"
         self.mqttClient = mqtt.Client(self.mqttBrokerParameters.idClient)
-        self.mqttClient.on_connect = self.on_connect
-        self.mqttClient.on_message = self.on_message
+        self.mqttClient.on_connect = PlateManager.on_connect
+        self.mqttClient.on_message = PlateManager.on_message
         self.mqttClient.username_pw_set(self.mqttBrokerParameters.USERNAME,
                                         self.mqttBrokerParameters.PASSWORD)
         self.mqttClient.connect(self.mqttBrokerParameters.BROKER_ADDRESS,
@@ -36,48 +41,58 @@ class PlateManager:
         self.mqttClient.loop_forever()
 
     @staticmethod
-    def on_connect(self, client, userdata, flags, rc):
-        devices_topic = "{0}/{1}/{2}/{3}/#".format(  # topic generico per ora
-            self.mqttBrokerParameters.BASIC_TOPIC,
-            self.mqttBrokerParameters.USERNAME,
-            self.mqttBrokerParameters.DEVICE_TOPIC,
-            self.mqttBrokerParameters.LOCATION
+    def on_connect(client, userdata, flags, rc):
+        mqttBrokerParameters = MQTTBrokerParameters()
+        configparser = open('Configuration/PlateReaderMQTTParameters/config.json')
+        mqttBrokerParameters.fromJson(configparser)
+        devices_topic = "{0}/{1}/{2}/#".format(  # topic generico per ora
+            mqttBrokerParameters.BASIC_TOPIC,
+            mqttBrokerParameters.USERNAME,
+            mqttBrokerParameters.DEVICE_TOPIC
         )
-        self.mqttClient.subscribe(devices_topic)
+        client.subscribe(devices_topic)
 
-        #print(self.mqttBrokerParameters.idClient + " subscribed to: " + devices_topic)
-        logger.info(self.mqttBrokerParameters.idClient + " subscribed to: " + devices_topic)
+        # print(self.mqttBrokerParameters.idClient + " subscribed to: " + devices_topic)
+        plateLogger.info(mqttBrokerParameters.idClient + " subscribed to: " + devices_topic)
 
     @staticmethod
-    def on_message(client, userdata, message):
-        message_payload = str(message.payload.decode("utf-8"))
-        print(f"Received IoT Message at {time.time().__str__()}:\nTopic: {message.topic}\nPayload: {message_payload}")
+    def on_message(client, userdata, msg):
+        message_payload = str(msg.payload.decode("utf-8"))
+        plateLogger.info(f"Received: Topic: {msg.topic} Payload: {message_payload}")
         localParkingDBManager = LocalDB("PARKING_SLOT")
         localPaymentsDBManager = LocalDB("PAYMENTS")
-        if str(message.topic).endswith("parking/in"):
+        if str(msg.topic).endswith("parking/in"):
             """
             no update to json files, if a car does not park it does not pay
             put/post to the gate (risorsa monitor in entrata e sbarra entrata) to open CoAP
             se sono presenti errori in lettura targa invio al monitor messaggio d'errore
             """
-            ret = localParkingDBManager.checkParkingSlots()
+            valid, availables, firstId = localParkingDBManager.checkParkingSlots()
 
             jsonData = json.loads(message_payload)
 
-            if jsonData['error'] is False and ret[0] is True:
-                put_message("uri_for_entryMonitor",
-                            "Total parking slots available: " + ret[1] + "\nThe nearest parking slot in: " + ret[2]
-                            + "\nReaded plate: " + jsonData['carPlate'])
-                post_message("uri_for_gate")
-            elif jsonData['error'] is True:
-                put_message("uri_for_entryMonitor", "Error in reading the plate.."
-                                                    "\nPlease press the HELP button.")
-            elif ret[0] is False:
-                put_message("uri_for_entryMonitor", "No parking slots available.")
-                print(ret[1])
-                post_message("uri_for_gate")
+            if jsonData['error'] is False and valid is True:
+                asyncio.get_event_loop().run_until_complete(put_message(BASE_URI + 'monitor_in',
+                                                                        "Total parking slots available: " + str(
+                                                                            availables) + "\nThe nearest parking slot in: " + str(
+                                                                            firstId)
+                                                                        + "\nReaded plate: " + jsonData['carPlate']))
+                asyncio.get_event_loop().run_until_complete(post_message(BASE_URI + 'gate_in'))
 
-        elif str(message.topic).endswith("parking/out"):
+            elif jsonData['error'] is True:
+                loop = asyncio.get_event_loop()
+                loop.run_until_complete(put_message(BASE_URI + 'IoT/device/monitor/in', "Error in reading the plate.."
+                                                                                        "\nPlease press the HELP button."))
+                loop.close()
+            elif valid is False:
+                errorString = availables
+                loop = asyncio.get_event_loop()
+                loop.run_until_complete(put_message(BASE_URI + 'IoT/device/monitor/in', "No parking slots available."))
+                plateLogger.error(errorString)
+                loop.run_until_complete(post_message(BASE_URI + 'IoT/actuator/gate/in'))
+                loop.close()
+
+        elif str(msg.topic).endswith("parking/out"):
             """
             control the payment
             put/post to the gate (monitor in uscita e sbarra) to open CoAP
@@ -86,20 +101,30 @@ class PlateManager:
             """
             jsonData = json.loads(message_payload)
             if jsonData['error'] is True:
-                put_message("uri_for_exitMonitor", "Error in reading the plate.."
-                                                   "\nPlease press the HELP button.")
+                loop = asyncio.get_event_loop()
+                loop.run_until_complete(put_message("uri_for_exitMonitor", "Error in reading the plate.."
+                                                                           "\nPlease press the HELP button."))
+                loop.close()
             else:
-                ret = localPaymentsDBManager.getPaymentByLicense(jsonData['carPlate'])
-                if ret[0] is True and ret[1] is None:
-                    put_message("uri_for _exitMonitor", "No payments founded for your car (" + jsonData[
-                        'carPlate'] + "). Please pay and comeback.")
-                elif ret[0] is True and ret[1] is not None:
-                    put_message("uri_for _exitMonitor",
-                                "Payments founded for your car (" + jsonData['carPlate'] + "). Goodbye." + ret[1])
-                    post_message("uri_for_exitGate")
+                valid, instance = localPaymentsDBManager.getPaymentByLicense(jsonData['carPlate'])
+                if valid is True and instance is None:
+                    loop = asyncio.get_event_loop()
+                    loop.run_until_complete(
+                        put_message("uri_for _exitMonitor", "No payments founded for your car (" + jsonData[
+                            'carPlate'] + "). Please pay and comeback."))
+                elif valid is True and instance is not None:
+                    loop = asyncio.get_event_loop()
+                    loop.run_until_complete(put_message("uri_for _exitMonitor",
+                                                        "Payments founded for your car (" + jsonData[
+                                                            'carPlate'] + "). Goodbye." + instance))
+                    loop.run_until_complete(post_message("uri_for_exitGate"))
                 else:
-                    put_message("uri_for _exitMonitor", "Error checking the payment. Please press HELP button.")
-                    print(ret[1])
+                    error_string = instance
+                    loop = asyncio.get_event_loop()
+                    loop.run_until_complete(
+                        put_message("uri_for _exitMonitor", "Error checking the payment. Please press HELP button."))
+                    loop.close()
+                    print(error_string)
         else:
             """
             TODO: put/post to the monitor parking slots free and the nearest place
@@ -114,13 +139,18 @@ class PlateManager:
                 """
                 checking parking slots available and the nearest
                 """
-                ret = localParkingDBManager.checkParkingSlots()
-                if ret[0] is True:
-                    put_message("uri_entryMonitor",
-                                "Total parking slots available: " + ret[1] + "\nThe nearest parking slot in: " + ret[2])
+                valid, availables, firstId = localParkingDBManager.checkParkingSlots()
+                if valid is True:
+                    loop = asyncio.get_event_loop()
+                    loop.run_until_complete(put_message("uri_entryMonitor",
+                                                        "Total parking slots available: " + availables + "\nThe nearest parking slot in: " + firstId))
+                    loop.close()
                 else:
-                    put_message("uri_entryMonitor", ret[1])
-                    print(ret[1])
+                    error_string = availables
+                    loop = asyncio.get_event_loop()
+                    loop.run_until_complete(put_message("uri_entryMonitor", error_string))
+                    loop.close()
+                    print(error_string)
 
             else:
                 car = jsonData['car']
@@ -131,43 +161,44 @@ class PlateManager:
                 """
                 checking parking slots available and the nearest
                 """
-                ret = localParkingDBManager.checkParkingSlots()
-                if ret[0] is True:
-                    put_message("uri_entryMonitor",
-                                "Total parking slots available: " + ret[1] + "\nThe nearest parking slot in: " + ret[2])
+                valid, availables, firstId = localParkingDBManager.checkParkingSlots()
+                if valid is True:
+                    loop = asyncio.get_event_loop()
+                    loop.run_until_complete(put_message("uri_entryMonitor",
+                                                        "Total parking slots available: " + availables + "\nThe nearest parking slot in: " + firstId))
+                    loop.close()
                 else:
-                    put_message("uri_entryMonitor", ret[1])
-                    print(ret[1])
-
-    def loop(self):
-        self.configurations()
+                    error_string = availables
+                    loop = asyncio.get_event_loop()
+                    loop.run_until_complete(put_message("uri_entryMonitor", error_string))
+                    loop.close()
+                    print(error_string)
 
     def stop(self):
         self.stop()
 
 
-async def put_message(URI, message):
-    logging.basicConfig(level=logging.INFO)
+async def put_message(URI, text):
     protocol = await Context.create_client_context()
-    request = Message(code=aiocoap.Code.PUT, payload=message, uri=URI)
+    request = Message(code=aiocoap.Code.PUT, payload=text.encode('utf-8'), uri=URI)
     try:
         response = await protocol.request(request).response
     except Exception as e:
-        print(print('Failed to fetch resource: '))
+        print('Failed to fetch resource: ')
         print(e)
     else:
-        print('Result: %s\n%r' % (response.code, response.payload))
+        if response is not None:
+            print('Result: %s\n%r' % (response.code, response.payload.decode("utf-8")))
 
 
 async def post_message(URI):
-    logging.basicConfig(level=logging.INFO)
     protocol = await Context.create_client_context()
     request = Message(code=aiocoap.Code.POST, uri=URI)
-
     try:
         response = await protocol.request(request).response
     except Exception as e:
-        print(print('Failed to fetch resource: '))
+        print('Failed to fetch resource: ')
         print(e)
     else:
-        print('Result: %s\n%r' % (response.code, response.payload))
+        if response is not None:
+            print('Result: %s\n%r' % (response.code, response.payload.decode("utf-8")))

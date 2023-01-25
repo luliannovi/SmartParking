@@ -55,7 +55,7 @@ class LocalDB:
 
     def getPaymentByLicense(self, licensePlate):
         """This method return a payment instance
-        True,istance is returned if everything is ok otherwise False,STR is returned.
+        True,instance is returned if everything is ok otherwise False,STR is returned.
         If no payments if found True, None is returned.
         """
         try:
@@ -165,8 +165,7 @@ class LocalDB:
         
     def addParkingSlot(self, parkingSlot):
         """
-        riceve aggiornamento su un singolo parkingSlot, libero o occupato
-        con stringa riguardo alla targa
+        the method gets updates about a single parkingSlot (free/taken) with a string that contains the plate
         """
         try:
             with open(LocalDB.SUPPORTED_MEDIA[self.type], 'r+') as jsonStream:
