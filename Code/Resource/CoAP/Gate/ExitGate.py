@@ -19,19 +19,19 @@ class ExitGate(resource.Resource):
     The class represents the resource Gate for park's exit
     """
 
-    def __init__(self, gateID, descrizione, timesleep):
+    def __init__(self, gateID, description, timesleep):
         """
         @param gateID: ID of the exit gate (str)
-        @param descrizione: gate description (str)
+        @param description: gate description (str)
         @param timesleep: seconds the gate has to wait before
         automatically closing after it was opened (int indicating seconds)
         """
         super().__init__()
         self.gateID = gateID
-        self.descrizione = descrizione
+        self.description = description
         self.timesleep = timesleep
 
-        self.exitGate = Gate(gateID, descrizione, timesleep)
+        self.exitGate = Gate(gateID, description, timesleep)
         # interface actuator
         self.if_ = 'core.a'
         # resource type
