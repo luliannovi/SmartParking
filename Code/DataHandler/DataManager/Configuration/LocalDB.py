@@ -185,18 +185,6 @@ class LocalDB:
             jsonStreamWrite.write(json.dumps(dataJson, indent=4))
             jsonStreamWrite.close()
             return True, ''
-            """todo
-            with open(LocalDB.SUPPORTED_MEDIA[self.type], 'r+') as jsonStream:
-                try:
-                    dataJson = json.load(jsonStream)
-                except JSONDecodeError:
-                    dataJson = []
-                for i in dataJson:
-                    if i['id'] == parkingSlot.id:
-                        dataJson.remove(i)
-                        break
-                dataJson.append(parkingSlot.toJson())
-                json.dump(dataJson, jsonStream, indent=4) return True, ''"""
 
         except Exception as e:
             logger.error(e)

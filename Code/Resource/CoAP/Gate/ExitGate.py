@@ -11,7 +11,7 @@ from Code.Logging.Logger import loggerSetup
 from Code.Model.Gate.Gate import Gate
 
 
-gateLogger = loggerSetup('gateLogger', 'Code/Logging/Gate/gate.log')
+gateLogger = loggerSetup('gateLogger_ExitGate', 'Code/Logging/Gate/gate.log')
 
 
 class ExitGate(resource.Resource):

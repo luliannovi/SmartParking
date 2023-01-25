@@ -1,13 +1,13 @@
 [
     {
         "id": 1,
-        "state": "True",
-        "car": "FM056GT"
+        "state": "False",
+        "car": ""
     },
     {
         "id": 2,
-        "state": "True",
-        "car": "FM056GT"
+        "state": "False",
+        "car": ""
     },
     {
         "id": 3,
@@ -26,8 +26,8 @@
     },
     {
         "id": 6,
-        "state": "False",
-        "car": ""
+        "state": "True",
+        "car": "FM056GT"
     },
     {
         "id": 7,

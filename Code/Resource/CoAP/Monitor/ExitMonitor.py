@@ -12,7 +12,7 @@ from Code.Logging.Logger import loggerSetup
 from Code.Model.Monitor.Monitor import Monitor
 
 
-monitorLogger = loggerSetup('monitorLogger', 'Code/Logging/Monitor/monitor.log')
+monitorLogger = loggerSetup('monitorLogger_ExitMonitor', 'Code/Logging/Monitor/monitor.log')
 
 class ExitMonitor(resource.Resource):
     """The class represents the resource monitor for parking exit"""

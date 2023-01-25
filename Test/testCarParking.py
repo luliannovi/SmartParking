@@ -14,11 +14,13 @@ check, available, id = lDB.checkParkingSlots()
 if check and available > 0:
     car = Car(licensePlate='FM056GT')
     # simulate car entrance inside parking slot inside first available slot. We suppose that par
-    parkingSensorResource = ParkingSensorResource(parkingPlace=id)
+    parkingSensorResource = ParkingSensorResource(parkingPlaceId=1)
     parkingSensorResource.plateUpdate(car.licensePlate)
-    # TODO -> FARE L'USCITA DAL POSTO DI PARCHEGGIO
-
-    # TODO -> FARE CAMBIO POSTO IN PARCHEGGIO
+    # car leaves previous parking slot
+    parkingSensorResource.plateUpdate("")
+    # simulate getting another place, we assume that others are empty
+    parkingSensorResource = ParkingSensorResource(parkingPlaceId=6)
+    parkingSensorResource.plateUpdate(car.licensePlate)
 else:
     parkingLogger.error("No parking slots available")
 
