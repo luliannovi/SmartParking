@@ -3,8 +3,9 @@ from datetime import datetime
 from Code.Logging.Logger import loggerSetup
 
 paymentsLogger = loggerSetup('paymentsLogger', 'Code/Logging/Payments/payments.log')
-URL = """https://sendpaymentscode.azurewebsites.net/api/PaymentsReceiverHTTP?code={}"""
-FUNCTION_KEY = """qutLVUJeqUP1Fiomlo2irHjq6D1BO2fI0FN_c9gh2uUNAzFu_GJDXg=="""
+
+URL = """https://paymentslambda.azurewebsites.net/api/HttpPaymentsHandler?code={}"""
+FUNCTION_KEY = """lE1Qt9uJnAM9X2scZGBHBKZV_PPaSTrgaatxFQ-8Y2ecAzFuQn8U8w=="""
 
 
 transactionID = 6
