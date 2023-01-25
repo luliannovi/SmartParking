@@ -7,7 +7,11 @@ import aiocoap
 
 from kpn_senml import *
 
+from Code.Logging.Logger import loggerSetup
 from Code.Model.Gate.Gate import Gate
+
+
+gateLogger = loggerSetup('gateLogger', 'Code/Logging/Gate/gate.log')
 
 
 class ExitGate(resource.Resource):
@@ -15,19 +19,19 @@ class ExitGate(resource.Resource):
     The class represents the resource Gate for park's exit
     """
 
-    def __init__(self, gateID, descrizione, timesleep):
+    def __init__(self, gateID, description, timesleep):
         """
         @param gateID: ID of the exit gate (str)
-        @param descrizione: gate description (str)
+        @param description: gate description (str)
         @param timesleep: seconds the gate has to wait before
         automatically closing after it was opened (int indicating seconds)
         """
         super().__init__()
         self.gateID = gateID
-        self.descrizione = descrizione
+        self.description = description
         self.timesleep = timesleep
 
-        self.exitGate = Gate(gateID, descrizione, timesleep)
+        self.exitGate = Gate(gateID, description, timesleep)
         # interface actuator
         self.if_ = 'core.a'
         # resource type
@@ -49,13 +53,13 @@ class ExitGate(resource.Resource):
 
     def render_get(self):
         """Method handles GET requests"""
-        print("ExitGate with ID: " + self.gateID + " --> GET Request Received...")
+        gateLogger.info("ExitGate with ID: " + self.gateID + " --> GET Request Received...")
         payload = self.buildSenMLJson()
         return aiocoap.Message(content_format=self.ct, payload=payload.encode('utf-8'))
 
     def render_post(self):
         """Method handles POST requests. Changes Gate state"""
-        print("ExitGate with ID: " + self.gateID + " --> POST Request Received...")
+        gateLogger.info("ExitGate with ID: " + self.gateID + " --> POST Request Received...")
         self.exitGate.switchState()
         return aiocoap.Message(code=Code.CHANGED,
                                payload=f'{str(self.exitGate.state)};timesleep={str(self.timesleep)}'.encode('utf-8'))

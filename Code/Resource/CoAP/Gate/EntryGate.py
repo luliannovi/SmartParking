@@ -7,24 +7,26 @@ from aiocoap import Code
 
 from kpn_senml import *
 
+from Code.Logging.Logger import loggerSetup
 from Code.Model.Gate.Gate import Gate
 
+gateLogger = loggerSetup('plateLogger', 'Code/Logging/Gate/gate.log')
 
 class EntryGate(resource.Resource):
     """
     The class represents the resource Gate for park's entrance
     """
 
-    def __init__(self, gateID, descrizione, timesleep):
+    def __init__(self, gateID, description, timesleep):
         """
         @param timesleep: indicates second to wait in order to close the gate after it was opened
         """
         super().__init__()
         self.gateID = gateID
         self.timesleep = timesleep
-        self.descrizione = descrizione
+        self.description = description
 
-        self.entryGate = Gate(self.gateID, descrizione, timesleep)
+        self.entryGate = Gate(self.gateID, description, timesleep)
         # interface actuator
         self.if_ = "core.a"
         # resource type
@@ -45,14 +47,14 @@ class EntryGate(resource.Resource):
 
     async def render_get(self, request):
         """Method handles GET requests"""
-        print("EntryGate with ID: " + self.gateID + " --> GET Request Received...")
+        gateLogger.info("EntryGate with ID: " + self.gateID + " --> GET Request Received...")
         payload = self.buildSenMLJson()
         return aiocoap.Message(content_format=self.ct, payload=payload.encode('utf-8'))
 
     async def render_post(self, request):
         """Method handles POST requests. Changes Gate state"""
-        print("EntryGate with ID: " + self.gateID + " --> POST Request Received...")
+        gateLogger.info("EntryGate with ID: " + self.gateID + " --> POST Request Received...")
         self.entryGate.switchState()
-        print("Sending response: " + f'{str(self.entryGate.state)};timesleep={str(self.timesleep)}')
+        gateLogger.info("Sending response: " + f'{str(self.entryGate.state)};timesleep={str(self.timesleep)}')
         return aiocoap.Message(code=Code.CHANGED,
                                paylaod=f'{str(self.entryGate.state)};timesleep={str(self.timesleep)}'.encode('utf-8'))
