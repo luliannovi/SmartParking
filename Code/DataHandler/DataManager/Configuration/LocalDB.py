@@ -163,11 +163,29 @@ class LocalDB:
                     id = parkingSlot.id
         return True, available, id
         
-    def addParkingSlot(self, parkingSlot):
+    def updateParkingSlot(self, parkingSlot):
         """
         the method gets updates about a single parkingSlot (free/taken) with a string that contains the plate
         """
         try:
+            # mio
+            jsonStreamRead = open(LocalDB.SUPPORTED_MEDIA[self.type], "r")
+            try:
+                dataJson = json.load(jsonStreamRead)
+            except JSONDecodeError:
+                dataJson = []
+            jsonStreamRead.close()
+
+            jsonStreamWrite = open(LocalDB.SUPPORTED_MEDIA[self.type], "w")
+            for index in range(len(dataJson)):
+                if dataJson[index].get("id", "") == parkingSlot.id:
+                    dataJson[index] = parkingSlot.__dict__
+                    dataJson[index]["state"] = str(dataJson[index]["state"])
+            jsonStreamWrite.truncate(0)
+            jsonStreamWrite.write(json.dumps(dataJson, indent=4))
+            jsonStreamWrite.close()
+            return True, ''
+            """todo
             with open(LocalDB.SUPPORTED_MEDIA[self.type], 'r+') as jsonStream:
                 try:
                     dataJson = json.load(jsonStream)
@@ -178,8 +196,8 @@ class LocalDB:
                         dataJson.remove(i)
                         break
                 dataJson.append(parkingSlot.toJson())
-                json.dump(dataJson, jsonStream, indent=4)
-            return True, ''
+                json.dump(dataJson, jsonStream, indent=4) return True, ''"""
+
         except Exception as e:
             logger.error(e)
             return False, f'Error with "addParkingSlot": {e}'

@@ -12,6 +12,7 @@ from Code.Logging.Logger import loggerSetup
 import asyncio
 
 plateLogger = loggerSetup("plateLogger_PlateManager", "Code/Logging/Plate/plate.log")
+
 BASE_URI = 'coap://127.0.0.1:5683/'
 
 
@@ -132,11 +133,11 @@ class PlateManager:
                         reading from the json
                 """
                 jsonData = json.loads(message_payload)
-                if jsonData['car'] is None:
+                if jsonData["car"] is None:
                     parkingSlot = ParkingSlot(jsonData['parkingPlace'],
                                               False,
                                               "")
-                    localParkingDBManager.addParkingSlot(parkingSlot)
+                    localParkingDBManager.updateParkingSlot(parkingSlot)
                     """
                     checking parking slots available and the nearest
                     """
@@ -157,8 +158,8 @@ class PlateManager:
                     car = jsonData['car']
                     parkingSlot = ParkingSlot(jsonData['parkingPlace'],
                                               True,
-                                              car.licensePlate)
-                    localParkingDBManager.addParkingSlot(parkingSlot)
+                                              car["licensePlate"])
+                    localParkingDBManager.updateParkingSlot(parkingSlot)
                     """
                     checking parking slots available and the nearest
                     """
@@ -174,8 +175,8 @@ class PlateManager:
                         loop.run_until_complete(put_message("uri_entryMonitor", error_string))
                         loop.close()
                         print(error_string)
-        except Exception:
-            pass
+        except Exception as e:
+            plateLogger.error(e)
 
     def stop(self):
         self.stop()

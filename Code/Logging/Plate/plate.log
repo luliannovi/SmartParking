@@ -40,3 +40,31 @@
 2023-01-25 16:19:58,320 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 0, "error": false} Retain: 0
 2023-01-25 16:21:14,675 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
 2023-01-25 16:21:18,185 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 0, "error": false} Retain: 0
+2023-01-25 16:36:27,135 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 16:40:50,635 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/1 Payload: {"parkingPlace": 1, "car": "FM056GT", "readingTime": 0, "error": false} Retain: 0
+2023-01-25 16:50:03,061 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/1 Payload: {"parkingPlace": 1, "car": {"licensePlate": "FM056GT", "parkingSlot": null, "paid": false, "entryTime": 1674661802.998518, "exitTime": 0, "deltaTime": 0}, "readingTime": 1674661802.998518, "error": false} Retain: 0
+2023-01-25 16:56:37,381 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 16:56:42,887 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/1 Payload: {"parkingPlace": 1, "car": {"licensePlate": "FM056GT", "parkingSlot": null, "paid": false, "entryTime": 1674662202.855233, "exitTime": 0, "deltaTime": 0}, "readingTime": 1674662202.855233, "error": false} Retain: 0
+2023-01-25 16:57:10,770 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 16:57:29,891 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/1 Payload: {"parkingPlace": 1, "car": {"licensePlate": "FM056GT", "parkingSlot": null, "paid": false, "entryTime": 1674662249.857227, "exitTime": 0, "deltaTime": 0}, "readingTime": 1674662249.857227, "error": false} Retain: 0
+2023-01-25 16:58:07,425 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/1 Payload: {"parkingPlace": 1, "car": {"licensePlate": "FM056GT", "parkingSlot": null, "paid": false, "entryTime": 1674662287.397023, "exitTime": 0, "deltaTime": 0}, "readingTime": 1674662287.397023, "error": false} Retain: 0
+2023-01-25 16:58:24,650 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 16:58:30,262 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/1 Payload: {"parkingPlace": 1, "car": {"licensePlate": "FM056GT", "parkingSlot": null, "paid": false, "entryTime": 1674662310.229983, "exitTime": 0, "deltaTime": 0}, "readingTime": 1674662310.229983, "error": false} Retain: 0
+2023-01-25 16:59:13,475 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 16:59:18,777 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/1 Payload: {"parkingPlace": 1, "car": {"licensePlate": "FM056GT", "parkingSlot": null, "paid": false, "entryTime": 1674662358.744076, "exitTime": 0, "deltaTime": 0}, "readingTime": 1674662358.744076, "error": false} Retain: 0
+2023-01-25 17:00:25,211 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 17:00:28,061 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/1 Payload: {"parkingPlace": 1, "car": {"licensePlate": "FM056GT", "parkingSlot": null, "paid": false, "entryTime": 1674662428.024851, "exitTime": 0, "deltaTime": 0}, "readingTime": 1674662428.025463, "error": false} Retain: 0
+2023-01-25 17:00:28,061 ERROR 'dict' object has no attribute 'toJson'
+2023-01-25 17:01:08,081 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 17:01:14,346 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/1 Payload: {"parkingPlace": 1, "car": {"licensePlate": "FM056GT", "parkingSlot": null, "paid": false, "entryTime": 1674662474.311824, "exitTime": 0, "deltaTime": 0}, "readingTime": 1674662474.311824, "error": false} Retain: 0
+2023-01-25 17:01:14,347 ERROR 'dict' object has no attribute 'licensePlate'
+2023-01-25 17:01:52,147 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 17:01:55,618 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/1 Payload: {"parkingPlace": 1, "car": {"licensePlate": "FM056GT", "parkingSlot": null, "paid": false, "entryTime": 1674662515.581158, "exitTime": 0, "deltaTime": 0}, "readingTime": 1674662515.581158, "error": false} Retain: 0
+2023-01-25 17:07:23,561 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 17:07:27,894 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/1 Payload: {"parkingPlace": 1, "car": {"licensePlate": "FM056GT", "parkingSlot": null, "paid": false, "entryTime": 1674662847.852173, "exitTime": 0, "deltaTime": 0}, "readingTime": 1674662847.852173, "error": false} Retain: 0
+2023-01-25 17:09:59,631 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 17:10:50,432 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 17:10:54,571 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/1 Payload: {"parkingPlace": 1, "car": {"licensePlate": "FM056GT", "parkingSlot": null, "paid": false, "entryTime": 1674663054.537908, "exitTime": 0, "deltaTime": 0}, "readingTime": 1674663054.537908, "error": false} Retain: 0
+2023-01-25 17:12:03,145 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 17:12:14,532 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/2 Payload: {"parkingPlace": 2, "car": {"licensePlate": "FM056GT", "parkingSlot": null, "paid": false, "entryTime": 1674663134.49791, "exitTime": 0, "deltaTime": 0}, "readingTime": 1674663134.49791, "error": false} Retain: 0
+2023-01-25 17:12:14,541 ERROR can only concatenate str (not "int") to str
