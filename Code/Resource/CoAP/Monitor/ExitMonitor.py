@@ -73,6 +73,8 @@ class ExitMonitor(resource.Resource):
         json_paylaod_string = request.payload.decode('utf-8')
         monitorLogger.info("ExitMonitor with ID: " + self.monitorID + " --> PUT String Payload : " + json_paylaod_string)
         self.monitor.updateDisplay(json_paylaod_string)
+        return aiocoap.Message(code=Code.CHANGED,
+                               payload=f'{str(self.monitor.state)};display={str(self.monitor.display)}'.encode('utf-8'))
 
     async def render_post(self, request):
         """

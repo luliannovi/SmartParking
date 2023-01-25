@@ -14,6 +14,7 @@ class EntrySensorResource:
         self.entrySensor = EntrySensor()
         self.configurations()
 
+
     def configurations(self):
         configFile = open("Configuration/PlateReaderMQTTParameters/config.json")
         self.mqttParameters = MQTTClientParameters()
@@ -44,5 +45,5 @@ class EntrySensorResource:
             self.mqttParameters.idClient
         )
         device_payload_string = self.entrySensor.toJson()
-        self.mqttClient.publish(target_topic, device_payload_string, 0, True)
+        self.mqttClient.publish(target_topic, device_payload_string, 0, False)
         print(f"Telemetry data Published at {time.time()}: \nTopic: {target_topic}\nPayload: {device_payload_string}")

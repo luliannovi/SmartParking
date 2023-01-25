@@ -1,0 +1,42 @@
+2023-01-25 15:31:47,996 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 15:31:48,103 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 0, "error": false}
+2023-01-25 15:35:00,194 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 15:35:00,298 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 0, "error": false}
+2023-01-25 15:36:02,047 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 0, "error": false}
+2023-01-25 15:46:09,999 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 15:46:10,102 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 0, "error": false}
+2023-01-25 15:46:33,296 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 0, "error": false}
+2023-01-25 15:51:43,843 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 15:51:43,951 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 0, "error": false}
+2023-01-25 15:52:00,234 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 15:52:00,342 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 0, "error": false}
+2023-01-25 15:53:46,240 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 15:53:46,346 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 0, "error": false} Retain: 1
+2023-01-25 15:57:06,574 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 15:57:06,682 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 0, "error": false} Retain: 1
+2023-01-25 15:57:15,472 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload:  Retain: 0
+2023-01-25 15:58:51,617 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 15:58:56,496 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload:  Retain: 0
+2023-01-25 15:59:35,381 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 15:59:39,468 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 0, "error": false} Retain: 0
+2023-01-25 16:01:49,407 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 16:01:53,017 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 0, "error": false} Retain: 0
+2023-01-25 16:02:16,701 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 16:02:29,632 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 0, "error": false} Retain: 0
+2023-01-25 16:03:16,582 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 16:03:19,230 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 0, "error": false} Retain: 0
+2023-01-25 16:06:31,528 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 16:06:34,535 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 0, "error": false} Retain: 0
+2023-01-25 16:10:17,916 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 16:10:20,320 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 0, "error": false} Retain: 0
+2023-01-25 16:11:23,642 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 16:11:27,358 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 0, "error": false} Retain: 0
+2023-01-25 16:11:58,612 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 16:12:02,336 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 0, "error": false} Retain: 0
+2023-01-25 16:13:08,894 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 16:13:12,774 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 0, "error": false} Retain: 0
+2023-01-25 16:18:26,651 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 16:19:54,430 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 16:19:58,320 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 0, "error": false} Retain: 0
+2023-01-25 16:21:14,675 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#
+2023-01-25 16:21:18,185 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 0, "error": false} Retain: 0
