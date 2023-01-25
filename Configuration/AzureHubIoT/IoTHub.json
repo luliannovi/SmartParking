@@ -1,8 +1,8 @@
 {
-  "DEVICE_ID": "SmartParkingIot-Hub",
-  "PRIMARY_KEY": "qpOA8XAjh4nb8hEswJ3lgMJ+3E/AZtTRLQcJX8k4SuI=",
-  "SECONDARY_KEY": "p6InPBwBy2NjZX1V2PcGANljdoYULA1IiYX/MkLkITo=",
-  "IOT_HUB_NAME": "SmartParking",
-  "FIRST_CONNECTION_STRING": "HostName=SmartParking.azure-devices.net;DeviceId=SmartParkingIot-Hub;SharedAccessKey=qpOA8XAjh4nb8hEswJ3lgMJ+3E/AZtTRLQcJX8k4SuI=",
-  "SECOND_CONNECTION_STRING": "HostName=SmartParking.azure-devices.net;DeviceId=SmartParkingIot-Hub;SharedAccessKey=p6InPBwBy2NjZX1V2PcGANljdoYULA1IiYX/MkLkITo="
+  "DEVICE_ID": "IoTHub",
+  "PRIMARY_KEY": "Y6QhbEvPmKJYUyZXVZxLNueM2T1+PGrG055SVsjBDbw=",
+  "SECONDARY_KEY": "z+W/K2k5SLulr+r0AcymnZtAdYQGTYNC2kNpxjRodAg=",
+  "IOT_HUB_NAME": "SmartParking-IoTHub",
+  "FIRST_CONNECTION_STRING": "HostName=SmartParkingIoTProject.azure-devices.net;DeviceId=IoTHub;SharedAccessKey=Y6QhbEvPmKJYUyZXVZxLNueM2T1+PGrG055SVsjBDbw=",
+  "SECOND_CONNECTION_STRING": "HostName=SmartParkingIoTProject.azure-devices.net;DeviceId=IoTHub;SharedAccessKey=z+W/K2k5SLulr+r0AcymnZtAdYQGTYNC2kNpxjRodAg="
 }
