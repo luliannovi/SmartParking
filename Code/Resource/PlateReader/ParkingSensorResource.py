@@ -30,6 +30,10 @@ class ParkingSensorResource:
                                 self.mqttParameters.BROKER_PORT)
 
     def plateUpdate(self, carPlate):
+        """
+        Used to update the car presence in a parking slot.
+        carPlate must be a string.
+        """
         self.parkingSensor.readThePlate(carPlate)
         self.publish_telemetry()
 
@@ -38,6 +42,9 @@ class ParkingSensorResource:
         plateLogger.info("Connected with result code: " + str(rc))
 
     def publish_telemetry(self):
+        """
+        Used to share the plate of a car in a parking slot or a free parking slot through MQTT
+        """
         target_topic = "{0}/{1}/{2}/{3}/{4}".format(
             self.mqttParameters.BASIC_TOPIC,
             self.mqttParameters.USERNAME,

@@ -155,6 +155,9 @@ class PlateManager:
                         plateLogger.error(f"Parking slot with id: {str(parkingSlot.id)}. {str(error_string)}.")
 
                 else:
+                    """
+                    A car has arrived in a parking slot
+                    """
                     car = jsonData['car']
                     parkingSlot = ParkingSlot(jsonData['parkingPlace'],
                                               True,
@@ -199,7 +202,7 @@ async def put_message(URI, text):
         plateLogger.error(str(e))
     else:
         if response is not None:
-            plateLogger.info('Result: %s\n%r' % (response.code, response.payload.decode("utf-8")))
+            plateLogger.info('Result: %s - %r' % (response.code, response.payload.decode("utf-8")))
 
 
 async def post_message(URI):
@@ -211,4 +214,4 @@ async def post_message(URI):
         plateLogger.error(str(e))
     else:
         if response is not None:
-            plateLogger.info('Result: %s\n%r' % (response.code, response.payload.decode("utf-8")))
+            plateLogger.info('Result: %s - %r' % (response.code, response.payload.decode("utf-8")))

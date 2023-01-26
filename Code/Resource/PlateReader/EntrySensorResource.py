@@ -29,7 +29,7 @@ class EntrySensorResource:
                                 self.mqttParameters.BROKER_PORT)
 
     def plateUpdate(self, carPlate):
-        self.entrySensor.carPlate = carPlate
+        self.entrySensor.readThePlate(carPlate)
         self.publish_telemetry()
 
     @staticmethod
@@ -37,6 +37,9 @@ class EntrySensorResource:
         plateLogger.info("Connected with result code: " + str(rc))
 
     def publish_telemetry(self):
+        """
+        Used to share info about a car at the entrance through MQTT
+        """
         target_topic = "{0}/{1}/{2}/{3}/{4}".format(
             self.mqttParameters.BASIC_TOPIC,
             self.mqttParameters.USERNAME,
