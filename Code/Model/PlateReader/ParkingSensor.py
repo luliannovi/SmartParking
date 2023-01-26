@@ -16,7 +16,7 @@ class ParkingSensor:
 
     def readThePlate(self, carPlate):
         if isinstance(carPlate, str):
-            self.car = Car(None,carPlate)
+            self.car = Car(None, carPlate)
             self.readingTime = float(datetime.timestamp(datetime.now()))
         else:
             raise ValueError("Data passed as parameter must be a CarDescriptor class data")

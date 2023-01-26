@@ -3,7 +3,9 @@ import paho.mqtt.client as mqtt
 
 from Code.Resource.PlateReader.MQTTClientParameters import MQTTClientParameters
 from Code.Model.PlateReader.ParkingSensor import ParkingSensor
-import json
+from Code.Logging.Logger import loggerSetup
+
+plateLogger = loggerSetup("plateLogger_ParkingSlotSensor", "Code/Logging/Plate/plateParkingSlot.log")
 
 
 class ParkingSensorResource:
@@ -28,14 +30,21 @@ class ParkingSensorResource:
                                 self.mqttParameters.BROKER_PORT)
 
     def plateUpdate(self, carPlate):
+        """
+        Used to update the car presence in a parking slot.
+        carPlate must be a string.
+        """
         self.parkingSensor.readThePlate(carPlate)
         self.publish_telemetry()
 
     @staticmethod
     def on_connect(client, userdata, flags, rc):
-        print("Connected with result code: " + str(rc))
+        plateLogger.info("Connected with result code: " + str(rc))
 
     def publish_telemetry(self):
+        """
+        Used to share the plate of a car in a parking slot or a free parking slot through MQTT
+        """
         target_topic = "{0}/{1}/{2}/{3}/{4}".format(
             self.mqttParameters.BASIC_TOPIC,
             self.mqttParameters.USERNAME,
@@ -45,4 +54,4 @@ class ParkingSensorResource:
         )
         device_payload_string = self.parkingSensor.toJson()
         self.mqttClient.publish(target_topic, device_payload_string, 0, False)
-        print(f"Telemetry data Published at {time.time()}: \nTopic: {target_topic}\nPayload: {device_payload_string}")
+        plateLogger.info(f"Telemetry data Published at {time.time()}: Topic: {target_topic}Payload: {device_payload_string}")
