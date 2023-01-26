@@ -1,4 +1,4 @@
-from LampBrightness import LampBrightness
+from Code.Model.Light.LampBrightness import LampBrightness
 
 
 class Lamp:

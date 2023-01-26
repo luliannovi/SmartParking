@@ -1,10 +1,13 @@
 import json
 import aiocoap.resource as resource
 import aiocoap
+import time
+from kpn_senml import *
 from aiocoap.numbers.codes import Code
 from Code.Model.Light.Lamp import Lamp
 from Code.Model.Light.LampBrightness import LampBrightness
 from Code.Logging.Logger import loggerSetup
+import aiocoap.numbers as numbers
 
 lampLogger = loggerSetup("plateLogger_lampResource", "Code/Logging/Light/light.log")
 
@@ -34,11 +37,23 @@ class LampResource(resource.Resource):
         self.if_ = "core.a"
         # resource type
         self.rt = "it.resource.actuator.lamp"
+        self.ct = numbers.media_types_rev['application/senml+json']
+
+    def buildSenMLJson(self):
+        """The method created a SenML+Json representation of the gate resource."""
+        state = self.lightEmittor.brightness
+        pack = SenmlPack(self.lightEmittor.sensorId)
+        gate = SenmlRecord("Lamp",
+                           unit="Int",  # no standard unit exists
+                           value=state,
+                           time=int(time.time()))
+        pack.add(gate)
+        return pack.to_json()
 
     async def render_get(self, request):
         lampLogger.info("LampResource with ID: " + self.lightEmittor.sensorId + " --> GET Request Received ...")
-        payload_string = json.dumps(self.lightEmittor)
-        return aiocoap.Message(content_format=50, payload=payload_string.encode('utf8'))
+        payload = self.buildSenMLJson()
+        return aiocoap.Message(content_format=self.ct, payload=payload.encode('utf-8'))
 
     async def render_put(self, request):
         """
