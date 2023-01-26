@@ -1,7 +1,5 @@
 import datetime
 import json
-import logging
-import time
 import aiocoap
 import paho.mqtt.client as mqtt
 from Code.DataHandler.DataCollector.MQTTBrokerParameters import MQTTBrokerParameters
@@ -23,7 +21,10 @@ class PlateManager:
     """This class allows to manage the incoming messages from parking considering entry/exit/parking status update.
     Incoming messages allow the following features:
         - communicate with Firebase to store online parking availabilities
-        - send free slot to the entry monitor"""
+        - send free slot to the entry monitor
+        - update data on local json file
+        - send signal to entry and exit gate
+    """
 
     def __init__(self):
         self.mqttClient = None
@@ -113,7 +114,7 @@ class PlateManager:
                     if valid is True and instance is None:
                         asyncio.get_event_loop().run_until_complete(
                             put_message(BASE_URI + 'monitor_in', "No payments founded for your car (" + jsonData[
-                                'carPlate'] + "). Please pay and comeback."))
+                                'carPlate'] + ").Please pay and comeback."))
                         plateLogger.info(
                             f"No payments founded for car with plate {jsonData['carPlate']} present at the exit gate.")
                     elif valid is True and instance is not None:
@@ -124,6 +125,13 @@ class PlateManager:
                         asyncio.get_event_loop().run_until_complete(post_message(BASE_URI + 'gate_out'))
                         plateLogger.info(
                             f"Payments founded for car with plate {jsonData['carPlate']}. Sending message for gate opening.")
+
+                        valid, value = localParkedCarsDBManager.removeParkedCar(jsonData['carPlate'])
+                        if valid is False:
+                            plateLogger.error(value)
+                        elif value is str:
+                            plateLogger.info(value)
+
                     else:
                         error_string = instance
                         asyncio.get_event_loop().run_until_complete(
