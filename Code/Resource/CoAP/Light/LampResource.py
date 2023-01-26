@@ -60,7 +60,7 @@ class LampResource(resource.Resource):
         Receive a Lamp object with the correct brightness, setup the right brightness in lightEmittor.
         """
         lampLogger.info("LampResource with ID: " + self.lightEmittor.sensorId + " --> PUT Request Received ...")
-        brightness = str(request.payload.decode('UTF-8'))
+        brightness = int(request.payload.decode('UTF-8'))
         lampLogger.info(
             "LampResource with ID: " + self.lightEmittor.sensorId + " --> PUT String Payload : %s" % str(brightness))
 
