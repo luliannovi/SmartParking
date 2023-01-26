@@ -121,6 +121,27 @@ class LocalDB:
 
     """Methods that read each position"""
 
+    def getParkingSlotById(self, givenId):
+        """This method return a parking slot by the given id.
+        If there is no item an empty list will be returned.
+        For a list of parking slot -> True, parkingSlot.
+        For an error -> False, stringError.
+        For a empty parking slot file -> True, []"""
+
+        try:
+            with open(LocalDB.SUPPORTED_MEDIA[self.type], "r") as jsonStream:
+                try:
+                    jsonData = json.load(jsonStream)
+                    for data in jsonData:
+                        if data['id'] == givenId:
+                            return True, data
+                    return True, []
+                except JSONDecodeError:
+                    return True, []
+        except Exception as e:
+            logger.error(e)
+            return False, f'Error with "getParkingSlot": {e}'
+
     def getParkingSlot(self):
         """This method return all the json object stored inside.
         If there is no item an empty list will be returned.
@@ -194,9 +215,41 @@ class LocalDB:
 
     """Methods that handles car.json update"""
 
+    def updateExitTime(self, plate, exitTime):
+        """
+        The method permit to insert the exit time for a car leaving a specific parking slot.
+
+        :return: (False, errorString) if errors occurs, (True, '') otherwise.
+        """
+        try:
+            jsonStreamRead = open(LocalDB.SUPPORTED_MEDIA[self.type], "r")
+            try:
+                dataJson = json.load(jsonStreamRead)
+            except JSONDecodeError:
+                dataJson = []
+            jsonStreamRead.close()
+
+            jsonStreamWrite = open(LocalDB.SUPPORTED_MEDIA[self.type], "w")
+            found = False
+            for index in range(len(dataJson)):
+                if dataJson[index].get("plate", "") == plate:
+                    slots = dataJson[index].get("slots", None)
+                    found = True
+                    slots[len(slots) - 1]["exitTime"] = exitTime
+
+            if not found:
+                return False, "no car with that plate founded in memory"
+            jsonStreamWrite.truncate(0)
+            jsonStreamWrite.write(json.dumps(dataJson, indent=4))
+            jsonStreamWrite.close()
+            return True, ''
+        except Exception as e:
+            logger.error(str(e))
+            return False, f'Error with "insertParkedCar": {e}'
+
     def insertParkedCar(self, plate, parkingSlotID, entryTime, exitTime):
         """
-        The methos handles a car parking in a parking slot. Either a car that just enetered the parking and a car that is
+        The method handles a car parking in a parking slot. Either a car that just entered the parking and a car that is
         changing the slot.
 
         :return: (False, str) if error occurs, (True, '') otherwise.

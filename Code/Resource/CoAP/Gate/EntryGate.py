@@ -9,6 +9,7 @@ from Code.Model.Gate.Gate import Gate
 
 gateLogger = loggerSetup('gateLogger_EntryGate', 'Code/Logging/Gate/gate.log')
 
+
 class EntryGate(resource.Resource):
     """
     The class represents the resource Gate for park's entrance
