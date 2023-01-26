@@ -15,3 +15,16 @@
 2023-01-26 10:45:30,944 INFO Result: 2.04 Changed - 'True;display=Total parking slots available: 9The nearest parking slot in: 1'
 2023-01-26 10:45:30,944 INFO New car with plate FM056GT in parking slot with id: 6.
 2023-01-26 10:45:30,944 INFO Updating FireBase real-time DB...
+2023-01-26 11:04:30,618 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#...
+2023-01-26 11:04:40,019 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/1 Payload: {"parkingPlace": 1, "car": {"licensePlate": "FM056GT", "parkingSlot": null, "paid": false, "entryTime": 1674727479.96606, "exitTime": 0, "deltaTime": 0}, "readingTime": 1674727479.96606, "error": false} Retain: 0
+2023-01-26 11:04:40,041 INFO Result: 2.04 Changed - 'True;display=Total parking slots available: 8The nearest parking slot in: 2'
+2023-01-26 11:04:40,041 INFO New car with plate FM056GT in parking slot with id: 1.
+2023-01-26 11:04:40,041 INFO Updating FireBase real-time DB...
+2023-01-26 11:04:41,711 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/1 Payload: {"parkingPlace": 1, "car": {"licensePlate": "", "parkingSlot": null, "paid": false, "entryTime": 1674727479.96606, "exitTime": 0, "deltaTime": 0}, "readingTime": 1674727479.96606, "error": false} Retain: 0
+2023-01-26 11:04:41,720 INFO Result: 2.04 Changed - 'True;display=Total parking slots available: 9The nearest parking slot in: 1'
+2023-01-26 11:04:41,720 INFO Parking slot with id: 1 is now free. Updating status..
+2023-01-26 11:04:41,720 INFO Updating FireBase real-time DB...
+2023-01-26 11:04:43,086 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/6 Payload: {"parkingPlace": 6, "car": {"licensePlate": "FM056GT", "parkingSlot": null, "paid": false, "entryTime": 1674727479.992166, "exitTime": 0, "deltaTime": 0}, "readingTime": 1674727479.992166, "error": false} Retain: 0
+2023-01-26 11:04:43,092 INFO Result: 2.04 Changed - 'True;display=Total parking slots available: 9The nearest parking slot in: 1'
+2023-01-26 11:04:43,092 INFO New car with plate FM056GT in parking slot with id: 6.
+2023-01-26 11:04:43,092 INFO Updating FireBase real-time DB...
