@@ -117,8 +117,7 @@ async def updateAllLamp(BASE_URI, BRIGHTNESS_LEVEL):
             for link in links_headers.links:
                 if "lamp" in link.href:
                     URI = link.href[1:]
-                    CONTENT = json.dumps({"brightness":BRIGHTNESS_LEVEL})
-                    request = Message(code=aiocoap.Code.PUT, payload=CONTENT.encode('utf-8'), uri=BASE_URI+URI)
+                    request = Message(code=aiocoap.Code.PUT, payload=str(BRIGHTNESS_LEVEL).encode('utf-8'), uri=BASE_URI+URI)
                     try:
                         response = await protocol.request(request).response
                     except Exception as e:

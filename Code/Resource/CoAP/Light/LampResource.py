@@ -60,18 +60,18 @@ class LampResource(resource.Resource):
         Receive a Lamp object with the correct brightness, setup the right brightness in lightEmittor.
         """
         lampLogger.info("LampResource with ID: " + self.lightEmittor.sensorId + " --> PUT Request Received ...")
-        json_payload_string = request.payload.decode('UTF-8')
+        brightness = str(request.payload.decode('UTF-8'))
         lampLogger.info(
-            "LampResource with ID: " + self.lightEmittor.sensorId + " --> PUT String Payload : %s" % json_payload_string)
+            "LampResource with ID: " + self.lightEmittor.sensorId + " --> PUT String Payload : %s" % str(brightness))
 
-        lampReceived = Lamp(**json.loads(json_payload_string))
-        if lampReceived.brightness == LampBrightness.LIGHT_OFF:
+
+        if brightness == LampBrightness.LIGHT_OFF:
             self.lightEmittor.switchStatus()
             lampLogger.info(f"Switched brightness from {LampBrightness.LIGHT_OFF} to {self.lightEmittor.brightness}")
             return aiocoap.Message(code=Code.CHANGED)
         else:
-            lampLogger.info(f"Switched brightness from {self.lightEmittor.brightness} to {lampReceived.brightness}")
-            self.lightEmittor.setBrightness(lampReceived.brightness)
+            lampLogger.info(f"Switched brightness from {self.lightEmittor.brightness} to {brightness}")
+            self.lightEmittor.setBrightness(brightness)
             return aiocoap.Message(code=Code.CHANGED)
 
     async def render_post(self):
