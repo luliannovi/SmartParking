@@ -6,13 +6,15 @@ from Code.Logging.Logger import loggerSetup
 
 logger = loggerSetup("db", "Code/Logging/DB/db.log")
 
+
 class LocalDB:
     """This class defines methods required to store/read/update data inside configuration file.
     We should reset each night payament.json, anyway..."""
 
     SUPPORTED_MEDIA = {
         "PAYMENTS": "Configuration/LocalDB/payments.json",
-        "PARKING_SLOT": "Configuration/LocalDB/parkingSlot.json"
+        "PARKING_SLOT": "Configuration/LocalDB/parkingSlot.json",
+        "CAR": "Configuration/LocalDB/car.json"
     }
 
     def __init__(self, type):
@@ -107,7 +109,7 @@ class LocalDB:
 
             jsonStreamWrite = open(LocalDB.SUPPORTED_MEDIA[self.type], "w")
             for index in range(len(dataJson)):
-                if dataJson[index].get("transactionID","")==paymentObject.transactionID:
+                if dataJson[index].get("transactionID", "") == paymentObject.transactionID:
                     dataJson[index] = paymentObject.__dict__
             jsonStreamWrite.truncate(0)
             jsonStreamWrite.write(json.dumps(dataJson, indent=4))
@@ -137,7 +139,7 @@ class LocalDB:
         except Exception as e:
             logger.error(e)
             return False, f'Error with "getParkingSlot": {e}'
-            
+
     def checkParkingSlots(self):
         """
         The method cheks whether or not there are any parking slost available.
@@ -162,7 +164,7 @@ class LocalDB:
                 if available == 1:
                     id = parkingSlot.id
         return True, available, id
-        
+
     def updateParkingSlot(self, parkingSlot):
         """
         the method gets updates about a single parkingSlot (free/taken) with a string that contains the plate
@@ -190,4 +192,81 @@ class LocalDB:
             logger.error(e)
             return False, f'Error with "addParkingSlot": {e}'
 
+    """Methods that handles car.json update"""
 
+    def insertParkedCar(self, plate, parkingSlotID, entryTime, exitTime):
+        """
+        The methos handles a car parking in a parking slot. Either a car that just enetered the parking and a car that is
+        changing the slot.
+
+        :return: (False, str) if error occurs, (True, '') otherwise.
+        """
+        try:
+            jsonStreamRead = open(LocalDB.SUPPORTED_MEDIA[self.type], "r")
+            try:
+                dataJson = json.load(jsonStreamRead)
+            except JSONDecodeError:
+                dataJson = []
+            jsonStreamRead.close()
+
+            jsonStreamWrite = open(LocalDB.SUPPORTED_MEDIA[self.type], "w")
+            found = False
+            for index in range(len(dataJson)):
+                if dataJson[index].get("plate", "") == plate:
+                    slots = dataJson[index].get("slots", None)
+                    found = True
+                    slots[len(slots) - 1]["exitTime"] = exitTime
+                    jsonAdd = {
+                        "id": parkingSlotID,
+                        "entryTime": entryTime,
+                        "exitTime": -1
+                    }
+                    slots.append(jsonAdd)
+            if not found:
+                jsonAdd = {
+                    "plate": plate,
+                    "slots": [{
+                        "id": parkingSlotID,
+                        "entryTime": entryTime,
+                        "exitTime": -1
+                    }
+                    ]
+                }
+                dataJson.append(jsonAdd)
+            jsonStreamWrite.truncate(0)
+            jsonStreamWrite.write(json.dumps(dataJson, indent=4))
+            jsonStreamWrite.close()
+            return True, ''
+        except Exception as e:
+            logger.error(str(e))
+            return False, f'Error with "insertParkedCar": {e}'
+
+    def removeParkedCar(self, plate):
+        """
+        Method is used to remove a parked car.
+        It needs the plate (str) of the car that needs to be removed.
+
+        :return: (False, str) if errore occurs, (True, '') if no car is found, (True, json_removed) if the car is removed
+        (note that in this case the json removed is returned in order to do any operations with id (as getting first entryTime).
+        """
+        try:
+            jsonStreamRead = open(LocalDB.SUPPORTED_MEDIA[self.type], "r")
+            try:
+                dataJson = json.load(jsonStreamRead)
+            except JSONDecodeError:
+                dataJson = []
+            jsonStreamRead.close()
+
+            jsonStreamWrite = open(LocalDB.SUPPORTED_MEDIA[self.type], "w")
+            removed = ''
+            for index in range(len(dataJson)):
+                if dataJson[index].get("plate", "") == plate:
+                    removed = dataJson.pop(index)
+
+            jsonStreamWrite.truncate(0)
+            jsonStreamWrite.write(json.dumps(dataJson, indent=4))
+            jsonStreamWrite.close()
+            return True, removed
+        except Exception as e:
+            logger.error(str(e))
+            return False, f'Error with "insertParkedCar": {e}'
