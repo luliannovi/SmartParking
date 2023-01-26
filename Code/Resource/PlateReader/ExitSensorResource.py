@@ -1,9 +1,10 @@
 from Code.Model.PlateReader.ExitSensor import ExitSensor
 import time
 import paho.mqtt.client as mqtt
+from Code.Resource.PlateReader.MQTTClientParameters import MQTTClientParameters
+from Code.Logging.Logger import loggerSetup
 
-from MQTTClientParameters import MQTTClientParameters
-import json
+plateLogger = loggerSetup("plateLogger_ExitSensor", "Code/Logging/Plate/plateExit.log")
 
 
 class ExitSensorResource:
@@ -31,10 +32,9 @@ class ExitSensorResource:
         self.exitSensor.carPlate = carPlate
         self.publish_telemetry()
 
-
     @staticmethod
     def on_connect(client, userdata, flags, rc):
-        print("Connected with result code: " + str(rc))
+        plateLogger.info("Connected with result code: " + str(rc))
 
     def publish_telemetry(self):
         target_topic = "{0}/{1}/{2}/{3}/{4}".format(
@@ -46,4 +46,4 @@ class ExitSensorResource:
         )
         device_payload_string = self.exitSensor.toJson()
         self.mqttClient.publish(target_topic, device_payload_string, 0, False)
-        print(f"Telemetry data Published at {time.time()}: \nTopic: {target_topic}\nPayload: {device_payload_string}")
+        plateLogger.info(f"Telemetry data Published at {time.time()}: \nTopic: {target_topic}\nPayload: {device_payload_string}")

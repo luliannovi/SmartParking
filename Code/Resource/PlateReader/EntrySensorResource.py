@@ -1,9 +1,10 @@
 from Code.Model.PlateReader.EntrySensor import EntrySensor
 import time
 import paho.mqtt.client as mqtt
-
 from Code.Resource.PlateReader.MQTTClientParameters import MQTTClientParameters
-import json
+from Code.Logging.Logger import loggerSetup
+
+plateLogger = loggerSetup("plateLogger_EntrySensor", "Code/Logging/Plate/plateEntry.log")
 
 
 class EntrySensorResource:
@@ -13,7 +14,6 @@ class EntrySensorResource:
         self.mqttClient = None
         self.entrySensor = EntrySensor()
         self.configurations()
-
 
     def configurations(self):
         configFile = open("Configuration/PlateReaderMQTTParameters/config.json")
@@ -34,7 +34,7 @@ class EntrySensorResource:
 
     @staticmethod
     def on_connect(client, userdata, flags, rc):
-        print("Connected with result code: " + str(rc))
+        plateLogger.info("Connected with result code: " + str(rc))
 
     def publish_telemetry(self):
         target_topic = "{0}/{1}/{2}/{3}/{4}".format(
@@ -46,4 +46,4 @@ class EntrySensorResource:
         )
         device_payload_string = self.entrySensor.toJson()
         self.mqttClient.publish(target_topic, device_payload_string, 0, False)
-        print(f"Telemetry data Published at {time.time()}: \nTopic: {target_topic}\nPayload: {device_payload_string}")
+        plateLogger.info(f"Telemetry data Published at {time.time()}: \nTopic: {target_topic}\nPayload: {device_payload_string}")
