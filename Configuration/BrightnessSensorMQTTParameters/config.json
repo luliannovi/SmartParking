@@ -1,0 +1,11 @@
+{
+  "idClient" : "",
+  "broker_ip" : "155.185.4.4",
+  "broker_port" : 7883,
+  "username" : "282423@studenti.unimore.it",
+  "password" : "stzkbjuyzghckidn",
+  "BASIC_TOPIC" : "/iot/user",
+  "INFO_TOPIC" : "",
+  "DEVICE_TOPIC": "sensor/light",
+  "LOCATION" : ""
+}

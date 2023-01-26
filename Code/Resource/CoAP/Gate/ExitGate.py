@@ -11,7 +11,7 @@ from Code.Logging.Logger import loggerSetup
 from Code.Model.Gate.Gate import Gate
 
 
-gateLogger = loggerSetup('gateLogger', 'Code/Logging/Gate/gate.log')
+gateLogger = loggerSetup('gateLogger_ExitGate', 'Code/Logging/Gate/gate.log')
 
 
 class ExitGate(resource.Resource):
@@ -51,13 +51,13 @@ class ExitGate(resource.Resource):
         pack.add(gate)
         return pack.to_json()
 
-    def render_get(self):
+    async def render_get(self, request):
         """Method handles GET requests"""
         gateLogger.info("ExitGate with ID: " + self.gateID + " --> GET Request Received...")
         payload = self.buildSenMLJson()
         return aiocoap.Message(content_format=self.ct, payload=payload.encode('utf-8'))
 
-    def render_post(self):
+    async def render_post(self, request):
         """Method handles POST requests. Changes Gate state"""
         gateLogger.info("ExitGate with ID: " + self.gateID + " --> POST Request Received...")
         self.exitGate.switchState()

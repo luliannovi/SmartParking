@@ -1,6 +1,9 @@
 import json
 import time
+from Code.Logging.Logger import loggerSetup
 
+
+gateLogger = loggerSetup('gateLogger_Gate', 'Code/Logging/Gate/gate.log')
 
 class Gate:
     """The class models gates used in the SmartParking"""
@@ -36,11 +39,16 @@ class Gate:
         """Switches state: closed to opened, opened to closed. If passes from closed to opened, it waits for
         self.timesleep seconds then closes it """
         if self.isOpen():
+            gateLogger.info(f"Gate state: {'OPEN' if self.state else 'CLOSED'}")
             self.closeGate()
+            gateLogger.info(f"Gate state: {'OPEN' if self.state else 'CLOSED'}")
         else:
+            gateLogger.info(f"Gate state: {'OPEN' if self.state else 'CLOSED'}")
             self.openGate()
+            gateLogger.info(f"Gate state: {'OPEN' if self.state else 'CLOSED'}")
             time.sleep(self.timesleep)
             self.closeGate()
+            gateLogger.info(f"Gate state: {'OPEN' if self.state else 'CLOSED'}")
 
     def toJson(self):
         return json.dumps(self, default=lambda o: o.__dict__)

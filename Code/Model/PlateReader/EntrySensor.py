@@ -15,7 +15,7 @@ class EntrySensor:
     def readThePlate(self, carPlate):
         if isinstance(carPlate, str):
             self.carPlate = carPlate
-            self.readingTime = datetime.now()
+            self.readingTime = float(datetime.timestamp(datetime.now()))
         else:
             raise ValueError("Data passed as paramether must be a CarDescriptor class data")
 

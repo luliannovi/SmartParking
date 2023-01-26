@@ -2,17 +2,17 @@ import requests
 from datetime import datetime
 from Code.Logging.Logger import loggerSetup
 
-paymentsLogger = loggerSetup('paymentsLogger', 'Code/Logging/Payments/payments.log')
+paymentsLogger = loggerSetup('paymentsLogger_PaymentsGenerator', 'Code/Logging/Payments/payments.log')
 
 URL = """https://paymentslambda.azurewebsites.net/api/HttpPaymentsHandler?code={}"""
 FUNCTION_KEY = """lE1Qt9uJnAM9X2scZGBHBKZV_PPaSTrgaatxFQ-8Y2ecAzFuQn8U8w=="""
 
 
-transactionID = 6
+transactionID = 7
 licensePlate = "EP726GG"
 amount = 15.00
 
-timeInString = "12/11/2022 10:50:00"
+timeInString = "25/11/2022 10:50:00"
 timeIn = datetime.strptime(timeInString,"%d/%m/%Y %H:%M:%S").timestamp()
 
 paymentTimeString = "12/11/2022 10:55:30"

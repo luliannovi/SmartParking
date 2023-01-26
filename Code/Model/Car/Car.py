@@ -11,7 +11,7 @@ class Car:
         self.licensePlate = licensePlate
         self.parkingSlot = None
         self.paid = False
-        self.entryTime = datetime.now()
+        self.entryTime = datetime.now().timestamp()
         self.exitTime = 0
         self.deltaTime = 0
         if carSerialized is not None:
@@ -28,7 +28,7 @@ class Car:
             raise ValueError("The car has not an exit time yet")
 
     def toJson(self):
-        return json.dumps(self, default=lambda o: o.__dict__())
+        return json.dumps(self, default=lambda o: o.__dict__)
 
     def exitNow(self):
         """

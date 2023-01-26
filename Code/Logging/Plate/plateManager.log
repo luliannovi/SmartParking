@@ -1,0 +1,55 @@
+
+2023-01-26 16:22:49,199 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#...
+2023-01-26 16:22:55,939 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 1674746575.889762, "error": false} Retain: 0
+2023-01-26 16:22:55,956 INFO Result: 2.04 Changed - 'True;display=Parking slots available: 8Nearest parking slot: 2Readed plate: FM056GT'
+2023-01-26 16:23:05,962 INFO Result: 2.04 Changed - 'False;timesleep=10'
+2023-01-26 16:23:05,962 INFO Arrived car with plate FM056GT to the entrance.
+2023-01-26 16:23:05,974 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/1 Payload: {"parkingPlace": 1, "car": {"licensePlate": "", "parkingSlot": null, "paid": false, "entryTime": 1674746585.946717, "exitTime": 0, "deltaTime": 0}, "readingTime": 1674746585.946717, "error": false} Retain: 0
+2023-01-26 16:23:05,974 ERROR getParkingSlotById() got an unexpected keyword argument 'id'
+2023-01-26 16:23:37,517 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/device/licensePlate/#...
+2023-01-26 16:23:39,950 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 1674746619.902052, "error": false} Retain: 0
+2023-01-26 16:23:39,967 INFO Result: 2.04 Changed - 'True;display=Parking slots available: 8Nearest parking slot: 2Readed plate: FM056GT'
+2023-01-26 16:23:49,981 INFO Result: 2.04 Changed - 'False;timesleep=10'
+2023-01-26 16:23:49,981 INFO Arrived car with plate FM056GT to the entrance.
+2023-01-26 16:23:49,982 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/1 Payload: {"parkingPlace": 1, "car": {"licensePlate": "", "parkingSlot": null, "paid": false, "entryTime": 1674746629.929674, "exitTime": 0, "deltaTime": 0}, "readingTime": 1674746629.929674, "error": false} Retain: 0
+2023-01-26 16:23:49,983 INFO Updating exit time for parked car with plate  in car.json file..
+2023-01-26 16:23:49,991 INFO Result: 2.04 Changed - 'True;display=Total parking slots available: 9The nearest parking slot in: 1'
+2023-01-26 16:23:49,991 INFO Parking slot with id: 1 is now free. Updating status..
+2023-01-26 16:23:49,992 INFO Updating FireBase real-time DB...
+2023-01-26 16:24:20,568 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 1674746660.516314, "error": false} Retain: 0
+2023-01-26 16:24:20,573 INFO Result: 2.04 Changed - 'True;display=Parking slots available: 9Nearest parking slot: 1Readed plate: FM056GT'
+2023-01-26 16:24:30,587 INFO Result: 2.04 Changed - 'False;timesleep=10'
+2023-01-26 16:24:30,587 INFO Arrived car with plate FM056GT to the entrance.
+2023-01-26 16:24:30,599 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/6 Payload: {"parkingPlace": 6, "car": {"licensePlate": "", "parkingSlot": null, "paid": false, "entryTime": 1674746670.572248, "exitTime": 0, "deltaTime": 0}, "readingTime": 1674746670.572248, "error": false} Retain: 0
+2023-01-26 16:24:30,600 INFO Updating exit time for parked car with plate  in car.json file..
+2023-01-26 16:24:30,608 INFO Result: 2.04 Changed - 'True;display=Total parking slots available: 10The nearest parking slot in: 1'
+2023-01-26 16:24:30,608 INFO Parking slot with id: 6 is now free. Updating status..
+2023-01-26 16:24:30,608 INFO Updating FireBase real-time DB...
+2023-01-26 16:24:59,358 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 1674746699.308432, "error": false} Retain: 0
+2023-01-26 16:24:59,362 INFO Result: 2.04 Changed - 'True;display=Parking slots available: 10Nearest parking slot: 1Readed plate: FM056GT'
+2023-01-26 16:25:09,369 INFO Result: 2.04 Changed - 'False;timesleep=10'
+2023-01-26 16:25:09,369 INFO Arrived car with plate FM056GT to the entrance.
+2023-01-26 16:25:09,420 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/6 Payload: {"parkingPlace": 6, "car": {"licensePlate": "FM056GT", "parkingSlot": null, "paid": false, "entryTime": 1674746709.369804, "exitTime": 0, "deltaTime": 0}, "readingTime": 1674746709.369804, "error": false} Retain: 0
+2023-01-26 16:25:09,426 INFO Result: 2.04 Changed - 'True;display=Total parking slots available: 9The nearest parking slot in: 1'
+2023-01-26 16:25:09,426 INFO New car with plate FM056GT in parking slot with id: 6.
+2023-01-26 16:25:09,426 INFO Writing parked car with plate FM056GT in car.json file..
+2023-01-26 16:25:09,426 INFO Updating FireBase real-time DB...
+2023-01-26 16:25:19,395 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/6 Payload: {"parkingPlace": 6, "car": {"licensePlate": "", "parkingSlot": null, "paid": false, "entryTime": 1674746719.37012, "exitTime": 0, "deltaTime": 0}, "readingTime": 1674746719.37012, "error": false} Retain: 0
+2023-01-26 16:25:19,396 INFO Updating exit time for parked car with plate  in car.json file..
+2023-01-26 16:25:19,401 INFO Result: 2.04 Changed - 'True;display=Total parking slots available: 10The nearest parking slot in: 1'
+2023-01-26 16:25:19,401 INFO Parking slot with id: 6 is now free. Updating status..
+2023-01-26 16:25:19,401 INFO Updating FireBase real-time DB...
+2023-01-26 16:27:59,216 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/in Payload: {"carPlate": "FM056GT", "readingTime": 1674746879.166207, "error": false} Retain: 0
+2023-01-26 16:27:59,222 INFO Result: 2.04 Changed - 'True;display=Parking slots available: 10Nearest parking slot: 1Readed plate: FM056GT'
+2023-01-26 16:28:09,226 INFO Result: 2.04 Changed - 'False;timesleep=10'
+2023-01-26 16:28:09,226 INFO Arrived car with plate FM056GT to the entrance.
+2023-01-26 16:28:09,275 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/1 Payload: {"parkingPlace": 1, "car": {"licensePlate": "FM056GT", "parkingSlot": null, "paid": false, "entryTime": 1674746889.226413, "exitTime": 0, "deltaTime": 0}, "readingTime": 1674746889.226413, "error": false} Retain: 0
+2023-01-26 16:28:09,283 INFO Result: 2.04 Changed - 'True;display=Total parking slots available: 9The nearest parking slot in: 2'
+2023-01-26 16:28:09,283 INFO New car with plate FM056GT in parking slot with id: 1.
+2023-01-26 16:28:09,284 INFO Writing parked car with plate FM056GT in car.json file..
+2023-01-26 16:28:09,284 INFO Updating FireBase real-time DB...
+2023-01-26 16:28:19,266 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/1 Payload: {"parkingPlace": 1, "car": {"licensePlate": "", "parkingSlot": null, "paid": false, "entryTime": 1674746899.241699, "exitTime": 0, "deltaTime": 0}, "readingTime": 1674746899.241699, "error": false} Retain: 0
+2023-01-26 16:28:19,268 INFO Updating exit time for parked car with plate  in car.json file..
+2023-01-26 16:28:19,272 INFO Result: 2.04 Changed - 'True;display=Total parking slots available: 10The nearest parking slot in: 1'
+2023-01-26 16:28:19,272 INFO Parking slot with id: 1 is now free. Updating status..
+2023-01-26 16:28:19,272 INFO Updating FireBase real-time DB...

@@ -1,16 +1,14 @@
 import time
-
 import aiocoap
 import aiocoap.resource as resource
 import aiocoap.numbers as numbers
 from aiocoap import Code
-
 from kpn_senml import *
-
 from Code.Logging.Logger import loggerSetup
 from Code.Model.Gate.Gate import Gate
 
-gateLogger = loggerSetup('plateLogger', 'Code/Logging/Gate/gate.log')
+gateLogger = loggerSetup('gateLogger_EntryGate', 'Code/Logging/Gate/gate.log')
+
 
 class EntryGate(resource.Resource):
     """
@@ -55,6 +53,5 @@ class EntryGate(resource.Resource):
         """Method handles POST requests. Changes Gate state"""
         gateLogger.info("EntryGate with ID: " + self.gateID + " --> POST Request Received...")
         self.entryGate.switchState()
-        gateLogger.info("Sending response: " + f'{str(self.entryGate.state)};timesleep={str(self.timesleep)}')
         return aiocoap.Message(code=Code.CHANGED,
-                               paylaod=f'{str(self.entryGate.state)};timesleep={str(self.timesleep)}'.encode('utf-8'))
+                               payload=f'{str(self.entryGate.state)};timesleep={str(self.timesleep)}'.encode('utf-8'))
