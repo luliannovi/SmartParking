@@ -4,3 +4,4 @@ azure-iot-device
 azure-iot-hub
 paho-mqtt
 firebase-admin
+LinkHeader
