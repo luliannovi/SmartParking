@@ -1,3 +1,4 @@
+import datetime
 import json
 import logging
 import time
@@ -62,13 +63,14 @@ class PlateManager:
         Manage the arrival of a new message in:
         '..parking/in' -- manage the arrival of a new car to the entryPlateReader
         '..parking/out' -- manage the arrival of a new car to te exitPlateReader
-        '..parking/..' -- manage arrival of a new car in a parking slot
+        '..parking/id' -- manage arrival of a new car in a parking slot with a id
         """
         try:
             message_payload = str(msg.payload.decode("utf-8"))
             plateLogger.info(f"Received: Topic: {msg.topic} Payload: {message_payload} Retain: {msg.retain}")
             localParkingDBManager = LocalDB("PARKING_SLOT")
             localPaymentsDBManager = LocalDB("PAYMENTS")
+            localParkedCarsDBManager = LocalDB("CAR")
             if str(msg.topic).endswith("parking/in"):
                 """
                 A car has arrived to the entrance
@@ -138,21 +140,38 @@ class PlateManager:
                     parkingSlot = ParkingSlot(jsonData['parkingPlace'],
                                               False,
                                               "")
-                    localParkingDBManager.updateParkingSlot(parkingSlot)
-                    """
-                    checking parking slots available and the nearest
-                    """
-                    valid, availables, firstId = localParkingDBManager.checkParkingSlots()
-                    if valid is True:
-                        asyncio.get_event_loop().run_until_complete(put_message(BASE_URI + 'monitor_in',
-                                                                                "Total parking slots available: " + str(
-                                                                                    availables) + "The nearest parking slot in: " + str(
-                                                                                    firstId)))
-                        plateLogger.info(f"Parking slot with id: {str(parkingSlot.id)} is now free. Updating status..")
+
+                    valid, slot = localParkingDBManager.getParkingSlotById(givenId=jsonData['parkingPlace'])
+                    if valid is False:
+                        plateLogger.error(slot)
+                    elif slot == []:
+                        plateLogger.error(f"No parking slot founded in file while searching.")
+
                     else:
-                        error_string = availables
-                        asyncio.get_event_loop().run_until_complete(put_message(BASE_URI + 'monitor_in', error_string))
-                        plateLogger.error(f"Parking slot with id: {str(parkingSlot.id)}. {str(error_string)}.")
+                        localParkingDBManager.updateParkingSlot(parkingSlot)
+                        valid, value = localParkedCarsDBManager.updateExitTime(plate=slot['car'],
+                                                                               exitTime=datetime.datetime.now().timestamp())
+                        if valid is False:
+                            plateLogger.error(value)
+                        else:
+                            plateLogger.info(
+                                f"Updating exit time for parked car with plate {jsonData['car']['licensePlate']} in car.json file..")
+                        """
+                        checking parking slots available and the nearest
+                        """
+                        valid, availables, firstId = localParkingDBManager.checkParkingSlots()
+                        if valid is True:
+                            asyncio.get_event_loop().run_until_complete(put_message(BASE_URI + 'monitor_in',
+                                                                                    "Total parking slots available: " + str(
+                                                                                        availables) + "The nearest parking slot in: " + str(
+                                                                                        firstId)))
+                            plateLogger.info(
+                                f"Parking slot with id: {str(parkingSlot.id)} is now free. Updating status..")
+                        else:
+                            error_string = availables
+                            asyncio.get_event_loop().run_until_complete(
+                                put_message(BASE_URI + 'monitor_in', error_string))
+                            plateLogger.error(f"Parking slot with id: {str(parkingSlot.id)}. {str(error_string)}.")
 
                 else:
                     """
@@ -161,7 +180,7 @@ class PlateManager:
                     car = jsonData['car']
                     parkingSlot = ParkingSlot(jsonData['parkingPlace'],
                                               True,
-                                              car["licensePlate"])
+                                              car['licensePlate'])
                     localParkingDBManager.updateParkingSlot(parkingSlot)
                     """
                     checking parking slots available and the nearest
@@ -174,6 +193,14 @@ class PlateManager:
                                                                                     firstId)))
                         plateLogger.info(
                             f"New car with plate {car['licensePlate']} in parking slot with id: {jsonData['parkingPlace']}.")
+                        valid, value = localParkedCarsDBManager.insertParkedCar(plate=car['licensePlate'],
+                                                                                parkingSlotID=parkingSlot.id,
+                                                                                entryTime=datetime.datetime.now().timestamp(),
+                                                                                exitTime=0)
+                        if valid is False:
+                            plateLogger.error(value)
+                        else:
+                            plateLogger.info(f"Writing parked car with plate {car['licensePlate']} in car.json file..")
                     else:
                         error_string = availables
                         asyncio.get_event_loop().run_until_complete(put_message(BASE_URI + 'monitor_in', error_string))
