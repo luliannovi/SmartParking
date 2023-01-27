@@ -16,7 +16,7 @@ class ExitSensorResource:
         self.configurations()
 
     def configurations(self):
-        configFile = open("Configuration/BrokerParameters/config.json")
+        configFile = open("Configuration/PlateReaderMQTTParameters/config.json")
         self.mqttParameters = MQTTClientParameters()
         self.mqttParameters.fromJson(configFile)
         self.mqttParameters.idClient = 'out'
