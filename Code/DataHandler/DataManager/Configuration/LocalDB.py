@@ -58,7 +58,7 @@ class LocalDB:
     def getPaymentByLicense(self, licensePlate):
         """This method return a payment instance
         True,instance is returned if everything is ok otherwise False,STR is returned.
-        If no payments if found True, None is returned.
+        If no payments if found True, [] is returned.
         """
         try:
             with open(LocalDB.SUPPORTED_MEDIA[self.type], "r") as jsonStream:
@@ -70,8 +70,7 @@ class LocalDB:
                             output.append(Payment(paymentSerialized=payment))
                     return True, output
                 except JSONDecodeError:
-                    return True, None
-            return True, None
+                    return True, []
         except Exception as e:
             logger.error(e)
             return False, f'Error with "getPaymentByLicense": {e}'
@@ -109,6 +108,7 @@ class LocalDB:
 
             jsonStreamWrite = open(LocalDB.SUPPORTED_MEDIA[self.type], "w")
             filtered = [element for element in dataJson if element['licensePlate'] != licensePlate]
+            print(filtered)
             jsonStreamWrite.truncate(0)
             jsonStreamWrite.write(json.dumps(filtered, indent=4))
             jsonStreamWrite.close()
