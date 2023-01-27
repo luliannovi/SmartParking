@@ -1,15 +1,11 @@
-import datetime
 import json
+
 import aiocoap
 import asyncio
 import link_header
-import traceback
 import paho.mqtt.client as mqtt
 from Code.DataHandler.DataCollector.MQTTBrokerParameters import MQTTBrokerParameters
-from aiocoap.numbers.codes import Code
-from Code.DataHandler.DataManager.CloudDialog.SendParkingStatus import SendParkingStatus
-from Code.DataHandler.DataManager.Configuration.LocalDB import LocalDB
-from Code.Model.Car.ParkingSlot import ParkingSlot
+from Code.Model.Light.LampBrightness import LampBrightness
 from aiocoap import *
 from Code.Logging.Logger import loggerSetup
 
@@ -62,16 +58,12 @@ class LightManager:
         Manage the arrival of a new message in sensor/light
         """
         try:
-            message_payload = str(msg.payload.decode("utf-8"))
+            message_payload = int(json.loads(str(msg.payload.decode("utf-8")))["brightness"])
             lightLogger.info(f"Received: Topic: {msg.topic} Payload: {message_payload} Retain: {msg.retain}")
-            regolazione, valoreRegolazione = True, 5 # 0 to 5
-            # verifico se attuare la regolazione
-            if regolazione:
-                # scarico tutte le risorse
-                asyncio.get_event_loop().run_until_complete(updateAllLamp(BASE_URI, valoreRegolazione))
+            valoreRegolazione = LampBrightness.calculateBrightnessFromLumen(message_payload)
+            asyncio.get_event_loop().run_until_complete(updateAllLamp(BASE_URI, valoreRegolazione))
 
         except Exception as e:
-            traceback.print_exc()
             lightLogger.error(e)
 
     def stop(self):
