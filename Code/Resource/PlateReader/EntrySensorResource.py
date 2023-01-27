@@ -49,4 +49,4 @@ class EntrySensorResource:
         )
         device_payload_string = self.entrySensor.toJson()
         self.mqttClient.publish(target_topic, device_payload_string, 0, False)
-        plateLogger.info(f"Telemetry data Published at {time.time()}: Topic: {target_topic}Payload: {device_payload_string}")
+        plateLogger.info(f"Telemetry data Published at {time.time()}: Topic: {target_topic} Payload: {device_payload_string}")

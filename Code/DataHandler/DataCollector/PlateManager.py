@@ -105,7 +105,7 @@ class PlateManager:
                 jsonData = json.loads(message_payload)
                 if jsonData['error'] is True:
                     asyncio.get_event_loop().run_until_complete(
-                        put_message(BASE_URI + 'IoT/deviceo/monitor/out', "Error in reading the plate.."
+                        put_message(BASE_URI + 'IoT/device/monitor/out', "Error in reading the plate.."
                                                               "Please press the HELP button."))
                     plateLogger.error("Error reading the plate of the car.")
 
@@ -118,7 +118,7 @@ class PlateManager:
                         plateLogger.info(
                             f"No payments founded for car with plate {jsonData['carPlate']} present at the exit gate.")
                     elif valid is True and instance is not None:
-                        asyncio.get_event_loop().run_until_complete(put_message(BASE_URI + 'IoT/deviceo/monitor/out',
+                        asyncio.get_event_loop().run_until_complete(put_message(BASE_URI + 'IoT/device/monitor/out',
                                                                                 "Payments founded for your car (" +
                                                                                 jsonData[
                                                                                     'carPlate'] + "). Goodbye." + instance))
@@ -130,12 +130,16 @@ class PlateManager:
                         if valid is False:
                             plateLogger.error(value)
                         elif value is str:
-                            plateLogger.info(value)
+                            check, output = localPaymentsDBManager.removePaymentByLicense(jsonData['carPlate'])
+                            if not check:
+                                plateLogger.error(f"Error removing payment for car {jsonData['carPlate']}: {output}")
+                            else:
+                                plateLogger.info(value)
 
                     else:
                         error_string = instance
                         asyncio.get_event_loop().run_until_complete(
-                            put_message(BASE_URI + 'IoT/deviceo/monitor/out',
+                            put_message(BASE_URI + 'IoT/device/monitor/out',
                                         "Error checking the payment. Please press HELP button."))
                         plateLogger.error(error_string)
             else:
@@ -178,7 +182,7 @@ class PlateManager:
                         else:
                             error_string = availables
                             asyncio.get_event_loop().run_until_complete(
-                                put_message(BASE_URI + 'IoT/deviceo/monitor/in', error_string))
+                                put_message(BASE_URI + 'IoT/device/monitor/in', error_string))
                             plateLogger.error(f"Parking slot with id: {str(parkingSlot.id)}. {str(error_string)}.")
 
                 else:
@@ -195,7 +199,7 @@ class PlateManager:
                     """
                     valid, availables, firstId = localParkingDBManager.checkParkingSlots()
                     if valid is True:
-                        asyncio.get_event_loop().run_until_complete(put_message(BASE_URI + 'IoT/deviceo/monitor/in',
+                        asyncio.get_event_loop().run_until_complete(put_message(BASE_URI + 'IoT/device/monitor/in',
                                                                                 "Total parking slots available: " + str(
                                                                                     availables) + "The nearest parking slot in: " + str(
                                                                                     firstId)))
@@ -211,7 +215,7 @@ class PlateManager:
                             plateLogger.info(f"Writing parked car with plate {car['licensePlate']} in car.json file..")
                     else:
                         error_string = availables
-                        asyncio.get_event_loop().run_until_complete(put_message(BASE_URI + 'IoT/deviceo/monitor/in', error_string))
+                        asyncio.get_event_loop().run_until_complete(put_message(BASE_URI + 'IoT/device/monitor/in', error_string))
                         plateLogger.error(error_string)
 
                 """Updating FireBase real-time DB"""

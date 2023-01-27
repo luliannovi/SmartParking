@@ -48,7 +48,7 @@ class LightManager:
         mqttBrokerParameters = MQTTBrokerParameters()
         configparser = open('Configuration/BrightnessSensorMQTTParameters/config.json')
         mqttBrokerParameters.fromJson(configparser)
-        devices_topic = "{0}/{1}/{2}/#".format(  # topic generico per ora
+        devices_topic = "{0}/{1}/{2}".format(  # topic generico per ora
             mqttBrokerParameters.BASIC_TOPIC,
             mqttBrokerParameters.USERNAME,
             mqttBrokerParameters.DEVICE_TOPIC
@@ -89,7 +89,6 @@ async def put_message(URI, text):
         if response is not None:
             lightLogger.info('Result: %s - %r' % (response.code, response.payload.decode("utf-8")))
 
-
 async def post_message(URI):
     protocol = await Context.create_client_context()
     request = Message(code=aiocoap.Code.POST, uri=URI)
@@ -115,7 +114,7 @@ async def updateAllLamp(BASE_URI, BRIGHTNESS_LEVEL):
             links_headers = link_header.parse(response_string)
             # printing response
             for link in links_headers.links:
-                if len(link.attr_pairs) > 1 and link.attr_pairs[1][2]=="it.resource.actuator.lamp":
+                if len(link.attr_pairs) > 1 and link.attr_pairs[1][1]=="it.resource.actuator.lamp":
                     URI = link.href[1:]
                     request = Message(code=aiocoap.Code.PUT, payload=str(BRIGHTNESS_LEVEL).encode('utf-8'), uri=BASE_URI+URI)
                     try:

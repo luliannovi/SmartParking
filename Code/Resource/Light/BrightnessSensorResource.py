@@ -40,13 +40,12 @@ class BrightnessSensorResource:
         Used to share info about brightness in the parking through MQTT.
         It sends an entire BrightnessSensor object.
         """
-        target_topic = "{0}/{1}/{2}/{3}".format(
+        target_topic = "{0}/{1}/{2}".format(
             self.mqttParameters.BASIC_TOPIC,
             self.mqttParameters.USERNAME,
-            self.mqttParameters.DEVICE_TOPIC,
-            self.mqttParameters.idClient
+            self.mqttParameters.DEVICE_TOPIC
         )
         device_payload_string = self.brightnessSensor.toJson()
         self.mqttClient.publish(target_topic, device_payload_string, 0, False)
         brightnessSensorLogger.info(
-            f"Telemetry data Published at {time.time()}: Topic: {target_topic}Payload: {device_payload_string}")
+            f"Telemetry data Published at {time.time()}: Topic: {target_topic} Payload: {device_payload_string}")
