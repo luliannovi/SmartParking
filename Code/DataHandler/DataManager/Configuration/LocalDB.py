@@ -108,7 +108,6 @@ class LocalDB:
 
             jsonStreamWrite = open(LocalDB.SUPPORTED_MEDIA[self.type], "w")
             filtered = [element for element in dataJson if element['licensePlate'] != licensePlate]
-            print(filtered)
             jsonStreamWrite.truncate(0)
             jsonStreamWrite.write(json.dumps(filtered, indent=4))
             jsonStreamWrite.close()

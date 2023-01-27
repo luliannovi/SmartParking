@@ -129,9 +129,10 @@ class PlateManager:
                             f"Payments found for car with plate {jsonData['carPlate']}. Sending message for gate opening.")
 
                         valid, value = localParkedCarsDBManager.removeParkedCar(jsonData['carPlate'])
+                        print(valid, value)
                         if valid is False:
                             plateLogger.error(value)
-                        elif value is str:
+                        elif isinstance(value,str):
                             check, output = localPaymentsDBManager.removePaymentByLicense(jsonData['carPlate'])
                             if not check:
                                 plateLogger.error(f"Error removing payment for car {jsonData['carPlate']}: {output}")
