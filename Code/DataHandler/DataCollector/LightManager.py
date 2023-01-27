@@ -115,7 +115,7 @@ async def updateAllLamp(BASE_URI, BRIGHTNESS_LEVEL):
             links_headers = link_header.parse(response_string)
             # printing response
             for link in links_headers.links:
-                if "lamp" in link.href:
+                if len(link.attr_pairs) > 1 and link.attr_pairs[1][2]=="it.resource.actuator.lamp":
                     URI = link.href[1:]
                     request = Message(code=aiocoap.Code.PUT, payload=str(BRIGHTNESS_LEVEL).encode('utf-8'), uri=BASE_URI+URI)
                     try:

@@ -95,6 +95,28 @@ class LocalDB:
             logger.error(e)
             return False, f'Error with "getPayamemtByTransactionID": {e}'
 
+    def removePaymentByLicense(self, licensePlate):
+        """This method remove all payments from payments.json containing specific licensePlate.
+        Retrun True, '' if everything is right; otherwise False, erroString
+        """
+        try:
+            jsonStreamRead = open(LocalDB.SUPPORTED_MEDIA[self.type], "r")
+            try:
+                dataJson = json.load(jsonStreamRead)
+            except JSONDecodeError:
+                dataJson = []
+            jsonStreamRead.close()
+
+            jsonStreamWrite = open(LocalDB.SUPPORTED_MEDIA[self.type], "w")
+            filtered = [element for element in dataJson if element['licensePlate'] != licensePlate]
+            jsonStreamWrite.truncate(0)
+            jsonStreamWrite.write(json.dumps(filtered, indent=4))
+            jsonStreamWrite.close()
+            return True, ''
+        except Exception as e:
+            logger.error(e)
+            return False, f'Error with "removePaymentByLicense": {e}'
+
     def updatePayment(self, paymentObject):
         """This method update a payment searching for ID with given payment instance
         True,'' is returned if everything is ok otherwise False,STR is returned
