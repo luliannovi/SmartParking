@@ -525,3 +525,67 @@
 2023-01-26 23:25:42,309 INFO LampResource with ID: id10 --> PUT String Payload : {"brightness": 5}
 2023-01-26 23:25:42,309 INFO Switched brightness from 0 to 5
 2023-01-26 23:25:42,310 INFO Attuation with result: 2.04 Changed
+2023-01-27 10:26:50,675 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/sensor/light/#...
+2023-01-27 10:26:55,228 INFO Telemetry data Published at 1674811615.2282665: Topic: /iot/user/282423@studenti.unimore.it/sensor/light/idPayload: {"sensorId": "id", "description": "description", "brightness": 1740}
+2023-01-27 10:26:55,260 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/sensor/light/id Payload: {"sensorId": "id", "description": "description", "brightness": 1740} Retain: 0
+2023-01-27 10:26:55,294 INFO [['ct', '110'], ['rt', 'it.resource.actuator.monitor'], ['if', 'core.a']]
+2023-01-27 10:26:55,296 INFO Attuation with result: 2.04 Changed
+2023-01-27 10:26:55,297 INFO [['ct', '110'], ['rt', 'it.resource.actuator.monitor'], ['if', 'core.a']]
+2023-01-27 10:26:55,298 INFO Attuation with result: 2.04 Changed
+2023-01-27 10:26:55,298 INFO [['ct', '110'], ['rt', 'it.resource.actuator.gate'], ['if', 'core.a']]
+2023-01-27 10:26:55,299 INFO Attuation with result: 4.05 Method Not Allowed
+2023-01-27 10:26:55,300 INFO [['ct', '110'], ['rt', 'it.resource.actuator.gate'], ['if', 'core.a']]
+2023-01-27 10:26:55,301 INFO Attuation with result: 4.05 Method Not Allowed
+2023-01-27 10:26:55,301 INFO [['ct', '110'], ['rt', 'it.resource.actuator.lamp'], ['if', 'core.a']]
+2023-01-27 10:26:55,302 INFO LampResource with ID: id1 --> PUT Request Received ...
+2023-01-27 10:26:55,302 INFO LampResource with ID: id1 --> PUT String Payload : 5
+2023-01-27 10:26:55,302 INFO Switched brightness from 0 to 5
+2023-01-27 10:26:55,303 INFO Attuation with result: 2.04 Changed
+2023-01-27 10:26:55,303 INFO [['ct', '110'], ['rt', 'it.resource.actuator.lamp'], ['if', 'core.a']]
+2023-01-27 10:26:55,304 INFO LampResource with ID: id2 --> PUT Request Received ...
+2023-01-27 10:26:55,304 INFO LampResource with ID: id2 --> PUT String Payload : 5
+2023-01-27 10:26:55,304 INFO Switched brightness from 0 to 5
+2023-01-27 10:26:55,305 INFO Attuation with result: 2.04 Changed
+2023-01-27 10:26:55,305 INFO [['ct', '110'], ['rt', 'it.resource.actuator.lamp'], ['if', 'core.a']]
+2023-01-27 10:26:55,307 INFO LampResource with ID: id3 --> PUT Request Received ...
+2023-01-27 10:26:55,307 INFO LampResource with ID: id3 --> PUT String Payload : 5
+2023-01-27 10:26:55,307 INFO Switched brightness from 0 to 5
+2023-01-27 10:26:55,307 INFO Attuation with result: 2.04 Changed
+2023-01-27 10:26:55,308 INFO [['ct', '110'], ['rt', 'it.resource.actuator.lamp'], ['if', 'core.a']]
+2023-01-27 10:26:55,309 INFO LampResource with ID: id4 --> PUT Request Received ...
+2023-01-27 10:26:55,309 INFO LampResource with ID: id4 --> PUT String Payload : 5
+2023-01-27 10:26:55,309 INFO Switched brightness from 0 to 5
+2023-01-27 10:26:55,309 INFO Attuation with result: 2.04 Changed
+2023-01-27 10:26:55,310 INFO [['ct', '110'], ['rt', 'it.resource.actuator.lamp'], ['if', 'core.a']]
+2023-01-27 10:26:55,311 INFO LampResource with ID: id5 --> PUT Request Received ...
+2023-01-27 10:26:55,311 INFO LampResource with ID: id5 --> PUT String Payload : 5
+2023-01-27 10:26:55,311 INFO Switched brightness from 0 to 5
+2023-01-27 10:26:55,311 INFO Attuation with result: 2.04 Changed
+2023-01-27 10:26:55,312 INFO [['ct', '110'], ['rt', 'it.resource.actuator.lamp'], ['if', 'core.a']]
+2023-01-27 10:26:55,312 INFO LampResource with ID: id6 --> PUT Request Received ...
+2023-01-27 10:26:55,312 INFO LampResource with ID: id6 --> PUT String Payload : 5
+2023-01-27 10:26:55,313 INFO Switched brightness from 0 to 5
+2023-01-27 10:26:55,313 INFO Attuation with result: 2.04 Changed
+2023-01-27 10:26:55,313 INFO [['ct', '110'], ['rt', 'it.resource.actuator.lamp'], ['if', 'core.a']]
+2023-01-27 10:26:55,314 INFO LampResource with ID: id7 --> PUT Request Received ...
+2023-01-27 10:26:55,314 INFO LampResource with ID: id7 --> PUT String Payload : 5
+2023-01-27 10:26:55,314 INFO Switched brightness from 0 to 5
+2023-01-27 10:26:55,314 INFO Attuation with result: 2.04 Changed
+2023-01-27 10:26:55,315 INFO [['ct', '110'], ['rt', 'it.resource.actuator.lamp'], ['if', 'core.a']]
+2023-01-27 10:26:55,315 INFO LampResource with ID: id8 --> PUT Request Received ...
+2023-01-27 10:26:55,315 INFO LampResource with ID: id8 --> PUT String Payload : 5
+2023-01-27 10:26:55,316 INFO Switched brightness from 0 to 5
+2023-01-27 10:26:55,316 INFO Attuation with result: 2.04 Changed
+2023-01-27 10:26:55,316 INFO [['ct', '110'], ['rt', 'it.resource.actuator.lamp'], ['if', 'core.a']]
+2023-01-27 10:26:55,317 INFO LampResource with ID: id9 --> PUT Request Received ...
+2023-01-27 10:26:55,317 INFO LampResource with ID: id9 --> PUT String Payload : 5
+2023-01-27 10:26:55,317 INFO Switched brightness from 0 to 5
+2023-01-27 10:26:55,318 INFO Attuation with result: 2.04 Changed
+2023-01-27 10:26:55,318 INFO [['ct', '110'], ['rt', 'it.resource.actuator.lamp'], ['if', 'core.a']]
+2023-01-27 10:26:55,319 INFO LampResource with ID: id10 --> PUT Request Received ...
+2023-01-27 10:26:55,319 INFO LampResource with ID: id10 --> PUT String Payload : 5
+2023-01-27 10:26:55,319 INFO Switched brightness from 0 to 5
+2023-01-27 10:26:55,320 INFO Attuation with result: 2.04 Changed
+2023-01-27 10:26:55,320 INFO [['ct', '40']]
+2023-01-27 10:26:55,322 INFO Attuation with result: 4.05 Method Not Allowed
+2023-01-27 10:36:04,546 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/sensor/light/#...

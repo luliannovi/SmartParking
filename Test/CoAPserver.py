@@ -12,19 +12,20 @@ def main():
     # Resource tree creation
     root = resource.Site()
 
-
-    # define ids
-    root.add_resource(['monitor_in'], EntryMonitor(monitorID='id1', description='entry monitor'))
-    root.add_resource(['monitor_out'], ExitMonitor(monitorID='id2', description='exit monitor'))
-    root.add_resource(['gate_in'], EntryGate(gateID='id3', description='entry gate', timesleep=10))
-    root.add_resource(['gate_out'], ExitGate(gateID='id4', description='exit gate', timesleep=10))
-    # add all light sensor
-    for index in range(1,11):
-        root.add_resource([f'lamp_{index}'], LampResource(sensorId=f'id{index}', description="parking slot generic lamp"))
-
     # Add WellKnownCore Resource to support the standard Resource Discovery
     root.add_resource(['.well-known', 'core'],
                       resource.WKCResource(root.get_resources_as_linkheader, impl_info=None))
+
+    # define ids
+    root.add_resource(['IoT', 'device', 'monitor', 'in'], EntryMonitor(monitorID='id1', description='entry monitor'))
+    root.add_resource(['IoT', 'device', 'monitor', 'out'], ExitMonitor(monitorID='id2', description='exit monitor'))
+    root.add_resource(['IoT', 'actuator', 'gate', 'in'], EntryGate(gateID='id3', description='entry gate', timesleep=10))
+    root.add_resource(['IoT', 'actuator', 'gate', 'out'], ExitGate(gateID='id4', description='exit gate', timesleep=10))
+    # add all light sensor
+    for index in range(1,11):
+        root.add_resource(['IoT', 'actuator', 'lamp', str(index)], LampResource(sensorId=f'id{index}', description="parking slot generic lamp"))
+
+
 
 
     asyncio.Task(aiocoap.Context.create_server_context(root, bind=('127.0.0.1', 5683)))
