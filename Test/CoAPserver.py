@@ -25,9 +25,6 @@ def main():
     for index in range(1,11):
         root.add_resource(['IoT', 'actuator', 'lamp', str(index)], LampResource(sensorId=f'id{index}', description="parking slot generic lamp"))
 
-
-
-
     asyncio.Task(aiocoap.Context.create_server_context(root, bind=('127.0.0.1', 5683)))
     gateLogger.info(f'CoAP server started...')
     asyncio.get_event_loop().run_forever()

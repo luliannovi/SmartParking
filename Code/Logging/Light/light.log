@@ -589,3 +589,136 @@
 2023-01-27 10:26:55,320 INFO [['ct', '40']]
 2023-01-27 10:26:55,322 INFO Attuation with result: 4.05 Method Not Allowed
 2023-01-27 10:36:04,546 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/sensor/light/#...
+2023-01-27 14:30:19,297 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/sensor/light/#...
+2023-01-27 14:36:29,609 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/sensor/light/#...
+2023-01-27 14:36:39,359 INFO Telemetry data Published at 1674826599.3595903: Topic: /iot/user/282423@studenti.unimore.it/sensor/light/idPayload: {"sensorId": "id", "description": "description", "brightness": 230}
+2023-01-27 14:36:39,394 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/sensor/light/id Payload: {"sensorId": "id", "description": "description", "brightness": 230} Retain: 0
+2023-01-27 14:36:39,458 ERROR list index out of range
+2023-01-27 14:38:08,120 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/sensor/light/#...
+2023-01-27 14:38:11,029 INFO Telemetry data Published at 1674826691.0290666: Topic: /iot/user/282423@studenti.unimore.it/sensor/light/idPayload: {"sensorId": "id", "description": "description", "brightness": 1030}
+2023-01-27 14:38:11,091 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/sensor/light/id Payload: {"sensorId": "id", "description": "description", "brightness": 1030} Retain: 0
+2023-01-27 14:38:11,123 INFO LampResource with ID: id1 --> PUT Request Received ...
+2023-01-27 14:38:11,123 INFO LampResource with ID: id1 --> PUT String Payload : 5
+2023-01-27 14:38:11,123 INFO Switched brightness from 0 to 5
+2023-01-27 14:38:11,124 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:38:11,125 INFO LampResource with ID: id2 --> PUT Request Received ...
+2023-01-27 14:38:11,126 INFO LampResource with ID: id2 --> PUT String Payload : 5
+2023-01-27 14:38:11,126 INFO Switched brightness from 0 to 5
+2023-01-27 14:38:11,126 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:38:11,128 INFO LampResource with ID: id3 --> PUT Request Received ...
+2023-01-27 14:38:11,128 INFO LampResource with ID: id3 --> PUT String Payload : 5
+2023-01-27 14:38:11,128 INFO Switched brightness from 0 to 5
+2023-01-27 14:38:11,129 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:38:11,130 INFO LampResource with ID: id4 --> PUT Request Received ...
+2023-01-27 14:38:11,130 INFO LampResource with ID: id4 --> PUT String Payload : 5
+2023-01-27 14:38:11,130 INFO Switched brightness from 0 to 5
+2023-01-27 14:38:11,131 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:38:11,132 INFO LampResource with ID: id5 --> PUT Request Received ...
+2023-01-27 14:38:11,132 INFO LampResource with ID: id5 --> PUT String Payload : 5
+2023-01-27 14:38:11,132 INFO Switched brightness from 0 to 5
+2023-01-27 14:38:11,132 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:38:11,134 INFO LampResource with ID: id6 --> PUT Request Received ...
+2023-01-27 14:38:11,134 INFO LampResource with ID: id6 --> PUT String Payload : 5
+2023-01-27 14:38:11,134 INFO Switched brightness from 0 to 5
+2023-01-27 14:38:11,134 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:38:11,135 INFO LampResource with ID: id7 --> PUT Request Received ...
+2023-01-27 14:38:11,135 INFO LampResource with ID: id7 --> PUT String Payload : 5
+2023-01-27 14:38:11,136 INFO Switched brightness from 0 to 5
+2023-01-27 14:38:11,136 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:38:11,137 INFO LampResource with ID: id8 --> PUT Request Received ...
+2023-01-27 14:38:11,137 INFO LampResource with ID: id8 --> PUT String Payload : 5
+2023-01-27 14:38:11,138 INFO Switched brightness from 0 to 5
+2023-01-27 14:38:11,138 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:38:11,139 INFO LampResource with ID: id9 --> PUT Request Received ...
+2023-01-27 14:38:11,140 INFO LampResource with ID: id9 --> PUT String Payload : 5
+2023-01-27 14:38:11,140 INFO Switched brightness from 0 to 5
+2023-01-27 14:38:11,140 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:38:11,141 INFO LampResource with ID: id10 --> PUT Request Received ...
+2023-01-27 14:38:11,142 INFO LampResource with ID: id10 --> PUT String Payload : 5
+2023-01-27 14:38:11,142 INFO Switched brightness from 0 to 5
+2023-01-27 14:38:11,142 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:43:01,400 INFO  subscribed to: /iot/user/282423@studenti.unimore.it/sensor/light...
+2023-01-27 14:43:05,733 INFO Telemetry data Published at 1674826985.7333353: Topic: /iot/user/282423@studenti.unimore.it/sensor/lightPayload: {"sensorId": "id", "description": "description", "brightness": 1100}
+2023-01-27 14:43:05,792 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/sensor/light Payload: {"sensorId": "id", "description": "description", "brightness": 1100} Retain: 0
+2023-01-27 14:43:05,829 INFO LampResource with ID: id1 --> PUT Request Received ...
+2023-01-27 14:43:05,830 INFO LampResource with ID: id1 --> PUT String Payload : 5
+2023-01-27 14:43:05,830 INFO Switched brightness from 0 to 5
+2023-01-27 14:43:05,830 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:43:05,831 INFO LampResource with ID: id2 --> PUT Request Received ...
+2023-01-27 14:43:05,831 INFO LampResource with ID: id2 --> PUT String Payload : 5
+2023-01-27 14:43:05,831 INFO Switched brightness from 0 to 5
+2023-01-27 14:43:05,832 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:43:05,833 INFO LampResource with ID: id3 --> PUT Request Received ...
+2023-01-27 14:43:05,833 INFO LampResource with ID: id3 --> PUT String Payload : 5
+2023-01-27 14:43:05,833 INFO Switched brightness from 0 to 5
+2023-01-27 14:43:05,834 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:43:05,835 INFO LampResource with ID: id4 --> PUT Request Received ...
+2023-01-27 14:43:05,835 INFO LampResource with ID: id4 --> PUT String Payload : 5
+2023-01-27 14:43:05,835 INFO Switched brightness from 0 to 5
+2023-01-27 14:43:05,835 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:43:05,837 INFO LampResource with ID: id5 --> PUT Request Received ...
+2023-01-27 14:43:05,837 INFO LampResource with ID: id5 --> PUT String Payload : 5
+2023-01-27 14:43:05,837 INFO Switched brightness from 0 to 5
+2023-01-27 14:43:05,838 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:43:05,839 INFO LampResource with ID: id6 --> PUT Request Received ...
+2023-01-27 14:43:05,840 INFO LampResource with ID: id6 --> PUT String Payload : 5
+2023-01-27 14:43:05,840 INFO Switched brightness from 0 to 5
+2023-01-27 14:43:05,840 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:43:05,841 INFO LampResource with ID: id7 --> PUT Request Received ...
+2023-01-27 14:43:05,841 INFO LampResource with ID: id7 --> PUT String Payload : 5
+2023-01-27 14:43:05,842 INFO Switched brightness from 0 to 5
+2023-01-27 14:43:05,842 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:43:05,843 INFO LampResource with ID: id8 --> PUT Request Received ...
+2023-01-27 14:43:05,843 INFO LampResource with ID: id8 --> PUT String Payload : 5
+2023-01-27 14:43:05,843 INFO Switched brightness from 0 to 5
+2023-01-27 14:43:05,844 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:43:05,844 INFO LampResource with ID: id9 --> PUT Request Received ...
+2023-01-27 14:43:05,845 INFO LampResource with ID: id9 --> PUT String Payload : 5
+2023-01-27 14:43:05,845 INFO Switched brightness from 0 to 5
+2023-01-27 14:43:05,845 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:43:05,846 INFO LampResource with ID: id10 --> PUT Request Received ...
+2023-01-27 14:43:05,846 INFO LampResource with ID: id10 --> PUT String Payload : 5
+2023-01-27 14:43:05,846 INFO Switched brightness from 0 to 5
+2023-01-27 14:43:05,846 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:43:35,772 INFO Telemetry data Published at 1674827015.7725055: Topic: /iot/user/282423@studenti.unimore.it/sensor/lightPayload: {"sensorId": "id", "description": "description", "brightness": 1630}
+2023-01-27 14:43:35,827 INFO Received: Topic: /iot/user/282423@studenti.unimore.it/sensor/light Payload: {"sensorId": "id", "description": "description", "brightness": 1630} Retain: 0
+2023-01-27 14:43:35,838 INFO LampResource with ID: id1 --> PUT Request Received ...
+2023-01-27 14:43:35,838 INFO LampResource with ID: id1 --> PUT String Payload : 5
+2023-01-27 14:43:35,838 INFO Switched brightness from 5 to 5
+2023-01-27 14:43:35,839 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:43:35,840 INFO LampResource with ID: id2 --> PUT Request Received ...
+2023-01-27 14:43:35,841 INFO LampResource with ID: id2 --> PUT String Payload : 5
+2023-01-27 14:43:35,841 INFO Switched brightness from 5 to 5
+2023-01-27 14:43:35,842 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:43:35,843 INFO LampResource with ID: id3 --> PUT Request Received ...
+2023-01-27 14:43:35,844 INFO LampResource with ID: id3 --> PUT String Payload : 5
+2023-01-27 14:43:35,844 INFO Switched brightness from 5 to 5
+2023-01-27 14:43:35,844 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:43:35,846 INFO LampResource with ID: id4 --> PUT Request Received ...
+2023-01-27 14:43:35,846 INFO LampResource with ID: id4 --> PUT String Payload : 5
+2023-01-27 14:43:35,846 INFO Switched brightness from 5 to 5
+2023-01-27 14:43:35,847 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:43:35,848 INFO LampResource with ID: id5 --> PUT Request Received ...
+2023-01-27 14:43:35,849 INFO LampResource with ID: id5 --> PUT String Payload : 5
+2023-01-27 14:43:35,849 INFO Switched brightness from 5 to 5
+2023-01-27 14:43:35,849 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:43:35,851 INFO LampResource with ID: id6 --> PUT Request Received ...
+2023-01-27 14:43:35,851 INFO LampResource with ID: id6 --> PUT String Payload : 5
+2023-01-27 14:43:35,851 INFO Switched brightness from 5 to 5
+2023-01-27 14:43:35,852 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:43:35,854 INFO LampResource with ID: id7 --> PUT Request Received ...
+2023-01-27 14:43:35,854 INFO LampResource with ID: id7 --> PUT String Payload : 5
+2023-01-27 14:43:35,854 INFO Switched brightness from 5 to 5
+2023-01-27 14:43:35,855 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:43:35,856 INFO LampResource with ID: id8 --> PUT Request Received ...
+2023-01-27 14:43:35,856 INFO LampResource with ID: id8 --> PUT String Payload : 5
+2023-01-27 14:43:35,857 INFO Switched brightness from 5 to 5
+2023-01-27 14:43:35,857 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:43:35,859 INFO LampResource with ID: id9 --> PUT Request Received ...
+2023-01-27 14:43:35,859 INFO LampResource with ID: id9 --> PUT String Payload : 5
+2023-01-27 14:43:35,859 INFO Switched brightness from 5 to 5
+2023-01-27 14:43:35,860 INFO Attuation with result: 2.04 Changed
+2023-01-27 14:43:35,862 INFO LampResource with ID: id10 --> PUT Request Received ...
+2023-01-27 14:43:35,862 INFO LampResource with ID: id10 --> PUT String Payload : 5
+2023-01-27 14:43:35,862 INFO Switched brightness from 5 to 5
+2023-01-27 14:43:35,862 INFO Attuation with result: 2.04 Changed
