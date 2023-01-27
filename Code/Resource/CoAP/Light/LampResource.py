@@ -64,7 +64,6 @@ class LampResource(resource.Resource):
         lampLogger.info(
             "LampResource with ID: " + self.lightEmittor.sensorId + " --> PUT String Payload : %s" % str(brightness))
 
-
         if brightness == LampBrightness.LIGHT_OFF:
             self.lightEmittor.switchStatus()
             lampLogger.info(f"Switched brightness from {LampBrightness.LIGHT_OFF} to {self.lightEmittor.brightness}")
