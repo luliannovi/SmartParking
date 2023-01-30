@@ -1,0 +1,1 @@
+2023-01-30 14:43:28,357 INFO Telemetry data Published at 1675086208.35778: Topic: /iot/user/282423@studenti.unimore.it/device/licensePlate/parking/out Payload: {"carPlate": "FM056GT", "readingTime": 1675086208.356779, "error": false}
