@@ -50,7 +50,7 @@ class PlateManager:
         mqttBrokerParameters = MQTTBrokerParameters()
         configparser = open('Configuration/PlateReaderMQTTParameters/config.json')
         mqttBrokerParameters.fromJson(configparser)
-        devices_topic = "{0}/{1}/{2}/#".format(  # topic generico per ora
+        devices_topic = "{0}/{1}/{2}/#".format(
             mqttBrokerParameters.BASIC_TOPIC,
             mqttBrokerParameters.USERNAME,
             mqttBrokerParameters.DEVICE_TOPIC
