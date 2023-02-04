@@ -6,6 +6,6 @@
   "password" : "stzkbjuyzghckidn",
   "BASIC_TOPIC" : "/iot/user",
   "INFO_TOPIC" : "",
-  "DEVICE_TOPIC": "device/licensePlate",
+  "DEVICE_TOPIC": "IoT/device/licensePlate/parking",
   "LOCATION" : ""
 }

@@ -52,11 +52,10 @@ class EntrySensorResource:
         """
         Used to share infos about a car at the entrance through MQTT.
         """
-        target_topic = "{0}/{1}/{2}/{3}/{4}".format(
+        target_topic = "{0}/{1}/{2}/{3}".format(
             self.mqttParameters.BASIC_TOPIC,
             self.mqttParameters.USERNAME,
             self.mqttParameters.DEVICE_TOPIC,
-            self.mqttParameters.LOCATION,
             self.mqttParameters.idClient
         )
         device_payload_string = self.entrySensor.toJson()

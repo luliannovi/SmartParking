@@ -2,6 +2,9 @@ import json
 
 
 class MQTTBrokerParameters:
+    """
+    Class used to represent configuration infos of a MQTT Client.
+    """
     def __init__(self):
         self.idClient = ""
         self.BROKER_ADDRESS = ""
