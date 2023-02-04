@@ -83,7 +83,7 @@ class PlateManager:
                                                                             "Parking slots available: " + str(
                                                                                 availables) + " Nearest parking slot: " + str(
                                                                                 firstId)
-                                                                            + "Readed plate: " + jsonData['carPlate']))
+                                                                            + " Read plate: " + jsonData['carPlate']))
                     asyncio.get_event_loop().run_until_complete(post_message(BASE_URI + 'IoT/actuator/gate/in'))
                     plateLogger.info(f"Arrived car with plate {jsonData['carPlate']} to the entrance.")
                 elif jsonData['error'] is True:
