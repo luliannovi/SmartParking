@@ -13,7 +13,7 @@ class LampBrightness:
     def calculateBrightnessFromLumen(lumen):
         ranges = [0,0,0,0,0,0]
         division = AmbientBrightness.ACCEPTED_MAX/6
-        for index in range(0,5):
+        for index in range(0,6):
             ranges[index] = division if index == 0 else ranges[index-1]+division
 
         for index in range(len(ranges)):
