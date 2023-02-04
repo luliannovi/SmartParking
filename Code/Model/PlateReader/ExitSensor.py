@@ -13,6 +13,9 @@ class ExitSensor:
         self.error = False
 
     def readThePlate(self, carPlate):
+        """
+        Method used to notify a new plate reading.
+        """
         if isinstance(carPlate, str):
             self.carPlate = carPlate
             self.readingTime = float(datetime.timestamp(datetime.now()))

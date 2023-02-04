@@ -2,6 +2,9 @@ import json
 
 
 class MQTTClientParameters:
+    """
+    Class used to represent configuration infos of a MQTT Client.
+    """
     def __init__(self):
         self.idClient = ""
         self.BROKER_ADDRESS = ""
@@ -14,6 +17,9 @@ class MQTTClientParameters:
         self.LOCATION = ""
 
     def fromJson(self, file):
+        """
+        Read configuration infos from a file in json format.
+        """
         data = json.load(file)
         self.idClient = data['idClient']
         self.BROKER_ADDRESS = data['broker_ip']

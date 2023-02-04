@@ -9,7 +9,9 @@ plateLogger = loggerSetup("plateLogger_ParkingSlotSensor", "Code/Logging/Plate/p
 
 
 class ParkingSensorResource:
-
+    """
+    The class represent the plate reader sensor of the single parking.
+    """
     def __init__(self, parkingPlaceId):
         self.mqttParameters = None
         self.mqttClient = None
@@ -17,6 +19,10 @@ class ParkingSensorResource:
         self.configurations()
 
     def configurations(self):
+        """
+        Configurations for the MQTT client.
+        Configurations infos retrieved from 'Configuration/PlateReaderMQTTParameters/config.json' file.
+        """
         configFile = open("Configuration/PlateReaderMQTTParameters/config.json")
         self.mqttParameters = MQTTClientParameters()
         self.mqttParameters.fromJson(configFile)
@@ -31,19 +37,21 @@ class ParkingSensorResource:
 
     def plateUpdate(self, carPlate):
         """
-        Used to update the car presence in a parking slot.
-        carPlate must be a string.
+        Method that notify a new plate at the parking and publish, through MQTT, telemetry.
         """
         self.parkingSensor.readThePlate(carPlate)
         self.publish_telemetry()
 
     @staticmethod
     def on_connect(client, userdata, flags, rc):
+        """
+        MQTT on connection actions.
+        """
         plateLogger.info("Connected with result code: " + str(rc))
 
     def publish_telemetry(self):
         """
-        Used to share the plate of a car in a parking slot or a free parking slot through MQTT
+        Used to share infos about a car at the exit through MQTT.
         """
         target_topic = "{0}/{1}/{2}/{3}/{4}".format(
             self.mqttParameters.BASIC_TOPIC,

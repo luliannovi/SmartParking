@@ -55,7 +55,7 @@ class EntryMonitor(resource.Resource):
 
     async def render_get(self, request):
         """
-        Methods handles GET request.
+        Method handles GET request.
         See method self.buildSenMLJson() in interested in payload content.
         """
         monitorLogger.info("EntryMonitor with ID: " + self.monitorID + " --> GET Request Received...")

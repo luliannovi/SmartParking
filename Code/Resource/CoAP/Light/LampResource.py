@@ -14,12 +14,7 @@ lampLogger = loggerSetup("plateLogger_lampResource", "Code/Logging/Light/light.l
 
 class LampResource(resource.Resource):
     """
-    Scheletro di risorsa, in questo caso per LampResource
-
-    Controllate:
-    - nomi attributi
-    - messaggi riccevuti-inviati
-    - correttezza serializzazione-deserializzazione
+    This class represents lamp resources for lights in the parking.
     """
 
     def __init__(self, brightness=0, sensorId="", description="", lampSerialized=None):
@@ -40,7 +35,7 @@ class LampResource(resource.Resource):
         self.ct = numbers.media_types_rev['application/senml+json']
 
     def buildSenMLJson(self):
-        """The method created a SenML+Json representation of the gate resource."""
+        """The method created a SenML+Json representation of the light resource."""
         state = self.lightEmittor.brightness
         pack = SenmlPack(self.lightEmittor.sensorId)
         gate = SenmlRecord("Lamp",
@@ -51,13 +46,18 @@ class LampResource(resource.Resource):
         return pack.to_json()
 
     async def render_get(self, request):
+        """
+        Method handles GET request.
+        See method self.buildSenMLJson() in interested in payload content.
+        """
         lampLogger.info("LampResource with ID: " + self.lightEmittor.sensorId + " --> GET Request Received ...")
         payload = self.buildSenMLJson()
         return aiocoap.Message(content_format=self.ct, payload=payload.encode('utf-8'))
 
     async def render_put(self, request):
         """
-        Receive a Lamp object with the correct brightness, setup the right brightness in lightEmittor.
+        Method handles PUT request.
+        Receive a Lamp object with the correct brightness and set the right brightness in lightEmittor actuator.
         """
         lampLogger.info("LampResource with ID: " + self.lightEmittor.sensorId + " --> PUT Request Received ...")
         brightness = int(request.payload.decode('UTF-8'))
@@ -75,7 +75,8 @@ class LampResource(resource.Resource):
 
     async def render_post(self):
         """
-        Receive a request to change the status.
+        Method handles POST request.
+        Receive a request to change the status of the lightEmittor actuator (ON - OFF).
         """
         lampLogger.info("LampResource with ID: " + self.lightEmittor.sensorId + " --> POST Request Received ...")
         self.lightEmittor.switchStatus()
