@@ -17,10 +17,10 @@ if check and available > 0:
     parkingSensorResource = ParkingSensorResource(parkingPlaceId=1)
     parkingSensorResource.plateUpdate(car.licensePlate)
     # car leaves previous parking slot
-    #parkingSensorResource.plateUpdate("")
+    parkingSensorResource.plateUpdate("")
     # simulate getting another place, we assume that others are empty
-    #parkingSensorResource = ParkingSensorResource(parkingPlaceId=6)
-    #parkingSensorResource.plateUpdate(car.licensePlate)
+    parkingSensorResource = ParkingSensorResource(parkingPlaceId=6)
+    parkingSensorResource.plateUpdate(car.licensePlate)
 else:
     parkingLogger.error("No parking slots available")
 

@@ -72,6 +72,7 @@ class PlateManager:
             localParkingDBManager = LocalDB("PARKING_SLOT")
             localPaymentsDBManager = LocalDB("PAYMENTS")
             localParkedCarsDBManager = LocalDB("CAR")
+
             if str(msg.topic).endswith("parking/in"):
                 """
                 A car has arrived to the entrance
@@ -144,6 +145,7 @@ class PlateManager:
                             put_message(BASE_URI + 'IoT/device/monitor/out',
                                         "Error checking the payment. Please press HELP button."))
                         plateLogger.error(error_string)
+
             else:
                 """
                 A car has arrived in a parking slot
@@ -209,8 +211,7 @@ class PlateManager:
                             f"New car with plate {car['licensePlate']} in parking slot with id: {jsonData['parkingPlace']}.")
                         valid, value = localParkedCarsDBManager.insertParkedCar(plate=car['licensePlate'],
                                                                                 parkingSlotID=parkingSlot.id,
-                                                                                entryTime=datetime.datetime.now().timestamp(),
-                                                                                exitTime=0)
+                                                                                entryTime=datetime.datetime.now().timestamp())
                         if valid is False:
                             plateLogger.error(value)
                         else:

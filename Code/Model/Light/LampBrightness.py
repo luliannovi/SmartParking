@@ -16,7 +16,7 @@ class LampBrightness:
         for index in range(0,5):
             ranges[index] = division if index == 0 else ranges[index-1]+division
 
-        for index in len(ranges):
+        for index in range(len(ranges)):
             if lumen < ranges[index]:
                 return index
 

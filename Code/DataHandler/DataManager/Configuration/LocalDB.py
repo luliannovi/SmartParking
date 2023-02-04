@@ -254,12 +254,13 @@ class LocalDB:
             found = False
             for index in range(len(dataJson)):
                 if dataJson[index].get("plate", "") == plate:
-                    slots = dataJson[index].get("slots", None)
+                    slots = len(dataJson[index].get("slots", []))
                     found = True
-                    slots[len(slots) - 1]["exitTime"] = exitTime
+                    dataJson[index].get("slots", [])[slots - 1]["exitTime"] = exitTime
 
             if not found:
-                return False, "no car with that plate founded in memory"
+                return False, "no car with that plate found in memory"
+
             jsonStreamWrite.truncate(0)
             jsonStreamWrite.write(json.dumps(dataJson, indent=4))
             jsonStreamWrite.close()
@@ -268,7 +269,7 @@ class LocalDB:
             logger.error(str(e))
             return False, f'Error with "insertParkedCar": {e}'
 
-    def insertParkedCar(self, plate, parkingSlotID, entryTime, exitTime):
+    def insertParkedCar(self, plate, parkingSlotID, entryTime, exitTime=0):
         """
         The method handles a car parking in a parking slot. Either a car that just entered the parking and a car that is
         changing the slot.
@@ -287,15 +288,13 @@ class LocalDB:
             found = False
             for index in range(len(dataJson)):
                 if dataJson[index].get("plate", "") == plate:
-                    slots = dataJson[index].get("slots", None)
                     found = True
-                    slots[len(slots) - 1]["exitTime"] = exitTime
                     jsonAdd = {
                         "id": parkingSlotID,
                         "entryTime": entryTime,
                         "exitTime": -1
                     }
-                    slots.append(jsonAdd)
+                    dataJson[index].get("slots", []).append(jsonAdd)
             if not found:
                 jsonAdd = {
                     "plate": plate,
@@ -307,6 +306,7 @@ class LocalDB:
                     ]
                 }
                 dataJson.append(jsonAdd)
+
             jsonStreamWrite.truncate(0)
             jsonStreamWrite.write(json.dumps(dataJson, indent=4))
             jsonStreamWrite.close()
