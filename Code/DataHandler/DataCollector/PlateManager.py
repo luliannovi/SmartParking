@@ -32,6 +32,10 @@ class PlateManager:
         self.configurations()
 
     def configurations(self):
+        """
+        Configurations for the MQTT broker.
+        Configurations infos retrieved from 'Configuration/PlateReaderMQTTParameters/config.json' file.
+        """
         self.mqttBrokerParameters = MQTTBrokerParameters()
         configparser = open('Configuration/PlateReaderMQTTParameters/config.json')
         self.mqttBrokerParameters.fromJson(configparser)
@@ -50,7 +54,7 @@ class PlateManager:
         mqttBrokerParameters = MQTTBrokerParameters()
         configparser = open('Configuration/PlateReaderMQTTParameters/config.json')
         mqttBrokerParameters.fromJson(configparser)
-        devices_topic = "{0}/{1}/{2}/#".format(  # topic generico per ora
+        devices_topic = "{0}/{1}/{2}/#".format(
             mqttBrokerParameters.BASIC_TOPIC,
             mqttBrokerParameters.USERNAME,
             mqttBrokerParameters.DEVICE_TOPIC
@@ -237,6 +241,10 @@ class PlateManager:
 
 
 async def put_message(URI, text):
+    """
+    Method to create a CoAP PUT message to the specified URI.
+    Paylod match to 'text' field.
+    """
     protocol = await Context.create_client_context()
     request = Message(code=aiocoap.Code.PUT, payload=text.encode('utf-8'), uri=URI)
     try:
@@ -249,6 +257,9 @@ async def put_message(URI, text):
 
 
 async def post_message(URI):
+    """
+    Method to create a CoAP POST message to the specified URI.
+    """
     protocol = await Context.create_client_context()
     request = Message(code=aiocoap.Code.POST, uri=URI)
     try:

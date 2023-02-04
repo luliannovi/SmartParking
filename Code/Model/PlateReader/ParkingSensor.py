@@ -15,6 +15,9 @@ class ParkingSensor:
         self.error = False
 
     def readThePlate(self, carPlate):
+        """
+        Method used to notify a new plate reading.
+        """
         if isinstance(carPlate, str):
             self.car = Car(None, carPlate)
             self.readingTime = float(datetime.timestamp(datetime.now()))

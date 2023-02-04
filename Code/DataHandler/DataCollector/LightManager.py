@@ -26,6 +26,10 @@ class LightManager:
         self.configurations()
 
     def configurations(self):
+        """
+        Configurations for the MQTT client.
+        Configurations infos retrieved from 'Configuration/BrightnessSensorMQTTParameters/config.json' file.
+        """
         self.mqttBrokerParameters = MQTTBrokerParameters()
         configparser = open('Configuration/BrightnessSensorMQTTParameters/config.json')
         self.mqttBrokerParameters.fromJson(configparser)
@@ -44,7 +48,7 @@ class LightManager:
         mqttBrokerParameters = MQTTBrokerParameters()
         configparser = open('Configuration/BrightnessSensorMQTTParameters/config.json')
         mqttBrokerParameters.fromJson(configparser)
-        devices_topic = "{0}/{1}/{2}".format(  # topic generico per ora
+        devices_topic = "{0}/{1}/{2}".format(
             mqttBrokerParameters.BASIC_TOPIC,
             mqttBrokerParameters.USERNAME,
             mqttBrokerParameters.DEVICE_TOPIC

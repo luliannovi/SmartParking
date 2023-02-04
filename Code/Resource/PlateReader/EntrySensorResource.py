@@ -8,7 +8,9 @@ plateLogger = loggerSetup("plateLogger_EntrySensor", "Code/Logging/Plate/plateEn
 
 
 class EntrySensorResource:
-
+    """
+    The class represent the entry sensor of plates.
+    """
     def __init__(self):
         self.mqttParameters = None
         self.mqttClient = None
@@ -16,6 +18,10 @@ class EntrySensorResource:
         self.configurations()
 
     def configurations(self):
+        """
+        Configurations for the MQTT client.
+        Configurations infos retrieved from 'Configuration/PlateReaderMQTTParameters/config.json' file.
+        """
         configFile = open("Configuration/PlateReaderMQTTParameters/config.json")
         self.mqttParameters = MQTTClientParameters()
         self.mqttParameters.fromJson(configFile)
@@ -29,22 +35,27 @@ class EntrySensorResource:
                                 self.mqttParameters.BROKER_PORT)
 
     def plateUpdate(self, carPlate):
+        """
+        Method that notify a new plate at the entrance and publish, through MQTT, telemetry.
+        """
         self.entrySensor.readThePlate(carPlate)
         self.publish_telemetry()
 
     @staticmethod
     def on_connect(client, userdata, flags, rc):
+        """
+        MQTT on connection actions.
+        """
         plateLogger.info("Connected with result code: " + str(rc))
 
     def publish_telemetry(self):
         """
-        Used to share info about a car at the entrance through MQTT
+        Used to share infos about a car at the entrance through MQTT.
         """
-        target_topic = "{0}/{1}/{2}/{3}/{4}".format(
+        target_topic = "{0}/{1}/{2}/{3}".format(
             self.mqttParameters.BASIC_TOPIC,
             self.mqttParameters.USERNAME,
             self.mqttParameters.DEVICE_TOPIC,
-            self.mqttParameters.LOCATION,
             self.mqttParameters.idClient
         )
         device_payload_string = self.entrySensor.toJson()

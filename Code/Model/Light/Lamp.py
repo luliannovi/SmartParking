@@ -2,7 +2,8 @@ from Code.Model.Light.LampBrightness import LampBrightness
 
 
 class Lamp:
-    """Lamp models Lamp resources used to light on the ambient
+    """
+    Lamp models Lamp resources used to light on the ambient
     """
 
     def __init__(self, brightness=0, sensorId="", description="", lampSerialized=None):
