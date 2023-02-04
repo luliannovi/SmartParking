@@ -1,5 +1,5 @@
 import json
-
+import traceback
 import aiocoap
 import asyncio
 import link_header
@@ -64,6 +64,7 @@ class LightManager:
             asyncio.get_event_loop().run_until_complete(updateAllLamp(BASE_URI, valoreRegolazione))
 
         except Exception as e:
+            traceback.print_exc()
             lightLogger.error(e)
 
     def stop(self):
