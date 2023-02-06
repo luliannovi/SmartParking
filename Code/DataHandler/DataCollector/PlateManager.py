@@ -140,8 +140,8 @@ class PlateManager:
                             check, output = localPaymentsDBManager.removePaymentByLicense(jsonData['carPlate'])
                             if not check:
                                 plateLogger.error(f"Error removing payment for car {jsonData['carPlate']}: {output}")
-                            else:
-                                plateLogger.info(value)
+                            #else:
+                            #    plateLogger.info(value)
 
                     else:
                         error_string = instance

@@ -9,7 +9,7 @@ FUNCTION_KEY = """lE1Qt9uJnAM9X2scZGBHBKZV_PPaSTrgaatxFQ-8Y2ecAzFuQn8U8w=="""
 
 
 transactionID = 7
-licensePlate = "EP726GG"
+licensePlate = "FM056GT"
 amount = 15.00
 
 timeInString = "25/11/2022 10:50:00"
